@@ -3,7 +3,9 @@
 Welcome to the SkillSprint Backend Repository! This repository contains the backend services for our educational platform, SkillSprint, designed to provide a seamless learning experience for both learners and instructors.
 
 ### Technologies Used:
-- **Framework**: Node.js with Express
+- **Framework**: Spring Boot
+- **Service Discovery**: Edureka Service Discovery
+- **API Gateway**: Spring Cloud Gateway
 - **Database**: MongoDB
 - **Authentication**: JSON Web Tokens (JWT)
 - **Containerization**: Docker
@@ -12,7 +14,8 @@ Welcome to the SkillSprint Backend Repository! This repository contains the back
 ### Prerequisites:
 - Docker installed on your machine
 - Kubernetes cluster set up (if deploying on Kubernetes)
-- Node.js and npm installed
+- Java Development Kit (JDK) installed
+- MongoDB installed and running
 
 ### Setup Instructions:
 1. **Clone the Repository:**
@@ -24,26 +27,26 @@ Welcome to the SkillSprint Backend Repository! This repository contains the back
 2. **Environment Configuration:**
    - Copy the `.env.example` file to `.env` and fill in the necessary environment variables, such as database connection details, API keys for third-party services, and JWT secret.
 
-3. **Install Dependencies:**
-   - Install the required dependencies using npm:
+3. **Build and Run Services:**
+   - Build each service using Maven and run them individually:
      ```bash
-     npm install
+     cd authentication-service
+     mvn spring-boot:run
+     
+     cd ../course-service
+     mvn spring-boot:run
+     
+     # Repeat for other services
      ```
 
-4. **Run Development Server:**
-   - Start the development server:
-     ```bash
-     npm start
-     ```
-
-5. **Deployment on Kubernetes (Optional):**
+4. **Deployment on Kubernetes (Optional):**
    - If deploying on Kubernetes, apply the Kubernetes manifests provided in the `kubernetes/` directory:
      ```bash
      kubectl apply -f kubernetes/
      ```
 
 ### API Documentation:
-- Detailed API documentation can be found in the `docs/` directory or at [API Documentation URL].
+- Detailed API documentation for each service can be found in the respective service directories or at [API Documentation URL].
 
 ### Security:
 - Authentication is implemented using JWT tokens. Users must include their JWT token in the Authorization header for protected routes.
