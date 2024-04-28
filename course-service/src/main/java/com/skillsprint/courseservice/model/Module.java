@@ -23,4 +23,5 @@ public class Module {
     private List<Video> videoList;
     private List<Reading> readingList;
     private List<Quiz> quizesList;
+    //thumbnail
 }
