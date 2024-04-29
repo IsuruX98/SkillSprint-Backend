@@ -1,10 +1,10 @@
-package com.skillsprint.authenticationservice;
+package com.skillsprint.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AuthenticationServiceApplicationTests {
+class UserServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
