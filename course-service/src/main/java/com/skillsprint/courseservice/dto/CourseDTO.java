@@ -16,10 +16,10 @@ public class CourseDTO {
     private ObjectId id;
     private String courseCode;
     private String courseName;
-    private List<Module> moduleList;
+//    private List<Module> moduleList;
     private String categoryId;
     private String description;
-    private List<String> instructorIds;
+//    private List<String> instructorIds;
     private BigDecimal price;
     private String status;
 }
