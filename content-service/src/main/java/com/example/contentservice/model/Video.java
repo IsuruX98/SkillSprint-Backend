@@ -1,4 +1,4 @@
-package com.skillsprint.courseservice.model;
+package com.example.contentservice.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,10 +7,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @EqualsAndHashCode(callSuper = true)
-@Document
+@Document(collection = "videos")
 @Data
-public class Reading extends CommonEntity{
+public class Video extends CommonEntity {
 
     @Id
     private ObjectId id;
+    private String title;
+    private String duration;
+    private String url;
+    private String moduleId;
 }

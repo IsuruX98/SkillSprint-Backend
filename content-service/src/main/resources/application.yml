@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: content-service
+
+server:
+  port: 8087
+
