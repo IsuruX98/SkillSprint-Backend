@@ -55,16 +55,16 @@ public class CourseServiceImpl implements CourseService {
         }
     }
 
-
+    //TODO - should be returned according to the given Response by Isuru
     @Override
     public CourseDTO getCourseByCourseCode(@PathVariable String courseCode) {
         try{
             Course course = courseRepository.findCourseByCourseCodeAndStatus(courseCode, CommonConstant.ACTIVE);
             if (course != null) {
                 return mapper.map(course, CourseDTO.class);
-            } else {
+            } else
                 return null;
-            }
+
 
         }catch(NoSuchElementException e){
             log.error("Course not found for id: {}", courseCode);
