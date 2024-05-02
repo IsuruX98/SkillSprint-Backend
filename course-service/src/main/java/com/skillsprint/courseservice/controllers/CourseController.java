@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/course-controller")
 @AllArgsConstructor
@@ -46,6 +48,18 @@ public class CourseController {
  //   @PreAuthorize("hasAuthority('admin:update')")
     public ResponseEntity<Object> deleteCourseByCourseCode(@PathVariable String courseCode){
         return ResponseEntity.status(HttpStatus.OK).body(courseService.deleteCourseByCourseCode(courseCode));
+    }
+
+
+    //TODO - Test this API - not tested yet.
+    @GetMapping("category/{courseCode}")
+    // @PreAuthorize("hasAnyAuthority('admin:read', 'faculty:read', 'student:read')")
+    public ResponseEntity<List<CourseDTO>> getCoursesByCategoryCode(@PathVariable String categoryCode){
+        List<CourseDTO> courseDTOs = courseService.getCoursesByCategoryCode(categoryCode);
+        if(courseDTOs != null)
+            return ResponseEntity.status(HttpStatus.OK).body(courseDTOs);
+        else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
 
