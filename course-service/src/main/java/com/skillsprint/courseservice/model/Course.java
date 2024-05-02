@@ -22,10 +22,8 @@ public class Course extends CommonEntity {
     private ObjectId id;
     private String courseCode;
     private String courseName;
-  //  private List<Module> moduleList;
     private String categoryId;
     private String description;
-   // private List<String> instructorIds;
     private BigDecimal price;
     private String status;
 
