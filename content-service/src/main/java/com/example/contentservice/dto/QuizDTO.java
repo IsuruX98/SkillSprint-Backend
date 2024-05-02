@@ -1,20 +1,14 @@
-package com.example.contentservice.model;
+package com.example.contentservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@Document(collection = "quizes")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Quiz extends CommonEntity {
-    @Id
+public class QuizDTO {
     private String id;
     private String moduleId;
     private String question;
