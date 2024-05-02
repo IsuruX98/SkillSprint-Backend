@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: instructor-service
+
+server:
+  port: 8083
