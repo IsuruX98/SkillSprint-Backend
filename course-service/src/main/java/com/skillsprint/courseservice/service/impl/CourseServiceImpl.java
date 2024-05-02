@@ -88,12 +88,7 @@ public class CourseServiceImpl implements CourseService {
                 course.setPrice(courseDTO.getPrice());
             if(StringUtils.hasLength(courseDTO.getStatus()))
                 course.setStatus(courseDTO.getStatus());
-            if(!courseDTO.getInstructorIds().isEmpty())
-                course.setInstructorIds(courseDTO.getInstructorIds());
-            if(StringUtils.hasLength(courseDTO.getDescription()))
-                course.setDescription(courseDTO.getDescription());
-            if(courseDTO.getModuleList() != null)
-                course.setModuleList(courseDTO.getModuleList());
+
 
             courseRepository.save(course);
             log.info("Course updated successfully: {}", course);
