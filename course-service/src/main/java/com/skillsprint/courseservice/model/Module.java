@@ -21,8 +21,5 @@ public class Module {
     private ObjectId id;
     private String moduleName;
     private String courseId;
-   // private List<Video> videoList;
-    //private List<Reading> readingList;
-    //private List<Quiz> quizesList;
-    //thumbnail
+
 }
