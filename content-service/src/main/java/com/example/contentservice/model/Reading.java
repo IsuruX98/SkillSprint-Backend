@@ -17,4 +17,5 @@ public class Reading extends CommonEntity{
     private String description;
     private String duration;
     private String moduleId;
+    private String status;
 }
