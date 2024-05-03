@@ -1,4 +1,5 @@
 package com.skillsprint.userservice.service;
+import com.skillsprint.userservice.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -44,17 +45,25 @@ public class JWTService {
     }
 
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        // Adding extra claims
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", userDetails.getAuthorities());
+        claims.put("role", ((User) userDetails).getUserType()); // Cast userDetails to User and get userType
+
+        // Merging extra claims with any provided extraClaims
+        if (extraClaims != null) {
+            claims.putAll(extraClaims);
+        }
+
         return Jwts
                 .builder()
-                .setClaims(extraClaims)
+                .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS256, getSigningKey())
                 .compact();
     }
+
 
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());

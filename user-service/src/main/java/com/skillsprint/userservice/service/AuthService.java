@@ -5,6 +5,7 @@ import com.skillsprint.userservice.DTO.JWTResponse;
 import com.skillsprint.userservice.DTO.UserDTO;
 import com.skillsprint.userservice.model.User;
 import com.skillsprint.userservice.repo.UserRepo;
+import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static javax.crypto.Cipher.SECRET_KEY;
 
 @Transactional
 @Service
@@ -50,6 +53,7 @@ public class AuthService {
 
     }
 
+
     public JWTResponse login(AuthDTO request) {
         try {
 
@@ -71,6 +75,20 @@ public class AuthService {
         }
         return JWTResponse.builder().build();
     }
+    public void validateTokenAndGetUser(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(String.valueOf(SECRET_KEY))
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            String userId = claims.getSubject();
+
+        } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException ex) {
+
+        }
+    }
+
     public void logout(HttpServletRequest request) {
         SecurityContextHolder.clearContext();
     }

@@ -42,5 +42,10 @@ public class AuthController {
                 .body(new ResponseDTO( "Success", response));
     }
 
+    @GetMapping("/validate")
+    public String validateToken(@RequestParam("token") String token){
+        authService.validateTokenAndGetUser(token);
+        return "token is valid";
+    }
 
 }

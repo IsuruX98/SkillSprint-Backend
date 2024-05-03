@@ -30,7 +30,11 @@ public class UserService {
         User user = userRepo.findById(userId).orElse(null);
             return modelMapper.map(user, UserDTO.class);
         }
-
+    public String getUserByEmail(String email) {
+        User user = userRepo.findUserByEmail(email).orElse(null);
+        assert user != null;
+        return user.getUserId();
+    }
 
     public void deleteUserById(String userId) {
         User user = userRepo.findById(userId).orElse(null);
