@@ -1,11 +1,13 @@
 spring:
   application:
-    name: course-service
+    name: content-service
 
-server:
-  port: 8081
-
-data:
   mongodb:
     uri: mongodb+srv://root:1234@cluster0.9dttrix.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-    database: courseDB
+    database: quizDB
+
+server:
+  port: 8087
+
+
+

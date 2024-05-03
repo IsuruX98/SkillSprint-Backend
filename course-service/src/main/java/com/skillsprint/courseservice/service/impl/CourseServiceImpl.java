@@ -1,7 +1,9 @@
 package com.skillsprint.courseservice.service.impl;
 
 import com.skillsprint.courseservice.dto.CourseDTO;
+import com.skillsprint.courseservice.model.Category;
 import com.skillsprint.courseservice.model.Course;
+import com.skillsprint.courseservice.repository.CategoryRepository;
 import com.skillsprint.courseservice.repository.CourseRepository;
 import com.skillsprint.courseservice.service.CourseService;
 import com.skillsprint.courseservice.utils.CommonConstant;
@@ -15,7 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -26,6 +29,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     CourseRepository courseRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     ModelMapper mapper = new ModelMapper();
 
@@ -49,16 +55,16 @@ public class CourseServiceImpl implements CourseService {
         }
     }
 
-
+    //TODO - should be returned according to the given Response by Isuru
     @Override
     public CourseDTO getCourseByCourseCode(@PathVariable String courseCode) {
         try{
             Course course = courseRepository.findCourseByCourseCodeAndStatus(courseCode, CommonConstant.ACTIVE);
             if (course != null) {
                 return mapper.map(course, CourseDTO.class);
-            } else {
+            } else
                 return null;
-            }
+
 
         }catch(NoSuchElementException e){
             log.error("Course not found for id: {}", courseCode);
@@ -88,12 +94,7 @@ public class CourseServiceImpl implements CourseService {
                 course.setPrice(courseDTO.getPrice());
             if(StringUtils.hasLength(courseDTO.getStatus()))
                 course.setStatus(courseDTO.getStatus());
-            if(!courseDTO.getInstructorIds().isEmpty())
-                course.setInstructorIds(courseDTO.getInstructorIds());
-            if(StringUtils.hasLength(courseDTO.getDescription()))
-                course.setDescription(courseDTO.getDescription());
-            if(courseDTO.getModuleList() != null)
-                course.setModuleList(courseDTO.getModuleList());
+
 
             courseRepository.save(course);
             log.info("Course updated successfully: {}", course);
@@ -118,6 +119,34 @@ public class CourseServiceImpl implements CourseService {
         }catch(Exception e){
             log.error("Failed to Delete course: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to Delete course");
+        }
+    }
+
+    @Override
+    public List<CourseDTO> getCoursesByCategoryCode(String categoryCode) {
+        try{
+            Category category = categoryRepository.findByCategoryCode(categoryCode);
+            if(category != null){
+                List<Course> courses = courseRepository.findAllByCategoryId(category.getId().toString());
+
+                if (!courses.isEmpty()) {
+                    List<CourseDTO> courseDTOS = new ArrayList<>();
+
+                    courses.forEach(course -> courseDTOS.add(mapper.map(course, CourseDTO.class)));
+                    return courseDTOS;
+                }
+
+                else {
+                    log.error("Course not Available");
+                    throw new NoSuchElementException("Course not found");
+                }
+            }
+            else
+                throw new NoSuchElementException("Category not found");
+
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw e;
         }
     }
 }
