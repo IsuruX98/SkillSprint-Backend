@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2ece0b65-a62a-4832-bad3-b2d8f1a80a62" name="Changes" comment="jwtUtilAdded" />
+    <list default="true" id="2ece0b65-a62a-4832-bad3-b2d8f1a80a62" name="Changes" comment="gatewayAuthDone">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/skillsprint/userservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/skillsprint/userservice/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/skillsprint/userservice/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/skillsprint/userservice/service/UserService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,7 +79,9 @@
       <workItem from="1714411291553" duration="15000" />
       <workItem from="1714582898867" duration="2658000" />
       <workItem from="1714598923211" duration="40000" />
-      <workItem from="1714726386095" duration="349000" />
+      <workItem from="1714726386095" duration="1309000" />
+      <workItem from="1714763374832" duration="628000" />
+      <workItem from="1714764026156" duration="474000" />
     </task>
     <task id="LOCAL-00001" summary="API-Gateway_added">
       <option name="closed" value="true" />
@@ -148,7 +155,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714726642579</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="gatewayAuthDone">
+      <option name="closed" value="true" />
+      <created>1714727089911</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1714727089911</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -164,6 +179,7 @@
     <MESSAGE value="configAdded" />
     <MESSAGE value="authFilterAdded" />
     <MESSAGE value="jwtUtilAdded" />
-    <option name="LAST_COMMIT_MESSAGE" value="jwtUtilAdded" />
+    <MESSAGE value="gatewayAuthDone" />
+    <option name="LAST_COMMIT_MESSAGE" value="gatewayAuthDone" />
   </component>
 </project>
