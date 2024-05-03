@@ -44,9 +44,12 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                         jwtUtil.validateToken(authHeader);
 
                             String userRole = jwtUtil.extractRole(token);
-
-                            ServerHttpRequest modifiedRequest = request.mutate()
+                              System.out.println(token);
+                            String userEmail = jwtUtil.extractUserName(token);
+                        System.out.println(userEmail);
+                        ServerHttpRequest modifiedRequest = request.mutate()
                                     .header("userRole", userRole)
+                                    .header("userEmail",userEmail)
                                     .build();
 
                             return chain.filter(exchange.mutate().request(modifiedRequest).build());

@@ -47,7 +47,7 @@ public class JWTUtill {
                 .getBody();
     }
     public String extractUserName(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return extractClaim (token, claims -> claims.get("sub", String.class));
     }
 
     private Key getSigningKey() {
