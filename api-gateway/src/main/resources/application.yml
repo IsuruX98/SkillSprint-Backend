@@ -15,6 +15,12 @@ spring:
             - Path= /api/v1/users/**
           filters:
             - AuthenticationFilter
+        - id: course-service
+          uri: lb://COURSE-SERVICE
+          predicates:
+            - Path= /api/v1/course-enrollment/**
+          filters:
+            - AuthenticationFilter
 server:
   port: 8765
 token:
