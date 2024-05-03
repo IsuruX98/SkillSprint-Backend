@@ -13,8 +13,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable String userId) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable String userId,@RequestHeader("userRole") String userRole) {
+        System.out.println("menn"+userRole);
         return ResponseEntity.ok(userService.getUserById(userId));
     }
 
@@ -26,6 +28,7 @@ public class UserController {
 
     @PutMapping("/{userId}")
     public ResponseEntity<UserDTO> updateUserById(@PathVariable String userId, @RequestBody UserDTO updatedUserDTO) {
+
         UserDTO updatedUser = userService.updateUserById(userId, updatedUserDTO);
         if (updatedUser != null) {
             return ResponseEntity.ok(updatedUser);
