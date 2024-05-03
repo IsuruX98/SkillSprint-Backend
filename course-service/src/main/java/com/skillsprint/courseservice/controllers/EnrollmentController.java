@@ -17,10 +17,10 @@ public class EnrollmentController {
     @Autowired
     EnrollmentService enrollmentService;
 
-    @PostMapping("")
+    @PostMapping("/{courseId}")
     //@PreAuthorize("hasAuthority('admin:create')")
-    public ResponseEntity<Object> courseEnrollment(@PathVariable String courseId, @RequestHeader String userName){
-        return ResponseEntity.status(HttpStatus.OK).body(enrollmentService.courseEnrollment(courseId, userName));
+    public ResponseEntity<Object> courseEnrollment(@PathVariable String courseId, @RequestHeader String userEmail, @RequestHeader String userRole){
+        return ResponseEntity.status(HttpStatus.OK).body(enrollmentService.courseEnrollment(courseId, userEmail, userRole));
     }
 }
 
