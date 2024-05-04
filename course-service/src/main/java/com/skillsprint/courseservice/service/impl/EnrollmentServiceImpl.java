@@ -1,5 +1,6 @@
 package com.skillsprint.courseservice.service.impl;
 
+import com.skillsprint.courseservice.feign.IContent;
 import com.skillsprint.courseservice.feign.IEnrollment;
 import com.skillsprint.courseservice.model.Enrollment;
 import com.skillsprint.courseservice.repository.EnrollmentRepository;
@@ -25,17 +26,20 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Autowired
     IEnrollment iEnrollment;
 
+    @Autowired
+    IContent iContent;
+
 
     @Override
     @Transactional
     public Object courseEnrollment(String courseId, String userName, String userRole) {
         try{
 
-            String uName = String.valueOf(iEnrollment.getUserByEmail(userName, userRole));
+          String uName = iEnrollment.getUserByEmail(userName, userRole).getBody();
 
             Enrollment enrollment = new Enrollment();
             enrollment.setCourseId(courseId);
-            enrollment.setUserName(uName);
+            enrollment.setUserId(uName);
             enrollmentRepository.save(enrollment);
 
             return ResponseEntity.status(HttpStatus.OK).body("Successfully enroll to the course");

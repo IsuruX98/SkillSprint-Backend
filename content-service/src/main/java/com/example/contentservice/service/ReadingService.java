@@ -8,7 +8,7 @@ import java.util.List;
 public interface ReadingService {
     Object addReading(ReadingDTO readingDTO);
 
-    ReadingDTO getReadingById(ObjectId readingId);
+    ReadingDTO getReadingById(String readingId);
 
     List<ReadingDTO> findAllByModuleId(String moduleId);
 

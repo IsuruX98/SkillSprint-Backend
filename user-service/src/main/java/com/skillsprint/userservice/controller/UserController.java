@@ -30,7 +30,7 @@ public class UserController {
         if (!"student".equalsIgnoreCase(userRole)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        return ResponseEntity.ok(userService.getUserByEmail(email));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByEmail(email));
     }
 
 
