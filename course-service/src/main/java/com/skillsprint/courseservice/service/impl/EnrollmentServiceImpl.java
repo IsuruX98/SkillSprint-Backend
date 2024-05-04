@@ -1,6 +1,5 @@
 package com.skillsprint.courseservice.service.impl;
 
-import com.skillsprint.courseservice.feign.IContent;
 import com.skillsprint.courseservice.feign.IEnrollment;
 import com.skillsprint.courseservice.model.Enrollment;
 import com.skillsprint.courseservice.repository.EnrollmentRepository;
@@ -26,16 +25,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Autowired
     IEnrollment iEnrollment;
 
-    @Autowired
-    IContent iContent;
-
 
     @Override
     @Transactional
     public Object courseEnrollment(String courseId, String userName, String userRole) {
         try{
 
-          String uName = iEnrollment.getUserByEmail(userName, userRole).getBody();
+            String uName = iEnrollment.getUserByEmail(userName, userRole).getBody();
 
             Enrollment enrollment = new Enrollment();
             enrollment.setCourseId(courseId);
@@ -44,6 +40,16 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
             return ResponseEntity.status(HttpStatus.OK).body("Successfully enroll to the course");
 
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public Object courseUnenrollment(String courseId, String userEmail, String userRole) {
+        try{
+            return null;  //todo - course Unenrollment
         }catch(Exception e){
             log.error(e.getMessage());
             throw e;
