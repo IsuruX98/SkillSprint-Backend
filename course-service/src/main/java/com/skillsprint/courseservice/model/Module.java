@@ -20,6 +20,7 @@ public class Module {
     @Id
     private ObjectId id;
     private String moduleName;
+    private String moduleCode;
     private String courseId;
 
 }
