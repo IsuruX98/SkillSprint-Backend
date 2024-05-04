@@ -15,8 +15,9 @@ spring:
             - Path= /api/v1/users/**
           filters:
             - AuthenticationFilter
-        - id: course-service
-          uri: lb://COURSE-SERVICE
+
+        - id: learner-service
+          uri: lb://LEARNER-SERVICE
           predicates:
             - Path= /api/v1/course-enrollment/**
           filters:
