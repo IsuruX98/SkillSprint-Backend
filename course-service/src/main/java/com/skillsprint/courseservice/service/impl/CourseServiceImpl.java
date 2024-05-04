@@ -39,11 +39,11 @@ public class CourseServiceImpl implements CourseService {
     public Object addCourse(CourseDTO courseDTO) {
         try{
 
-            if(courseRepository.findCourseByCourseCodeAndStatus(courseDTO.getCourseCode(), CommonConstant.ACTIVE) != null)
+            if(courseRepository.findCourseByCourseCode(courseDTO.getCourseCode()) != null)
                 return ResponseEntity.status(HttpStatus.FOUND).body("Course Already exist for Course Code: " + courseDTO.getCourseCode());
 
             Course course = mapper.map(courseDTO, Course.class);
-            course.setStatus(CommonConstant.ACTIVE);
+            course.setStatus(CommonConstant.PENDING);
 
             courseRepository.save(course);
             log.info("Course added successfully: {}", course);
@@ -55,11 +55,14 @@ public class CourseServiceImpl implements CourseService {
         }
     }
 
-    //TODO - should be returned according to the given Response by Isuru
+    //TODO - should be returned according to the given Response by Isuru ?
+
+
+
     @Override
     public CourseDTO getCourseByCourseCode(@PathVariable String courseCode) {
         try{
-            Course course = courseRepository.findCourseByCourseCodeAndStatus(courseCode, CommonConstant.ACTIVE);
+            Course course = courseRepository.findCourseByCourseCode(courseCode);
             if (course != null) {
                 return mapper.map(course, CourseDTO.class);
             } else
@@ -79,7 +82,7 @@ public class CourseServiceImpl implements CourseService {
     public Object updateCourseByCourseCode(String courseCode, CourseDTO courseDTO) {
 
         try{
-            Course course = courseRepository.findCourseByCourseCodeAndStatus(courseCode, CommonConstant.ACTIVE);
+            Course course = courseRepository.findCourseByCourseCode(courseCode);
 
             if(course == null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
@@ -92,8 +95,8 @@ public class CourseServiceImpl implements CourseService {
                 course.setCategoryId(courseDTO.getCategoryId());
             if(courseDTO.getPrice() != null)
                 course.setPrice(courseDTO.getPrice());
-            if(StringUtils.hasLength(courseDTO.getStatus()))
-                course.setStatus(courseDTO.getStatus());
+//            if(StringUtils.hasLength(courseDTO.getStatus()))
+//                course.setStatus(courseDTO.getStatus());
 
 
             courseRepository.save(course);
@@ -109,7 +112,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Object deleteCourseByCourseCode(String courseCode) {
         try{
-            Course course = courseRepository.findCourseByCourseCodeAndStatus(courseCode, CommonConstant.ACTIVE);
+            Course course = courseRepository.findCourseByCourseCode(courseCode);
             course.setStatus(CommonConstant.DEACTIVE);
 
             courseRepository.save(course);

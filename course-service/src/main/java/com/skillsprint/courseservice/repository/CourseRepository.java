@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends MongoRepository<Course, ObjectId> {
 
-    Course findCourseByCourseCodeAndStatus(String courseCode, String status);
+    Course findCourseByCourseCode(String courseCode);
 
     List<Course> findAllByCategoryId(String categoryId);
 

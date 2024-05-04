@@ -22,5 +22,15 @@ public class EnrollmentController {
     public ResponseEntity<Object> courseEnrollment(@PathVariable String courseId, @RequestHeader String userEmail, @RequestHeader String userRole){
         return ResponseEntity.status(HttpStatus.OK).body(enrollmentService.courseEnrollment(courseId, userEmail, userRole));
     }
+
+    @DeleteMapping("unenroll/{courseId}")
+    public ResponseEntity<Object> courseUnenrollment(@PathVariable String courseId, @RequestHeader String userEmail, String userRole){
+        return ResponseEntity.status(HttpStatus.OK).body(enrollmentService.courseUnenrollment(courseId, userEmail, userRole));
+    }
+
+
+    //todo - My Enrollments
 }
+
+
 
