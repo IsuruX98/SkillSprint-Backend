@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/reading-controller/")
+@RequestMapping("api/v1/reading-controller")
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReadingController {
@@ -30,9 +30,9 @@ public class ReadingController {
         return ResponseEntity.status(HttpStatus.OK).body(readingService.addReading(readingDTO));
     }
 
-    @GetMapping("/{readingId}")
+    @GetMapping("{readingId}")
     // @PreAuthorize("hasAnyAuthority('admin:read', 'faculty:read', 'student:read')")
-    public ResponseEntity<ReadingDTO> getCourseById(@PathVariable ObjectId readingId){
+    public ResponseEntity<ReadingDTO> getReadingById(@PathVariable String readingId){
         ReadingDTO readingDTO = readingService.getReadingById(readingId);
         if(readingDTO != null)
             return ResponseEntity.status(HttpStatus.OK).body(readingDTO);

@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Document(collation = "readings")
+@Document(collection = "readings")
 public class Reading extends CommonEntity{
 
     @Id

@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient("USER-SERVICE")
 public interface IEnrollment {
 
-    @GetMapping
+    @GetMapping("api/v1/users")
     ResponseEntity<String> getUserByEmail(@RequestParam("email") String email, @RequestHeader("userRole") String userRole);
 }

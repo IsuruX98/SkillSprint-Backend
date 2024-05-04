@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -49,11 +50,11 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
     @Override
-    public ReadingDTO getReadingById(ObjectId readingId) {
+    public ReadingDTO getReadingById(String readingId) {
         try{
-            Reading course = readingRepository.findByIdAndStatus(readingId, CommonConstant.ACTIVE);
-            if (course != null) {
-                return mapper.map(course, ReadingDTO.class);
+            Optional<Reading> reading = readingRepository.findById(readingId);
+            if (reading.isPresent()) {
+                return mapper.map(reading, ReadingDTO.class);
             } else
                 return null;
 

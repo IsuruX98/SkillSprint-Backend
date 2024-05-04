@@ -16,5 +16,5 @@ public class Enrollment {
     @Id
     private ObjectId id;
     private String courseId;
-    private String userName;
+    private String userId;
 }
