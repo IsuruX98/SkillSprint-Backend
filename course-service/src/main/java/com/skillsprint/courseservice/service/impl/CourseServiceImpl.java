@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -113,9 +114,9 @@ public class CourseServiceImpl implements CourseService {
     public Object deleteCourseByCourseCode(String courseCode) {
         try{
             Course course = courseRepository.findCourseByCourseCode(courseCode);
-            course.setStatus(CommonConstant.DEACTIVE);
 
-            courseRepository.save(course);
+
+            courseRepository.delete(course);
             log.info("Course Deleted successfully: {}", course);
             return ResponseEntity.status(HttpStatus.CREATED).body("Course Deleted Successfully");
 
@@ -147,6 +148,24 @@ public class CourseServiceImpl implements CourseService {
             else
                 throw new NoSuchElementException("Category not found");
 
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public Object approveCourse(String courseId) {
+        try{
+            Optional<Course> course = courseRepository.findById(courseId);
+
+            if(course.isPresent()){
+                Course crs = course.get();
+                crs.setStatus(CommonConstant.APPROVED);
+                courseRepository.save(crs);
+                return ResponseEntity.status(HttpStatus.OK).body("Course Approved");
+            }else
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found.");
         }catch(Exception e){
             log.error(e.getMessage());
             throw e;
