@@ -40,8 +40,8 @@ public class CourseServiceImpl implements CourseService {
     public Object addCourse(CourseDTO courseDTO) {
         try{
 
-            if(courseRepository.findCourseByCourseCode(courseDTO.getCourseCode()) != null)
-                return ResponseEntity.status(HttpStatus.FOUND).body("Course Already exist for Course Code: " + courseDTO.getCourseCode());
+            if(courseRepository.findCourseById(courseDTO.getId()) != null)
+                return ResponseEntity.status(HttpStatus.FOUND).body("Course Already exist for Course Code: " + courseDTO.getId());
 
             Course course = mapper.map(courseDTO, Course.class);
             course.setStatus(CommonConstant.PENDING);
@@ -61,9 +61,9 @@ public class CourseServiceImpl implements CourseService {
 
 
     @Override
-    public CourseDTO getCourseByCourseCode(@PathVariable String courseCode) {
+    public CourseDTO getCourseById(@PathVariable String courseId) {
         try{
-            Course course = courseRepository.findCourseByCourseCode(courseCode);
+            Course course = courseRepository.findCourseById(courseId);
             if (course != null) {
                 return mapper.map(course, CourseDTO.class);
             } else
@@ -71,7 +71,7 @@ public class CourseServiceImpl implements CourseService {
 
 
         }catch(NoSuchElementException e){
-            log.error("Course not found for id: {}", courseCode);
+            log.error("Course not found for id: {}", courseId);
             throw e;
         }catch(Exception e){
             log.error("Failed to retrieve course {}", e.getMessage());
@@ -80,25 +80,28 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Object updateCourseByCourseCode(String courseCode, CourseDTO courseDTO) {
+    public Object updateCourseByCourseId(CourseDTO courseDTO) {
 
         try{
-            Course course = courseRepository.findCourseByCourseCode(courseCode);
+            Course course = courseRepository.findCourseById(courseDTO.getId());
 
             if(course == null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
 
-            if(StringUtils.hasLength(courseDTO.getCourseCode()))
-                course.setCourseCode(courseDTO.getCourseCode());
             if(StringUtils.hasLength(courseDTO.getCourseName()))
                 course.setCourseName(courseDTO.getCourseName());
             if(StringUtils.hasLength(courseDTO.getCategoryId()))
                 course.setCategoryId(courseDTO.getCategoryId());
+            if(StringUtils.hasLength(courseDTO.getDescription()))
+                course.setDescription(courseDTO.getDescription());
             if(courseDTO.getPrice() != null)
                 course.setPrice(courseDTO.getPrice());
-//            if(StringUtils.hasLength(courseDTO.getStatus()))
-//                course.setStatus(courseDTO.getStatus());
-
+            if(StringUtils.hasLength(courseDTO.getLevel()))
+                course.setLevel(courseDTO.getLevel());
+            if(courseDTO.getSkillgained() != null)
+                course.setSkillgained(courseDTO.getSkillgained());
+            if(StringUtils.hasLength(courseDTO.getInstructorId()))
+                course.setInstructorId(courseDTO.getInstructorId());
 
             courseRepository.save(course);
             log.info("Course updated successfully: {}", course);
@@ -111,9 +114,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Object deleteCourseByCourseCode(String courseCode) {
+    public Object deleteCourseByCourseId(String courseId) {
         try{
-            Course course = courseRepository.findCourseByCourseCode(courseCode);
+            Course course = courseRepository.findCourseById(courseId);
 
 
             courseRepository.delete(course);

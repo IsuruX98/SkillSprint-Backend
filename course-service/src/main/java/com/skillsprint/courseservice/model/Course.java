@@ -20,11 +20,12 @@ public class Course extends CommonEntity {
 
     @Id
     private String id;
-    private String courseCode;
     private String courseName;
     private String categoryId;
     private String description;
     private BigDecimal price;
+    private String level;
+    private String[] skillgained;
     private String status;
     private String instructorId;
 
