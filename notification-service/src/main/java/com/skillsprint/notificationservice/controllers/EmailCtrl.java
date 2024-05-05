@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmailCtrl {
-
     private  EmailSendService emailSendService;
-
     @PostMapping("/send-email")
     public ResponseEntity sendEmail(@RequestBody EmailBodyDTO dto){
         emailSendService.sendEmail(dto.getTo(), dto.getSubject(), dto.getMsg());
