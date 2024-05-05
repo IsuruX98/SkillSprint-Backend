@@ -27,27 +27,27 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body(courseService.addCourse(courseDTO));
     }
 
-    @GetMapping("/{courseCode}")
+    @GetMapping("/{courseId}")
    // @PreAuthorize("hasAnyAuthority('admin:read', 'faculty:read', 'student:read')")
-    public ResponseEntity<CourseDTO> getCourseById(@PathVariable String courseCode){
-        CourseDTO courseDTO = courseService.getCourseByCourseCode(courseCode);
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable String courseId){
+        CourseDTO courseDTO = courseService.getCourseById(courseId);
         if(courseDTO != null)
             return ResponseEntity.status(HttpStatus.OK).body(courseDTO);
         else
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @PutMapping("/{courseCode}")
+    @PutMapping("/")
    // @PreAuthorize("hasAuthority('admin:update')")
-    public ResponseEntity<Object> updateCourseByCourseCode(@PathVariable String courseCode, @RequestBody CourseDTO courseDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.updateCourseByCourseCode(courseCode, courseDTO));
+    public ResponseEntity<Object> updateCourseByCourseCode(@RequestBody CourseDTO courseDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.updateCourseByCourseId(courseDTO));
     }
 
 
-    @DeleteMapping("/delete/{courseCode}")
+    @DeleteMapping("/delete/{courseId}")
  //   @PreAuthorize("hasAuthority('admin:update')")
-    public ResponseEntity<Object> deleteCourseByCourseCode(@PathVariable String courseCode){
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.deleteCourseByCourseCode(courseCode));
+    public ResponseEntity<Object> deleteCourseByCourseCode(@PathVariable String courseId){
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.deleteCourseByCourseId(courseId));
     }
 
 
