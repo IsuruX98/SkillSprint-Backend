@@ -17,6 +17,8 @@ public class Quiz extends CommonEntity {
     @Id
     private String id;
     private String moduleId;
+    private String title;
+    private String description;
     private String question;
     private String[] options;
     private int correctOption;
