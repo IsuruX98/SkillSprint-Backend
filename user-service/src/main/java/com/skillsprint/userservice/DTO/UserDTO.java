@@ -13,6 +13,7 @@ public class UserDTO {
     protected String userId;
     protected String userName;
     protected String email;
+    private String contactNo;
     protected String password;
     protected String userType;
     protected LocalDateTime createdAt;

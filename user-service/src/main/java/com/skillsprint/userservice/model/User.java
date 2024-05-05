@@ -26,6 +26,7 @@ public  class User implements UserDetails {
     private String userName;
     private String email;
     private String password;
+    private String contactNo;
     private String userType;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

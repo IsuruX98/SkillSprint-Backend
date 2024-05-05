@@ -47,8 +47,8 @@ public class JWTService {
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         // Adding extra claims
         Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", ((User) userDetails).getUserId());
         claims.put("role", ((User) userDetails).getUserType()); // Cast userDetails to User and get userType
-
         // Merging extra claims with any provided extraClaims
         if (extraClaims != null) {
             claims.putAll(extraClaims);

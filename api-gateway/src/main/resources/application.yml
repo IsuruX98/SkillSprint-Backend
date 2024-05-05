@@ -16,10 +16,22 @@ spring:
           filters:
             - AuthenticationFilter
 
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path= /api/v1/auth/**
+
         - id: learner-service
           uri: lb://LEARNER-SERVICE
           predicates:
             - Path= /api/v1/course-enrollment/**
+          filters:
+            - AuthenticationFilter
+
+        - id: course-service
+          uri: lb://COURSE-SERVICE
+          predicates:
+            - Path= /api/v1/course-controller/**
           filters:
             - AuthenticationFilter
 server:
