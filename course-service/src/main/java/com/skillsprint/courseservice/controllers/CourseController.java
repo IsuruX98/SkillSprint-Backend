@@ -44,7 +44,7 @@ public class CourseController {
     }
 
 
-    @PutMapping("/delete/{courseCode}")
+    @DeleteMapping("/delete/{courseCode}")
  //   @PreAuthorize("hasAuthority('admin:update')")
     public ResponseEntity<Object> deleteCourseByCourseCode(@PathVariable String courseCode){
         return ResponseEntity.status(HttpStatus.OK).body(courseService.deleteCourseByCourseCode(courseCode));
@@ -61,6 +61,12 @@ public class CourseController {
         else
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
+    @PutMapping("/{courseId}")
+    public ResponseEntity<Object> approveCourseByCourseId(@PathVariable String courseId){
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.approveCourse(courseId));
+    }
+
 
 
 }

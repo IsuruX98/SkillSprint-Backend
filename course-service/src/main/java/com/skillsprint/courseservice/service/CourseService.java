@@ -14,4 +14,6 @@ public interface CourseService {
     Object deleteCourseByCourseCode(String courseCode);
 
     List<CourseDTO> getCoursesByCategoryCode(String categoryCode);
+
+    Object approveCourse(String courseId);
 }
