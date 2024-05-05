@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CourseRepository extends MongoRepository<Course, ObjectId> {
+public interface CourseRepository extends MongoRepository<Course, String> {
 
     Course findCourseByCourseCode(String courseCode);
 

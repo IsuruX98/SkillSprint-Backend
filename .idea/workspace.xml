@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2ece0b65-a62a-4832-bad3-b2d8f1a80a62" name="Changes" comment="ymlUpdated">
+    <list default="true" id="2ece0b65-a62a-4832-bad3-b2d8f1a80a62" name="Changes" comment="emailServiceUpdated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/controllers/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/controllers/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/dto/CourseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/dto/CourseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/model/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/model/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/repository/CourseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/repository/CourseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/service/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/service/CourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/service/impl/CourseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/service/impl/CourseServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +52,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "chamith2",
+    "git-widget-placeholder": "Merging chamith2",
     "last_opened_file_path": "C:/Users/Chamith/Documents/3rd year Projects/3Y2S projects/DS/SkillSprint-Backend/notification-service",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -80,7 +87,7 @@
       <workItem from="1714763374832" duration="628000" />
       <workItem from="1714764026156" duration="474000" />
       <workItem from="1714861342155" duration="790000" />
-      <workItem from="1714891525343" duration="1697000" />
+      <workItem from="1714891525343" duration="4717000" />
     </task>
     <task id="LOCAL-00001" summary="API-Gateway_added">
       <option name="closed" value="true" />
@@ -186,7 +193,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714861458487</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="emailServiceUpdated">
+      <option name="closed" value="true" />
+      <created>1714897642437</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1714897642437</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,6 +232,7 @@
     <MESSAGE value="videogetBymoduleIdPartDone" />
     <MESSAGE value="leanerServiceAdded" />
     <MESSAGE value="ymlUpdated" />
-    <option name="LAST_COMMIT_MESSAGE" value="ymlUpdated" />
+    <MESSAGE value="emailServiceUpdated" />
+    <option name="LAST_COMMIT_MESSAGE" value="emailServiceUpdated" />
   </component>
 </project>

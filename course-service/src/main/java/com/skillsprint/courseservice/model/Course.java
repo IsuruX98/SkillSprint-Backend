@@ -19,12 +19,13 @@ import java.util.List;
 public class Course extends CommonEntity {
 
     @Id
-    private ObjectId id;
+    private String id;
     private String courseCode;
     private String courseName;
     private String categoryId;
     private String description;
     private BigDecimal price;
     private String status;
+    private String instructorId;
 
 }
