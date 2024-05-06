@@ -114,9 +114,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Object deleteCourseByCourseCode(String courseCode) {
+    public Object deleteCourseByCourseId(String courseId) {
         try{
-            Course course = courseRepository.findCourseByCourseCode(courseCode);
+            Course course = courseRepository.findCourseById(courseId);
 
 
             courseRepository.delete(course);
