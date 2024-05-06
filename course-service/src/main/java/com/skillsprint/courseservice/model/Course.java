@@ -25,6 +25,8 @@ public class Course extends CommonEntity {
     private String categoryId;
     private String description;
     private BigDecimal price;
+    private String level;
+    private String[] skillgained;
     private String status;
     private String instructorId;
 

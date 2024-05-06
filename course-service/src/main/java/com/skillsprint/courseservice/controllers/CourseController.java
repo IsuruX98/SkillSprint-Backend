@@ -27,10 +27,10 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body(courseService.addCourse(courseDTO));
     }
 
-    @GetMapping("/{courseCode}")
+    @GetMapping("/{courseId}")
    // @PreAuthorize("hasAnyAuthority('admin:read', 'faculty:read', 'student:read')")
-    public ResponseEntity<CourseDTO> getCourseById(@PathVariable String courseCode){
-        CourseDTO courseDTO = courseService.getCourseByCourseCode(courseCode);
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable String courseId){
+        CourseDTO courseDTO = courseService.getCourseById(courseId);
         if(courseDTO != null)
             return ResponseEntity.status(HttpStatus.OK).body(courseDTO);
         else

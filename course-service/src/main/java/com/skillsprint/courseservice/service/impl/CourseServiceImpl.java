@@ -40,8 +40,8 @@ public class CourseServiceImpl implements CourseService {
     public Object addCourse(CourseDTO courseDTO) {
         try{
 
-            if(courseRepository.findCourseByCourseCode(courseDTO.getCourseCode()) != null)
-                return ResponseEntity.status(HttpStatus.FOUND).body("Course Already exist for Course Code: " + courseDTO.getCourseCode());
+            if(courseRepository.findCourseById(courseDTO.getId()) != null)
+                return ResponseEntity.status(HttpStatus.FOUND).body("Course Already exist for Course Code: " + courseDTO.getId());
 
             Course course = mapper.map(courseDTO, Course.class);
             course.setStatus(CommonConstant.PENDING);
