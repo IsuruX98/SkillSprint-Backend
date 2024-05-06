@@ -88,8 +88,6 @@ public class CourseServiceImpl implements CourseService {
             if(course == null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
 
-            if(StringUtils.hasLength(courseDTO.getCourseCode()))
-                course.setCourseCode(courseDTO.getCourseCode());
             if(StringUtils.hasLength(courseDTO.getCourseName()))
                 course.setCourseName(courseDTO.getCourseName());
             if(StringUtils.hasLength(courseDTO.getCategoryId()))
