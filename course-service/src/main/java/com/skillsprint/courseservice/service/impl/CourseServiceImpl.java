@@ -61,9 +61,9 @@ public class CourseServiceImpl implements CourseService {
 
 
     @Override
-    public CourseDTO getCourseByCourseCode(@PathVariable String courseCode) {
+    public CourseDTO getCourseById(@PathVariable String courseId) {
         try{
-            Course course = courseRepository.findCourseByCourseCode(courseCode);
+            Course course = courseRepository.findCourseById(courseId);
             if (course != null) {
                 return mapper.map(course, CourseDTO.class);
             } else
