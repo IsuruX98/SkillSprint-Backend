@@ -20,7 +20,6 @@ public class Course extends CommonEntity {
 
     @Id
     private String id;
-    private String courseCode;
     private String courseName;
     private String categoryId;
     private String description;

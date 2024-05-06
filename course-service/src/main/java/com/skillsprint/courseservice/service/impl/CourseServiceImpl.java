@@ -71,7 +71,7 @@ public class CourseServiceImpl implements CourseService {
 
 
         }catch(NoSuchElementException e){
-            log.error("Course not found for id: {}", courseCode);
+            log.error("Course not found for id: {}", courseId);
             throw e;
         }catch(Exception e){
             log.error("Failed to retrieve course {}", e.getMessage());
@@ -80,10 +80,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Object updateCourseByCourseCode(String courseCode, CourseDTO courseDTO) {
+    public Object updateCourseByCourseId(CourseDTO courseDTO) {
 
         try{
-            Course course = courseRepository.findCourseByCourseCode(courseCode);
+            Course course = courseRepository.findCourseById(courseDTO.getId());
 
             if(course == null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
