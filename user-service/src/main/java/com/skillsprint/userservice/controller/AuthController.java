@@ -47,5 +47,10 @@ public class AuthController {
         authService.validateTokenAndGetUser(token);
         return "token is valid";
     }
-
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<ResponseDTO> handleIllegalArgumentException(IllegalArgumentException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.badRequest().body(new ResponseDTO("Error", response));
+    }
 }

@@ -34,23 +34,40 @@ public class AuthService {
     private UserRepo userRepo;
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    public JWTResponse signin(UserDTO request){
+    public JWTResponse signin(UserDTO request) {
+        // Validate user inputs
+        if (request.getEmail() == null || request.getEmail().isEmpty()) {
+            throw new IllegalArgumentException("Email is required.");
+        }
+        if (request.getUserName() == null || request.getUserName().isEmpty()) {
+            throw new IllegalArgumentException("Username is required.");
+        }
+        if (request.getPassword() == null || request.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("Password is required.");
+        }
 
         if (userRepo.existsUserByEmail(request.getEmail())) {
             throw new IllegalArgumentException("User with this email already exists.");
         }
-            User user=new User();
+
+        User user = new User();
         user.setEmail(request.getEmail());
+        user.setUserName(request.getUserName());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setUserType(request.getUserType());
+        user.setContactNo(request.getContactNo());
+
+        if (request.getUserType() == null) {
+            user.setUserType("student");
+        } else {
+            user.setUserType(request.getUserType());
+        }
         user.setUserName(request.getUserName());
 
+        var user_ = userService.saveUser(user);
+        user_.setPassword(null);
+        String jwt = jwtService.generateToken(user_);
 
-            var user_= userService.saveUser(user);
-            String jwt =jwtService.generateToken(user_);
-            return JWTResponse.builder().token(jwt).build();
-
+        return JWTResponse.builder().token(jwt).user(user_).build();
     }
 
 
@@ -66,6 +83,7 @@ public class AuthService {
         if(userRepo.existsUserByEmail(request.getEmail())){
             var user = userRepo.findUserByEmail(request.getEmail())
                     .orElseThrow(() -> new IllegalArgumentException("User not found."));
+            user.setUserName(user.getUser_Name());
             var jwt = jwtService.generateToken(user);
             JWTResponse.builder().user(user);
             return JWTResponse
