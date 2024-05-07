@@ -63,9 +63,14 @@ public class CourseController {
     }
 
     @PutMapping("/{courseId}")
-    public ResponseEntity<Object> approveCourseByCourseId(@PathVariable String courseId){
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.approveCourse(courseId));
+    public ResponseEntity<Object> approveCourseByCourseId(@PathVariable String courseId, @RequestHeader String userRole) {
+        if ("admin".equals(userRole)) {
+            return ResponseEntity.status(HttpStatus.OK).body(courseService.approveCourse(courseId));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+        }
     }
+
 
 
 

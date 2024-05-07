@@ -28,7 +28,6 @@ public  class User implements UserDetails {
     private String password;
     private String contactNo;
     private String userType;
-    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
 
@@ -36,6 +35,10 @@ public  class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(userType));
     }
+    public String getUser_Name() {
+        return userName;
+    }
+
 
     @Override
     public String getUsername() {

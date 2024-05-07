@@ -16,6 +16,10 @@ public class UserDTO {
     private String contactNo;
     protected String password;
     protected String userType;
-    protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
+
+
+    public String getUser_Name() {
+        return userName;
+    }
 }
