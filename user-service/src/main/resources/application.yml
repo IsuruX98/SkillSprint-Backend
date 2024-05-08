@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: USER-SERVICE
+  data:
+    mongodb:
+      uri: mongodb+srv://root:1234@cluster0.ksoh91d.mongodb.net/SkillSprintDB?retryWrites=true&w=majority&appName=Cluster0
+token:
+  secret:
+    key: hehe
+  expirationms: 36000000
+
+server:
+  port: 8077
+
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#    hostname: eureka-0
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    service-url:
+#      defaultZone: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost

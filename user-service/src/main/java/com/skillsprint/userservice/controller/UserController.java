@@ -1,5 +1,6 @@
 package com.skillsprint.userservice.controller;
 
+import com.skillsprint.userservice.DTO.ResponseDTO;
 import com.skillsprint.userservice.DTO.UserDTO;
 import com.skillsprint.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RequestMapping("api/v1/users")
 @RestController
@@ -38,7 +42,7 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUserById(@PathVariable String userId) {
         userService.deleteUserById(userId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{userId}")
@@ -50,5 +54,11 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<ResponseDTO> handleIllegalArgumentException(IllegalArgumentException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.badRequest().body(new ResponseDTO("Error", response));
     }
 }

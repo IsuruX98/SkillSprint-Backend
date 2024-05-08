@@ -27,32 +27,54 @@ public class UserService {
     }
 
     public UserDTO getUserById(String userId) {
-        User user = userRepo.findById(userId).orElse(null);
-            return modelMapper.map(user, UserDTO.class);
-        }
+        User user = userRepo.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+        user.setUserName(user.getUser_Name());
+        return modelMapper.map(user, UserDTO.class);
+    }
+
     public String getUserByEmail(String email) {
-        User user = userRepo.findUserByEmail(email).orElse(null);
-        assert user != null;
+        User user = userRepo.findUserByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
         return user.getUserId();
     }
 
     public void deleteUserById(String userId) {
-        User user = userRepo.findById(userId).orElse(null);
+        User user = userRepo.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
         userRepo.delete(user);
-        return;
-        }
+    }
+
 
 
     public UserDTO updateUserById(String userId, UserDTO updatedUserDTO) {
         UserDTO existingUserDTO = getUserById(userId);
         if (existingUserDTO == null) {
             return null;
-        }
-        else  {
-            User user = modelMapper.map(updatedUserDTO, User.class);
+        } else {
+            User user = modelMapper.map(existingUserDTO, User.class);
+
+            // Update attributes only if they are provided by the user
+            if (updatedUserDTO.getUserName() != null &&  !updatedUserDTO.getUserName().isEmpty() ) {
+                user.setUserName(updatedUserDTO.getUserName());
+            }
+            if (updatedUserDTO.getEmail() != null &&  !updatedUserDTO.getEmail().isEmpty()) {
+                user.setEmail(updatedUserDTO.getEmail());
+            }
+            if (updatedUserDTO.getContactNo() != null &&  !updatedUserDTO.getContactNo().isEmpty()) {
+                user.setContactNo(updatedUserDTO.getContactNo());
+            }
+            if (updatedUserDTO.getPassword() != null &&  !updatedUserDTO.getPassword().isEmpty()) {
+                user.setPassword(updatedUserDTO.getPassword());
+            }
+            if (updatedUserDTO.getUserType() != null &&  !updatedUserDTO.getUserType().isEmpty()) {
+                user.setUserType(updatedUserDTO.getUserType());
+            }
+
             user.setUpdatedAt(LocalDateTime.now());
             user.setUserId(userId);
+
+            // Save the updated user
             userRepo.save(user);
+            user.setUserName(user.getUser_Name());
+
             return modelMapper.map(user, UserDTO.class);
         }
     }
