@@ -1,24 +1,17 @@
 package com.skillsprint.courseservice.model;
 
-import lombok.*;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
-import java.util.List;
-
-
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "courses")
-@EqualsAndHashCode(callSuper = true)
-public class Course extends CommonEntity {
+public class CourseWrapper {
 
-    @Id
     private String id;
     private String courseName;
     private String categoryId;
@@ -29,5 +22,5 @@ public class Course extends CommonEntity {
     private String status;
     private String instructorId;
     private String coverImgUrl;
-
+    private MultipartFile file;
 }
