@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/payment-details")
+@RequestMapping("/api/v1/payment-details")
 @RequiredArgsConstructor
 public class PaymentCtrl {
     private final PaymentService paymentService;

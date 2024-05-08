@@ -34,6 +34,18 @@ spring:
             - Path= /api/v1/course-controller/**
           filters:
             - AuthenticationFilter
+
+        - id: PAYMENT-SERVICE
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path= /api/v1/payment/**
+
+        - id: PAYMENT-SERVICE
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path= /api/v1/payment-details/**
+          filters:
+            - AuthenticationFilter
 server:
   port: 9191
 
