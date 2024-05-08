@@ -174,4 +174,22 @@ public class CourseServiceImpl implements CourseService {
             throw e;
         }
     }
+
+    @Override
+    public List<CourseDTO> findAllByInstructorId(String instructorId) {
+        try{
+            List<Course> courseList = courseRepository.findAllByInstructorId(instructorId);
+            List<CourseDTO> courseDTOList = new ArrayList<>();
+
+            if(!courseList.isEmpty()){
+                courseList.forEach(course -> courseDTOList.add(mapper.map(course, CourseDTO.class)));
+                return courseDTOList;
+            }
+            else
+                throw new NullPointerException("Courses are not available for the Instructor Id: " + instructorId);
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw e;
+        }
+    }
 }
