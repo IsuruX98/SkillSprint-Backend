@@ -72,6 +72,12 @@ public class CourseController {
     }
 
 
+    @GetMapping("instructor/{instructorId}")
+    public ResponseEntity<List<CourseDTO>> getAllCoursesByInstructorId(@PathVariable String instructorId){
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.findAllByInstructorId(instructorId));
+    }
+
+
 
 
 }

@@ -15,4 +15,6 @@ public interface CourseRepository extends MongoRepository<Course, String> {
     List<Course> findAllByCategoryId(String categoryId);
 
     Course findByIdAndStatus(String id,String status);
+
+    List<Course> findAllByInstructorId(String instructorId);
 }
