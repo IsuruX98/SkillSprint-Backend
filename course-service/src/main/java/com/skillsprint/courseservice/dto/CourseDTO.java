@@ -13,11 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseDTO {
-    private ObjectId id;
-    private String courseCode;
+    private String id;
     private String courseName;
     private String categoryId;
     private String description;
     private BigDecimal price;
-//    private String status;
+    private String level;
+    private String[] skillgained;
+    private String status;
+    private String instructorId;
 }

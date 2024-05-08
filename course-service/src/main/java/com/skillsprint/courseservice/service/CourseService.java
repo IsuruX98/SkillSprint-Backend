@@ -7,11 +7,13 @@ import java.util.List;
 public interface CourseService {
     Object addCourse(CourseDTO courseDTO);
 
-    CourseDTO getCourseByCourseCode(String courseCode);
+    CourseDTO getCourseById(String courseId);
 
-    Object updateCourseByCourseCode(String courseCode, CourseDTO courseDTO);
+    Object updateCourseByCourseId(CourseDTO courseDTO);
 
-    Object deleteCourseByCourseCode(String courseCode);
+    Object deleteCourseByCourseId(String courseId);
 
     List<CourseDTO> getCoursesByCategoryCode(String categoryCode);
+
+    Object approveCourse(String courseId);
 }

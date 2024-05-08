@@ -40,17 +40,25 @@ public class AuthService {
         if (userRepo.existsUserByEmail(request.getEmail())) {
             throw new IllegalArgumentException("User with this email already exists.");
         }
-            User user=new User();
+        User user=new User();
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setUserType(request.getUserType());
+        user.setContactNo(request.getContactNo());
+        if (request.getUserType() == null) {
+            user.setUserType("student");
+        } else {
+            user.setUserType(request.getUserType());
+        }
         user.setUserName(request.getUserName());
 
 
-            var user_= userService.saveUser(user);
-            String jwt =jwtService.generateToken(user_);
-            return JWTResponse.builder().token(jwt).build();
+        var user_= userService.saveUser(user);
+        String jwt =jwtService.generateToken(user_);
 
+        return JWTResponse
+                .builder().token(jwt)
+                .user(user_)
+                .build();
     }
 
 

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skillsprint-api-gateway-app
+  labels:
+    app: skillsprint-api-gateway-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: skillsprint-api-gateway-app
+  template:
+    metadata:
+      labels:
+        app: skillsprint-api-gateway-app
+    spec:
+      containers:
+        - name: skillsprint-api-gateway-app
+          image: isurux98/skillsprint-gateway:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9191
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: skillsprint-api-gateway-svc
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 9191
+      protocol: TCP
+  selector:
+    app: skillsprint-api-gateway-app
