@@ -68,12 +68,12 @@ public class AuthService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         } catch (AuthenticationException ex) {
-            throw new IllegalArgumentException("Invalid email or password.");
+            throw new IllegalArgumentException("Invalid email or password!");
         }
 
         if(userRepo.existsUserByEmail(request.getEmail())){
             var user = userRepo.findUserByEmail(request.getEmail())
-                    .orElseThrow(() -> new IllegalArgumentException("User not found."));
+                    .orElseThrow(() -> new IllegalArgumentException("User not found!"));
             var jwt = jwtService.generateToken(user);
             JWTResponse.builder().user(user);
             return JWTResponse

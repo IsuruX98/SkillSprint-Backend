@@ -85,11 +85,11 @@ public class UserService {
             public UserDetails loadUserByUsername(String username) {
                 if (userRepo.existsUserByEmail(username)) {
                     return (UserDetails) userRepo.findUserByEmail(username)
-                            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                            .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
                 }
                 else {
                     return (UserDetails) userRepo.findUserByEmail(username)
-                            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                            .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
 
                 }
             }
