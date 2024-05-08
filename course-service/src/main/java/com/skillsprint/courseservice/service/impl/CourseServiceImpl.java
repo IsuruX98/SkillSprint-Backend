@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.*;
 
@@ -200,6 +200,24 @@ public class CourseServiceImpl implements CourseService {
             else
                 throw new NullPointerException("Courses are not available for the Instructor Id: " + instructorId);
         }catch (Exception e){
+            log.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<CourseDTO> getAll() {
+        try{
+            List<Course> courseList = courseRepository.findAll();
+            List<CourseDTO> courseDTOList = new ArrayList<>();
+
+            if(!courseList.isEmpty()){
+                courseList.forEach(course -> courseDTOList.add(mapper.map(course, CourseDTO.class)));
+                return courseDTOList;
+            }else
+                return Collections.emptyList();
+
+        }catch(Exception e){
             log.error(e.getMessage());
             throw e;
         }

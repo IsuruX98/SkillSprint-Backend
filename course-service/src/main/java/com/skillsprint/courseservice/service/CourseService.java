@@ -21,4 +21,6 @@ public interface CourseService {
     Object approveCourse(String courseId);
 
     List<CourseDTO> findAllByInstructorId(String instructorId);
+
+    List<CourseDTO> getAll();
 }
