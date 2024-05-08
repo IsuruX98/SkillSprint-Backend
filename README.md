@@ -12,38 +12,66 @@ Welcome to the SkillSprint Backend Repository! This repository contains the back
 - **Orchestration**: Kubernetes
 
 ### Prerequisites:
-- Docker installed on your machine
-- Kubernetes cluster set up (if deploying on Kubernetes)
+- [Docker](https://docs.docker.com/get-docker/) installed on your machine
+- [Kubernetes](https://minikube.sigs.k8s.io/docs/start/) installed and configured, such as Minikube
+- [Kube Forward app](https://github.com/pixel-point/kube-forwarder) installed (for port forwarding)
 - Java Development Kit (JDK) installed
-- MongoDB installed and running
 
-### Setup Instructions:
-1. **Clone the Repository:**
+## Getting Started
+
+1. Clone the project repository:
+
+```bash
+git clone https://github.com/IsuruX98/SkillSprint-Backend.git
+```
+
+2. Navigate to the `yml` folder:
+
+```bash
+cd yml
+```
+
+3. Apply Kubernetes configurations for the services:
+
+```bash
+kubectl apply -f .
+```
+
+4. Check the status of the deployed services:
+
+```bash
+kubectl get all
+```
+OR
+Use Minikube dashboard to monitor the status visually.
+
+5. Port Forwarding
+
+   a. For Eureka Service Registry:
    ```bash
-   git clone [repository_url]
-   cd skillsprint-backend
+   kubectl port-forward service/eureka-lb 8761:80 -n default
    ```
 
-2. **Environment Configuration:**
-   - Copy the `.env.example` file to `.env` and fill in the necessary environment variables, such as database connection details, API keys for third-party services, and JWT secret.
+   b. For Cloud Gateway:
+   ```bash
+   kubectl port-forward service/cloud-gateway-svc 9191:80 -n default
+   ```
+OR
+Use Kube Forward app, select the Minikube cluster, and add the following port forwarding configurations:
+   - Resource Namespace: default
+   - Kind: Service
+   - Name: eureka-lb
+   - Local Port: 8761
+   - Resource Port: 80
 
-3. **Build and Run Services:**
-   - Build each service using Maven and run them individually:
-     ```bash
-     cd authentication-service
-     mvn spring-boot:run
-     
-     cd ../course-service
-     mvn spring-boot:run
-     
-     # Repeat for other services
-     ```
+   Repeat the same steps for cloud-gateway-svc:
+   - Name: cloud-gateway-svc
+   - Local Port: 9191
+   - Resource Port: 80
 
-4. **Deployment on Kubernetes (Optional):**
-   - If deploying on Kubernetes, apply the Kubernetes manifests provided in the `kubernetes/` directory:
-     ```bash
-     kubectl apply -f kubernetes/
-     ```
+7. Access the services:
+   - Eureka Service Registry: http://localhost:8761/
+   - Cloud Gateway: http://localhost:9191/
 
 ### API Documentation:
 - Detailed API documentation for each service can be found in the respective service directories or at [API Documentation URL].
@@ -58,4 +86,7 @@ Welcome to the SkillSprint Backend Repository! This repository contains the back
 - **Email and SMS Notifications:** Upon successful enrollment, learners receive confirmation via email and SMS using third-party services for sending notifications.
 
 ### Contributors:
-- [List of contributors]
+- Isuru Madusanka
+- Yasiru Deshan
+- Chamith kavinda
+- Sehan Deemantha
