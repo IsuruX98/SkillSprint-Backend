@@ -80,6 +80,10 @@ public class CourseController {
     }
 
 
+    @GetMapping("all/")
+    public ResponseEntity<List<CourseDTO>> getAllCourses(){
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.getAll());
+    }
 
 
 }
