@@ -2,11 +2,13 @@ package com.skillsprint.courseservice.service;
 
 import com.skillsprint.courseservice.dto.CourseDTO;
 import com.skillsprint.courseservice.model.Course;
+import com.skillsprint.courseservice.model.CourseWrapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface CourseService {
-    Object addCourse(CourseDTO courseDTO);
+    Object addCourse(CourseWrapper coverImg);
 
     CourseDTO getCourseById(String courseId);
 

@@ -1,6 +1,7 @@
 package com.skillsprint.courseservice.controllers;
 
 import com.skillsprint.courseservice.dto.CourseDTO;
+import com.skillsprint.courseservice.model.CourseWrapper;
 import com.skillsprint.courseservice.service.CourseService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -21,10 +23,10 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
-    @PostMapping("")
+    @PostMapping(value = "", consumes = "multipart/form-data")
   //@PreAuthorize("hasAuthority('admin:create')")
-    public ResponseEntity<Object> addCourse(@RequestBody CourseDTO courseDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.addCourse(courseDTO));
+    public ResponseEntity<Object> addCourse(@ModelAttribute CourseWrapper courseWrapper){
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.addCourse(courseWrapper));
     }
 
     @GetMapping("/{courseId}")
