@@ -35,7 +35,7 @@ spring:
           filters:
             - AuthenticationFilter
 server:
-  port: 8765
+  port: 9191
 
 token:
   secret:
