@@ -73,7 +73,7 @@ public class AuthService {
 
         if(userRepo.existsUserByEmail(request.getEmail())){
             var user = userRepo.findUserByEmail(request.getEmail())
-                    .orElseThrow(() -> new IllegalArgumentException("User not found."));
+                    .orElseThrow(() -> new IllegalArgumentException("User not found!"));
             var jwt = jwtService.generateToken(user);
             JWTResponse.builder().user(user);
             return JWTResponse
