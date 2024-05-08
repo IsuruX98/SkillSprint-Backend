@@ -68,7 +68,7 @@ public class AuthService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         } catch (AuthenticationException ex) {
-            throw new IllegalArgumentException("Invalid email or password."+ex);
+            throw new IllegalArgumentException("Invalid email or password!");
         }
 
         if(userRepo.existsUserByEmail(request.getEmail())){

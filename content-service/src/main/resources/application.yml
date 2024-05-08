@@ -1,6 +1,6 @@
 spring:
   application:
-    name: content-service
+    name: CONTENT-SERVICE
 
   mongodb:
     uri: mongodb+srv://root:1234@cluster0.9dttrix.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
@@ -8,6 +8,26 @@ spring:
 
 server:
   port: 8087
+
+
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#    hostname: eureka-0
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    service-url:
+#      defaultZone: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
 
 
 
