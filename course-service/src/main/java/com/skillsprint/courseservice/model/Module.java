@@ -18,7 +18,7 @@ import java.util.List;
 public class Module {
 
     @Id
-    private ObjectId id;
+    private String id;
     private String moduleName;
     private String moduleCode;
     private String courseId;
