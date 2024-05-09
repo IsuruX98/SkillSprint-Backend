@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 @Data
 public class ModuleDTO {
 
-    private ObjectId id;
+    private String id;
     private String moduleName;
     private String moduleCode;
     private String courseId;
