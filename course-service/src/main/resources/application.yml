@@ -7,6 +7,11 @@ spring:
       uri: mongodb+srv://root:1234@cluster0.9dttrix.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       database: courseDB
 
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
 server:
   port: 8078
 

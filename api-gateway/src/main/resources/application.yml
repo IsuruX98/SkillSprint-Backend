@@ -42,6 +42,13 @@ spring:
           filters:
             - AuthenticationFilter
 
+        - id: COURSE-SERVICE
+          uri: lb://COURSE-SERVICE
+          predicates:
+            - Path= /api/v1/module-controller/**
+          filters:
+            - AuthenticationFilter
+
         - id: PAYMENT-SERVICE
           uri: lb://PAYMENT-SERVICE
           predicates:

@@ -1,8 +1,10 @@
 package com.skillsprint.courseservice.service.impl;
 
+import com.cloudinary.Cloudinary;
 import com.skillsprint.courseservice.dto.CourseDTO;
 import com.skillsprint.courseservice.model.Category;
 import com.skillsprint.courseservice.model.Course;
+import com.skillsprint.courseservice.model.CourseWrapper;
 import com.skillsprint.courseservice.repository.CategoryRepository;
 import com.skillsprint.courseservice.repository.CourseRepository;
 import com.skillsprint.courseservice.service.CourseService;
@@ -17,10 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+
+
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -36,15 +37,26 @@ public class CourseServiceImpl implements CourseService {
 
     ModelMapper mapper = new ModelMapper();
 
+    @Autowired
+    private Cloudinary cloudinary;
+
     @Override
-    public Object addCourse(CourseDTO courseDTO) {
+    public Object addCourse(CourseWrapper courseWrapper) {
         try{
 
-            if(courseRepository.findCourseById(courseDTO.getId()) != null)
-                return ResponseEntity.status(HttpStatus.FOUND).body("Course Already exist for Course Code: " + courseDTO.getId());
+            if(courseRepository.findCourseById(courseWrapper.getId()) != null)
+                return ResponseEntity.status(HttpStatus.FOUND).body("Course Already exist for Course Code: " + courseWrapper.getId());
 
-            Course course = mapper.map(courseDTO, Course.class);
+            Course course = mapper.map(courseWrapper, Course.class);
             course.setStatus(CommonConstant.PENDING);
+
+            Map<String, String> uploadOptions = new HashMap<>();
+            uploadOptions.put("resource_type","image");
+
+            Map uploadResult = cloudinary.uploader().upload(courseWrapper.getFile().getBytes(), uploadOptions);
+            String url = uploadResult.get("url").toString();
+
+            course.setCoverImgUrl(url);
 
             courseRepository.save(course);
             log.info("Course added successfully: {}", course);
@@ -188,6 +200,24 @@ public class CourseServiceImpl implements CourseService {
             else
                 throw new NullPointerException("Courses are not available for the Instructor Id: " + instructorId);
         }catch (Exception e){
+            log.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<CourseDTO> getAll() {
+        try{
+            List<Course> courseList = courseRepository.findAll();
+            List<CourseDTO> courseDTOList = new ArrayList<>();
+
+            if(!courseList.isEmpty()){
+                courseList.forEach(course -> courseDTOList.add(mapper.map(course, CourseDTO.class)));
+                return courseDTOList;
+            }else
+                return Collections.emptyList();
+
+        }catch(Exception e){
             log.error(e.getMessage());
             throw e;
         }

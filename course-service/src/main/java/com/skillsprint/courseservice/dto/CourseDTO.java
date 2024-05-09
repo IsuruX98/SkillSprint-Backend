@@ -22,4 +22,5 @@ public class CourseDTO {
     private String[] skillgained;
     private String status;
     private String instructorId;
+    private String coverImgUrl;
 }
