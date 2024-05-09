@@ -28,6 +28,13 @@ spring:
           filters:
             - AuthenticationFilter
 
+        - id: LEARNER-SERVICE
+          uri: lb://LEARNER-SERVICE
+          predicates:
+            - Path= /api/v1/progress/**
+          filters:
+            - AuthenticationFilter
+
         - id: COURSE-SERVICE
           uri: lb://COURSE-SERVICE
           predicates:
