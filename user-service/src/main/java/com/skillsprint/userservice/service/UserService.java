@@ -32,9 +32,9 @@ public class UserService {
         return modelMapper.map(user, UserDTO.class);
     }
 
-    public String getUserByEmail(String email) {
+    public UserDTO getUserByEmail(String email) {
         User user = userRepo.findUserByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
-        return user.getUserId();
+        return modelMapper.map(user,UserDTO.class);
     }
 
     public void deleteUserById(String userId) {
