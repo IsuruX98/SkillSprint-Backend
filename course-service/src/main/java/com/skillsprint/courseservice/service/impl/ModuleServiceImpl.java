@@ -55,6 +55,9 @@ public class ModuleServiceImpl implements ModuleService {
                 moduleList.forEach(module -> moduleDTOList.add(mapper.map(module, ModuleDTO.class)));
                 return moduleDTOList;
             }
+            else{
+                log.error("No modules available for this course");
+            }
 
         }catch(Exception e){
             log.error(e.getMessage());

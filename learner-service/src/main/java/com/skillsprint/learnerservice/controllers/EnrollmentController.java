@@ -18,8 +18,8 @@ public class EnrollmentController {
 
     @PostMapping("/{courseId}")
     //@PreAuthorize("hasAuthority('admin:create')")
-    public ResponseEntity<Object> courseEnrollment(@PathVariable String courseId, @RequestHeader String userEmail, @RequestHeader String userRole){
-        return ResponseEntity.status(HttpStatus.OK).body(enrollmentService.courseEnrollment(courseId, userEmail, userRole));
+    public ResponseEntity<Object> courseEnrollment(@PathVariable String courseId,@RequestParam String courseName, @RequestHeader String userEmail, @RequestHeader String userRole){
+        return ResponseEntity.status(HttpStatus.OK).body(enrollmentService.courseEnrollment(courseId, userEmail, userRole,courseName));
     }
 
     @DeleteMapping("unenroll/{courseId}")
