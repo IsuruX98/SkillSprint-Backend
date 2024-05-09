@@ -28,10 +28,24 @@ spring:
           filters:
             - AuthenticationFilter
 
+        - id: LEARNER-SERVICE
+          uri: lb://LEARNER-SERVICE
+          predicates:
+            - Path= /api/v1/progress/**
+          filters:
+            - AuthenticationFilter
+
         - id: COURSE-SERVICE
           uri: lb://COURSE-SERVICE
           predicates:
             - Path= /api/v1/course-controller/**
+          filters:
+            - AuthenticationFilter
+
+        - id: COURSE-SERVICE
+          uri: lb://COURSE-SERVICE
+          predicates:
+            - Path= /api/v1/module-controller/**
           filters:
             - AuthenticationFilter
 
@@ -44,6 +58,13 @@ spring:
           uri: lb://PAYMENT-SERVICE
           predicates:
             - Path= /api/v1/payment-details/**
+          filters:
+            - AuthenticationFilter
+
+        - id: CONTENT-SERVICE
+          uri: lb://CONTENT-SERVICE
+          predicates:
+            - Path= /api/v1/content-controller/**
           filters:
             - AuthenticationFilter
 server:

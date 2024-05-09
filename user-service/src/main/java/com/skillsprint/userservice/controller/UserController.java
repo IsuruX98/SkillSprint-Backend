@@ -30,11 +30,11 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(userId));
     }
     @GetMapping
-    public ResponseEntity<String> getUserByEmail(@RequestParam("email") String email, @RequestHeader("userRole") String userRole) {
+    public UserDTO getUserByEmail(@RequestParam("email") String email, @RequestHeader("userRole") String userRole) {
         if (!"student".equalsIgnoreCase(userRole)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            return null;
         }
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByEmail(email));
+        return userService.getUserByEmail(email);
     }
 
 
