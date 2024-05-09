@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +43,7 @@ public class CourseServiceImpl implements CourseService {
         try{
 
             if(courseRepository.findCourseById(courseWrapper.getId()) != null)
-                return ResponseEntity.status(HttpStatus.FOUND).body("Course Already exist for Course Code: " + courseWrapper.getId());
+                return "Course Already exist for Course Code: " + courseWrapper.getId();
 
             Course course = mapper.map(courseWrapper, Course.class);
             course.setStatus(CommonConstant.PENDING);
@@ -60,11 +58,11 @@ public class CourseServiceImpl implements CourseService {
 
             courseRepository.save(course);
             log.info("Course added successfully: {}", course);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Course Added Successfully");
+            return "Course Added Successfully";
 
         }catch(Exception e){
             log.error("Failed to add course: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add course");
+            return "Failed to add course";
         }
     }
 
@@ -98,7 +96,7 @@ public class CourseServiceImpl implements CourseService {
             Course course = courseRepository.findCourseById(courseDTO.getId());
 
             if(course == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
+                return "Course not found";
 
             if(StringUtils.hasLength(courseDTO.getCourseName()))
                 course.setCourseName(courseDTO.getCourseName());
@@ -117,11 +115,11 @@ public class CourseServiceImpl implements CourseService {
 
             courseRepository.save(course);
             log.info("Course updated successfully: {}", course);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Course Updated Successfully");
+            return "Course Updated Successfully";
 
         }catch(Exception e){
             log.error("Failed to update course: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to updated course");
+            return "Failed to updated course";
         }
     }
 
@@ -130,14 +128,16 @@ public class CourseServiceImpl implements CourseService {
         try{
             Course course = courseRepository.findCourseById(courseId);
 
+            if(course == null)
+                return "Course not found.";
 
             courseRepository.delete(course);
             log.info("Course Deleted successfully: {}", course);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Course Deleted Successfully");
+            return "Course Deleted Successfully";
 
         }catch(Exception e){
             log.error("Failed to Delete course: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to Delete course");
+            return "Failed to Delete course";
         }
     }
 
@@ -178,9 +178,9 @@ public class CourseServiceImpl implements CourseService {
                 Course crs = course.get();
                 crs.setStatus(CommonConstant.APPROVED);
                 courseRepository.save(crs);
-                return ResponseEntity.status(HttpStatus.OK).body("Course Approved");
+                return "Course Approved";
             }else
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found.");
+                return "Course not found.";
         }catch(Exception e){
             log.error(e.getMessage());
             throw e;

@@ -26,7 +26,19 @@ public class CourseController {
     @PostMapping(value = "", consumes = "multipart/form-data")
   //@PreAuthorize("hasAuthority('admin:create')")
     public ResponseEntity<Object> addCourse(@ModelAttribute CourseWrapper courseWrapper){
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.addCourse(courseWrapper));
+        Object result = courseService.addCourse(courseWrapper);
+
+        if (result instanceof String) {
+            String message = (String) result;
+            if (message.equals("Course Added Successfully")) {
+                return ResponseEntity.status(HttpStatus.OK).body(result);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+            }
+        } else {
+            // Handle unexpected return type
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected response from service");
+        }
     }
 
     @GetMapping("/{courseId}")
@@ -39,21 +51,47 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+
+    //@TODO - not completed......
     @PutMapping("/")
-   // @PreAuthorize("hasAuthority('admin:update')")
-    public ResponseEntity<Object> updateCourseByCourseCode(@RequestBody CourseDTO courseDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.updateCourseByCourseId(courseDTO));
+    public ResponseEntity<Object> updateCourseByCourseCode(@RequestBody CourseDTO courseDTO) {
+        Object result = courseService.updateCourseByCourseId(courseDTO);
+
+        if (result instanceof String) {
+            String message = (String) result;
+            if (message.equals("Course Updated Successfully")) {
+                return ResponseEntity.status(HttpStatus.OK).body(result);
+            } else if (message.equals("Course not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+            }
+        } else {
+            // Handle unexpected return type
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected response from service");
+        }
     }
 
 
     @DeleteMapping("/delete/{courseId}")
- //   @PreAuthorize("hasAuthority('admin:update')")
-    public ResponseEntity<Object> deleteCourseByCourseCode(@PathVariable String courseId){
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.deleteCourseByCourseId(courseId));
+    public ResponseEntity<Object> deleteCourseByCourseCode(@PathVariable String courseId) {
+        Object result = courseService.deleteCourseByCourseId(courseId);
+
+        if (result instanceof String) {
+            String message = (String) result;
+            if (message.equals("Course Deleted Successfully")) {
+                return ResponseEntity.status(HttpStatus.OK).body(result);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected response from service");
+        }
     }
 
 
     //TODO - Test this API - not tested yet.
+
     @GetMapping("category/{courseCode}")
     // @PreAuthorize("hasAnyAuthority('admin:read', 'faculty:read', 'student:read')")
     public ResponseEntity<List<CourseDTO>> getCoursesByCategoryCode(@PathVariable String categoryCode){
@@ -64,12 +102,23 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+
     @PutMapping("/{courseId}")
     public ResponseEntity<Object> approveCourseByCourseId(@PathVariable String courseId, @RequestHeader String userRole) {
-        if ("admin".equals(userRole)) {
-            return ResponseEntity.status(HttpStatus.OK).body(courseService.approveCourse(courseId));
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+        try {
+            Object result;
+            if ("admin".equals(userRole)) {
+                result = courseService.approveCourse(courseId);
+                if (result.equals("Course Approved")) {
+                    return ResponseEntity.status(HttpStatus.OK).body(result);
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to approve course");
         }
     }
 

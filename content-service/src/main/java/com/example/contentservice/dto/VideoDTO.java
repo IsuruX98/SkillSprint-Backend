@@ -9,7 +9,7 @@ import org.bson.types.ObjectId;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VideoDTO {
-    private ObjectId id;
+    private String id;
     private String title;
     private String duration;
     private String url;
