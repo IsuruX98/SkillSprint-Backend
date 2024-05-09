@@ -15,6 +15,11 @@ server:
 #    service-url:
 #      defaultZone: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka
 
+twilio:
+  account_sid: ACcb7589a9fe806f219db5976a26ddc584
+  auth_token: f7d5c8601f824357b2d4ca911fc80ade
+  trial_number: +18507805929
+
 eureka:
   client:
     registerWithEureka: true
@@ -23,3 +28,4 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
+
