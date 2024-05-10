@@ -62,7 +62,6 @@ public class UserController {
 
          List<UserDTO> userDTOS= userService.getAllUsers();
          return ResponseEntity.ok(userDTOS);
-
         }
 
     @ExceptionHandler({IllegalArgumentException.class})

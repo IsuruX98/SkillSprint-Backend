@@ -39,6 +39,7 @@ public class UserService {
     }
 
     public List<UserDTO> getAllUsers() {
+
         List<User> userList = userRepo.findAll();
         List<UserDTO> userDTOS=new ArrayList<>();
 
