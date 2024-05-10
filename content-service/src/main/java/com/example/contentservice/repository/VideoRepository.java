@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface VideoRepository extends MongoRepository<Video, ObjectId> {
+public interface VideoRepository extends MongoRepository<Video, String> {
     List<Video> findAllByModuleId(String moduleId);
 }
