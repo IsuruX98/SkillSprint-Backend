@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Transactional
 @Service
@@ -19,6 +23,8 @@ public class UserService {
 
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     ModelMapper modelMapper;
     public User saveUser(User user) {
@@ -31,6 +37,19 @@ public class UserService {
         user.setUserName(user.getUser_Name());
         return modelMapper.map(user, UserDTO.class);
     }
+
+    public List<UserDTO> getAllUsers() {
+
+        List<User> userList = userRepo.findAll();
+        List<UserDTO> userDTOS=new ArrayList<>();
+
+        if(!userList.isEmpty()){
+            userList.forEach(user -> userDTOS.add(modelMapper.map(user, UserDTO.class)));
+            return userDTOS;
+        }else
+            throw new IllegalArgumentException("Users not found!");
+    }
+
 
     public UserDTO getUserByEmail(String email) {
         User user = userRepo.findUserByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
@@ -62,7 +81,7 @@ public class UserService {
                 user.setContactNo(updatedUserDTO.getContactNo());
             }
             if (updatedUserDTO.getPassword() != null &&  !updatedUserDTO.getPassword().isEmpty()) {
-                user.setPassword(updatedUserDTO.getPassword());
+                user.setPassword(passwordEncoder.encode(updatedUserDTO.getPassword()));
             }
             if (updatedUserDTO.getUserType() != null &&  !updatedUserDTO.getUserType().isEmpty()) {
                 user.setUserType(updatedUserDTO.getUserType());

@@ -10,16 +10,18 @@ public class EmailSendService {
 
     public static void sendEmail(String to, String subject, String body) {
         // Email configuration
-        String username = "greenmart227@gmail.com";
-        String password = "zspzyrgpkofyguya";
+        String username = "skillsprintteam@outlook.com";
+        String password = "16820skill";
 
-        // SMTP server properties
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com"); // Replace with your SMTP server host
-        props.put("mail.smtp.port", "587"); // Replace with your SMTP server port
+        props.put("mail.smtp.host", "smtp.office365.com"); // Outlook SMTP server
+        props.put("mail.smtp.port", "587"); // Outlook SMTP port
+
+        // Specify SSL/TLS protocol and cipher suites
         props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        props.put("mail.smtp.ssl.ciphersuites", "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256");
 
         // Create a session with authentication
         Session session = Session.getInstance(props, new Authenticator() {
