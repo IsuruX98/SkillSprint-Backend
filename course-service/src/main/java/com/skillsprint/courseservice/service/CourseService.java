@@ -18,7 +18,7 @@ public interface CourseService {
 
     List<CourseDTO> getCoursesByCategoryCode(String categoryCode);
 
-    Object approveCourse(String courseId);
+    Object approveCourse(String courseId,String userEmail);
 
     List<CourseDTO> findAllByInstructorId(String instructorId);
 
