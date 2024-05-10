@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2ece0b65-a62a-4832-bad3-b2d8f1a80a62" name="Changes" comment="enrollmentNotificationUpdated" />
+    <list default="true" id="2ece0b65-a62a-4832-bad3-b2d8f1a80a62" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,7 +46,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "chamithDev",
+    "git-widget-placeholder": "sehan__dev__v2",
     "last_opened_file_path": "C:/Users/Chamith/Documents/3rd year Projects/3Y2S projects/DS/SkillSprint-Backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -320,6 +322,7 @@
     <MESSAGE value="getUserByEmailUpdated" />
     <MESSAGE value="applicationYmlUpdated" />
     <MESSAGE value="enrollmentNotificationUpdated" />
-    <option name="LAST_COMMIT_MESSAGE" value="enrollmentNotificationUpdated" />
+    <MESSAGE value="updated_s" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated_s" />
   </component>
 </project>

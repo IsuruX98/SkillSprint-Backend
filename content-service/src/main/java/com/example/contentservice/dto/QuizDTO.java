@@ -11,6 +11,8 @@ import org.bson.types.ObjectId;
 public class QuizDTO {
     private String id;
     private String moduleId;
+    private String description;
+    private String title;
     private String question;
     private String[] options;
     private int correctOption;
