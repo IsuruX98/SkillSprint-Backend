@@ -67,6 +67,13 @@ spring:
             - Path= /api/v1/content-controller/**
           filters:
             - AuthenticationFilter
+
+        - id: CONTENT-SERVICE
+          uri: lb://CONTENT-SERVICE
+          predicates:
+            - Path= /api/v1/reading-controller/**
+          filters:
+            - AuthenticationFilter
 server:
   port: 9191
 
