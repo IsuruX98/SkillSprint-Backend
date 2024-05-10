@@ -16,6 +16,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Quiz extends CommonEntity {
     @Id
     private String id;
+    private String description;
+    private String title;
     private String moduleId;
     private String question;
     private String[] options;

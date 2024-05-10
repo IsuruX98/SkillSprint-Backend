@@ -81,6 +81,8 @@ public class QuizServiceImpl implements QuizService {
             if(optionalQuiz.isPresent()){
                 Quiz quiz =  optionalQuiz.get();
                 quiz.setModuleId(updatedQuizDTO.getModuleId());
+                quiz.setDescription(updatedQuizDTO.getDescription());
+                quiz.setTitle(updatedQuizDTO.getTitle());
                 quiz.setQuestion(updatedQuizDTO.getQuestion());
                 quiz.setOptions(updatedQuizDTO.getOptions());
                 quiz.setCorrectOption(updatedQuizDTO.getCorrectOption());
