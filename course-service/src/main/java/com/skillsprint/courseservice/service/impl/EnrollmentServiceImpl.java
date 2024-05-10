@@ -1,6 +1,6 @@
 package com.skillsprint.courseservice.service.impl;
 
-import com.skillsprint.courseservice.feign.IEnrollment;
+import com.skillsprint.courseservice.feign.IUser;
 import com.skillsprint.courseservice.model.Enrollment;
 import com.skillsprint.courseservice.repository.EnrollmentRepository;
 import com.skillsprint.courseservice.service.EnrollmentService;
@@ -23,7 +23,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     EnrollmentRepository enrollmentRepository;
 
     @Autowired
-    IEnrollment iEnrollment;
+    IUser iEnrollment;
 
 
     @Override

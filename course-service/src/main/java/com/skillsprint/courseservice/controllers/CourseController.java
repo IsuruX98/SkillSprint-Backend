@@ -104,11 +104,11 @@ public class CourseController {
 
 
     @PutMapping("/{courseId}")
-    public ResponseEntity<Object> approveCourseByCourseId(@PathVariable String courseId, @RequestHeader String userRole) {
+    public ResponseEntity<Object> approveCourseByCourseId(@PathVariable String courseId, @RequestHeader String userRole, @RequestHeader String userEmail) {
         try {
             Object result;
             if ("admin".equals(userRole)) {
-                result = courseService.approveCourse(courseId);
+                result = courseService.approveCourse(courseId,userEmail);
                 if (result.equals("Course Approved")) {
                     return ResponseEntity.status(HttpStatus.OK).body(result);
                 } else {

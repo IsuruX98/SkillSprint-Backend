@@ -2,6 +2,11 @@ package com.skillsprint.courseservice.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.skillsprint.courseservice.dto.CourseDTO;
+import com.skillsprint.courseservice.dto.EmailBodyDTO;
+import com.skillsprint.courseservice.dto.MessageDTO;
+import com.skillsprint.courseservice.dto.UserDTO;
+import com.skillsprint.courseservice.feign.INotification;
+import com.skillsprint.courseservice.feign.IUser;
 import com.skillsprint.courseservice.model.Category;
 import com.skillsprint.courseservice.model.Course;
 import com.skillsprint.courseservice.model.CourseWrapper;
@@ -20,6 +25,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 @AllArgsConstructor
@@ -37,6 +44,19 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private Cloudinary cloudinary;
+    @Autowired
+    INotification iNotification;
+
+    @Autowired
+    IUser iUser;
+
+    @Autowired
+    EmailBodyDTO emailBodyDTO;
+    @Autowired
+    MessageDTO messageDTO;
+
+
+    private final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     @Override
     public Object addCourse(CourseWrapper courseWrapper) {
@@ -170,14 +190,37 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Object approveCourse(String courseId) {
+    public Object approveCourse(String courseId,String userEmail) {
         try{
             Optional<Course> course = courseRepository.findById(courseId);
 
             if(course.isPresent()){
+
+
                 Course crs = course.get();
+                UserDTO userDTO=iUser.getUserDTOById(crs.getInstructorId());
+
                 crs.setStatus(CommonConstant.APPROVED);
                 courseRepository.save(crs);
+
+                emailBodyDTO.setTo(userDTO.getEmail());
+                emailBodyDTO.setMsg("Dear " + userDTO.getUserName() + ",\n\n" +
+                        "Congratulations! Your "+crs.getCourseName()+ " Course successfully added to the system."+"\n\n" +
+                        "Thank you for choosing SkillSprint.\n\n" +
+                        "Best regards,\n" +
+                        "SkillSprint Team");
+
+                emailBodyDTO.setSubject("SkillSprint Course Enrollment");
+
+                messageDTO.setNumber(userDTO.getContactNo());
+                messageDTO.setMessageBody("Dear " + userDTO.getUserName() + ",\n\n" +
+                        " \" Your "+crs.getCourseName()+"Course successfully added to the system.\n\n" +
+                        "Best regards,\n" +
+                        "SkillSprint Team");
+
+                executorService.submit(() -> iNotification.sendEmail(emailBodyDTO)); // Submit email sending task to executor service
+                executorService.submit(() -> iNotification.sendSms(messageDTO)); // Submit SMS sending task to executor service
+
                 return "Course Approved";
             }else
                 return "Course not found.";

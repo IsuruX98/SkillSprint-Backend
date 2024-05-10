@@ -30,6 +30,11 @@ public class UserController {
         // If userRole is "student", proceed with getting the user by ID
         return ResponseEntity.ok(userService.getUserById(userId));
     }
+
+    @GetMapping("getUser/{userId}")
+    public UserDTO getUserDTOById(@PathVariable String userId) {
+        return userService.getUserById(userId);
+    }
     @GetMapping
     public UserDTO getUserByEmail(@RequestParam("email") String email, @RequestHeader("userRole") String userRole) {
         if (!"student".equalsIgnoreCase(userRole)) {
