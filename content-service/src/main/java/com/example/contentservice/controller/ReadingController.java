@@ -25,9 +25,17 @@ public class ReadingController {
     //TODO - not tested yet.
 
     @PostMapping("")
-    //@PreAuthorize("hasAuthority('admin:create')")
-    public ResponseEntity<Object> addReading(@RequestBody ReadingDTO readingDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(readingService.addReading(readingDTO));
+    public ResponseEntity<Object> addReading(@RequestBody ReadingDTO readingDTO) {
+        try {
+            Object result = readingService.addReading(readingDTO);
+            if (result.equals("Reading Added Successfully")) {
+                return ResponseEntity.status(HttpStatus.OK).body(result);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add reading");
+        }
     }
 
     @GetMapping("{readingId}")

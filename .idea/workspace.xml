@@ -6,7 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="2ece0b65-a62a-4832-bad3-b2d8f1a80a62" name="Changes" comment="updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/skillsprint/notificationservice/service/EmailSendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/skillsprint/notificationservice/service/EmailSendService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/controller/ReadingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/controller/ReadingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/controller/VideoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/controller/VideoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/dto/VideoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/dto/VideoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/model/Video.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/model/Video.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/repository/VideoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/repository/VideoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/service/impl/ReadingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/service/impl/ReadingServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/service/impl/VideoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/com/example/contentservice/service/impl/VideoServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/controllers/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/controllers/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/controllers/ModuleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/controllers/ModuleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/service/impl/CourseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/service/impl/CourseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/skillsprint/userservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/skillsprint/userservice/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/skillsprint/userservice/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/skillsprint/userservice/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,21 +55,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;chamithDev&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Chamith/Documents/3rd year Projects/3Y2S projects/DS/SkillSprint-Backend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "Merging chamithDev",
+    "last_opened_file_path": "C:/Users/Chamith/Documents/3rd year Projects/3Y2S projects/DS/SkillSprint-Backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Chamith\Documents\3rd year Projects\3Y2S projects\DS\SkillSprint-Backend\authentication-service\src\main\java\com\skillsprint\authenticationservice" />
@@ -91,7 +103,8 @@
       <workItem from="1715197408103" duration="232000" />
       <workItem from="1715236166097" duration="674000" />
       <workItem from="1715268217744" duration="1397000" />
-      <workItem from="1715281509256" duration="596000" />
+      <workItem from="1715281509256" duration="2104000" />
+      <workItem from="1715348079583" duration="592000" />
     </task>
     <task id="LOCAL-00001" summary="API-Gateway_added">
       <option name="closed" value="true" />
@@ -309,7 +322,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715269007111</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="updated">
+      <option name="closed" value="true" />
+      <created>1715284018246</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1715284018247</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -53,11 +53,11 @@ public class VideoServiceImpl implements VideoService {
 
             videoRepository.save(video);
 
-            return ResponseEntity.status(HttpStatus.OK).body("Video Uploaded Successfully.");
+            return "Video Uploaded Successfully.";
 
         }catch (Exception e){
             log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Video upload Failed.");
+            return "Video upload Failed.";
         }
     }
 

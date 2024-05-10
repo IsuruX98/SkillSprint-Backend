@@ -21,13 +21,19 @@ public class VideoController {
     private VideoService videoService;
 
     @PostMapping("/")
-    public ResponseEntity<Object> uploadVideo(@RequestParam("video") MultipartFile videoFile,
-                                             @RequestParam("title") String title,
-                                             @RequestParam("moduleId") String moduleId
-                                             ) throws IOException {
-
-        return ResponseEntity.status(HttpStatus.OK).body(videoService.uploadVideo(videoFile, title, moduleId));
-
+    public ResponseEntity<Object> uploadVideo(@RequestPart("video") MultipartFile videoFile,
+                                              @RequestPart("title") String title,
+                                              @RequestPart("moduleId") String moduleId) {
+        try {
+            Object result = videoService.uploadVideo(videoFile, title, moduleId);
+            if (result.equals("Video Uploaded Successfully.")) {
+                return ResponseEntity.status(HttpStatus.OK).body(result);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
+            }
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Video upload Failed.");
+        }
     }
 
     @GetMapping("/{moduleId}")
