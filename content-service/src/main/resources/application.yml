@@ -2,9 +2,16 @@ spring:
   application:
     name: CONTENT-SERVICE
 
-  mongodb:
-    uri: mongodb+srv://root:1234@cluster0.9dttrix.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-    database: quizDB
+  data:
+    mongodb:
+      uri: mongodb+srv://root:1234@cluster0.9dttrix.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      database: videoDB
+
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 server:
   port: 8087

@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("api/v1/users")
@@ -55,6 +56,14 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<List<UserDTO>> getlAllUser(){
+
+         List<UserDTO> userDTOS= userService.getAllUsers();
+         return ResponseEntity.ok(userDTOS);
+        }
+
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<ResponseDTO> handleIllegalArgumentException(IllegalArgumentException ex) {
         Map<String, Object> response = new HashMap<>();

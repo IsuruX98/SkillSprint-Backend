@@ -8,11 +8,8 @@ import com.example.contentservice.service.ReadingService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.types.ObjectId;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +38,11 @@ public class ReadingServiceImpl implements ReadingService {
 
             readingRepository.save(reading);
             log.info("Reading added successfully: {}", reading);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Reading Added Successfully");
+            return "Reading Added Successfully";
 
         }catch(Exception e){
             log.error("Failed to add course: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add reading");
+            return "Failed to add reading";
         }
     }
 
@@ -90,6 +87,8 @@ public class ReadingServiceImpl implements ReadingService {
     public Object updateReading(ReadingDTO readingDTO) {
         return null;
     }
+
+    //Todo Update and Delete Reading.
 
 
 }
