@@ -1,17 +1,15 @@
 package com.skillsprint.courseservice.service.impl;
 
 import com.cloudinary.Cloudinary;
-import com.skillsprint.courseservice.dto.CourseDTO;
-import com.skillsprint.courseservice.dto.EmailBodyDTO;
-import com.skillsprint.courseservice.dto.MessageDTO;
-import com.skillsprint.courseservice.dto.UserDTO;
-import com.skillsprint.courseservice.feign.INotification;
-import com.skillsprint.courseservice.feign.IUser;
+import com.skillsprint.courseservice.dto.*;
+import com.skillsprint.courseservice.feign.*;
 import com.skillsprint.courseservice.model.Category;
 import com.skillsprint.courseservice.model.Course;
 import com.skillsprint.courseservice.model.CourseWrapper;
+import com.skillsprint.courseservice.model.Module;
 import com.skillsprint.courseservice.repository.CategoryRepository;
 import com.skillsprint.courseservice.repository.CourseRepository;
+import com.skillsprint.courseservice.repository.ModuleRepository;
 import com.skillsprint.courseservice.service.CourseService;
 import com.skillsprint.courseservice.utils.CommonConstant;
 import lombok.AllArgsConstructor;
@@ -27,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @AllArgsConstructor
@@ -36,6 +35,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     CourseRepository courseRepository;
+
+    @Autowired
+    ModuleRepository moduleRepository;
 
     @Autowired
     CategoryRepository categoryRepository;
@@ -49,6 +51,15 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     IUser iUser;
+
+//    @Autowired
+//    IVideo iVideo;
+//
+//    @Autowired
+//    IReading iReading;
+
+    @Autowired
+    IContent iContent;
 
     @Autowired
     EmailBodyDTO emailBodyDTO;
@@ -260,6 +271,73 @@ public class CourseServiceImpl implements CourseService {
             }else
                 return Collections.emptyList();
 
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public DetailedCourseDTO getAllDetailedCourses(String courseId) {
+        try{
+                Course course = courseRepository.findCourseById(courseId);
+
+                if(course != null){
+                    DetailedCourseDTO detailedCourseDTO = new DetailedCourseDTO();
+
+                    detailedCourseDTO.setId(course.getId());
+                    detailedCourseDTO.setCourseName(course.getCourseName());
+                    detailedCourseDTO.setCategoryId(course.getCategoryId());
+                    detailedCourseDTO.setDescription(course.getDescription());
+                    detailedCourseDTO.setPrice(course.getPrice());
+                    detailedCourseDTO.setLevel(course.getLevel());
+                    detailedCourseDTO.setSkillgained(course.getSkillgained());
+                    detailedCourseDTO.setStatus(course.getStatus());
+                    detailedCourseDTO.setInstructorId(course.getInstructorId());
+                    detailedCourseDTO.setCoverImgUrl(course.getCoverImgUrl());
+
+                    List<Module> moduleList = moduleRepository.findAllByCourseId(courseId);
+
+                    if(!moduleList.isEmpty()){
+
+                        AtomicReference<List<ModuleResponseDTO>> moduleResponseDTOList1 = new AtomicReference<>(new ArrayList<>());
+
+
+                        moduleList.forEach(module -> {
+
+                            ModuleResponseDTO moduleResponseDTO = new ModuleResponseDTO();
+                            moduleResponseDTO.setId(module.getId());
+                            moduleResponseDTO.setModuleCode(module.getModuleCode());
+                            moduleResponseDTO.setModuleName(module.getModuleName());
+                            moduleResponseDTO.setCourseId(module.getCourseId());
+
+                            List<VideoDTO> videoDTOList = iContent.getAllVideos(module.getId());
+                            if(!videoDTOList.isEmpty())
+                                moduleResponseDTO.setVideoDTOList(videoDTOList);
+
+                            List<ReadingDTO> readingDTOList = iContent.getAllReadingsByModule(module.getId());
+                            if(!readingDTOList.isEmpty())
+                                moduleResponseDTO.setReadingDTOList(readingDTOList);
+
+                            List<QuizDTO> quizDTO = iContent.getAllQuizzesByModuleId(module.getId());
+                            if(!quizDTO.isEmpty())
+                                moduleResponseDTO.setQuizDTO(quizDTO.get(0));
+
+                            if(detailedCourseDTO.getModuleResponseDTOList() == null)
+                                detailedCourseDTO.setModuleResponseDTOList(new ArrayList<>());
+
+                            moduleResponseDTOList1.set(detailedCourseDTO.getModuleResponseDTOList());
+                            moduleResponseDTOList1.get().add(moduleResponseDTO);
+
+                        });
+
+                        List<ModuleResponseDTO> moduleResponseDTOList = moduleResponseDTOList1.get();
+                        detailedCourseDTO.setModuleResponseDTOList(moduleResponseDTOList);
+
+                    }
+                    return detailedCourseDTO;
+                }else
+                    throw new NullPointerException("Course not found");
         }catch(Exception e){
             log.error(e.getMessage());
             throw e;
