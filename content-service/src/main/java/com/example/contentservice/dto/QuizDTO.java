@@ -1,5 +1,6 @@
 package com.example.contentservice.dto;
 
+import com.example.contentservice.model.Question;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,12 @@ public class QuizDTO {
     private String moduleId;
     private String description;
     private String title;
-    private String question;
-    private String[] options;
-    private int correctOption;
+    private Question[] questions;
+
+    public void setCorrectAnswers(int[] correctAnswers) {
+        this.correctAnswers = correctAnswers;
+    }
+
+    private int[] correctAnswers;
+    private Boolean isPassed;
 }

@@ -2,11 +2,13 @@ spring:
   application:
     name: CONTENT-SERVICE
 
+
+
+
   data:
     mongodb:
-      uri: mongodb+srv://root:1234@cluster0.9dttrix.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      uri : mongodb+srv://root:1234@cluster0.rghcsi4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       database: videoDB
-
 
   servlet:
     multipart:
