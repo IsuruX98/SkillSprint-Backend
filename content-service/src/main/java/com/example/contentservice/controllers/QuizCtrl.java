@@ -47,12 +47,15 @@ public class QuizCtrl {
 
     @GetMapping("/module/{moduleId}")
     public ResponseEntity<List<QuizDTO>> getAllQuizzesByModuleId(@PathVariable String moduleId) {
-        try{
+        try {
             List<QuizDTO> quizzes = quizService.getAllQuizzesByModuleId(moduleId);
+            if (quizzes.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
             return ResponseEntity.ok(quizzes);
-        }catch (Exception e){
-            log.error("Error in fetching All the quizzes of module {}",e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (Exception e) {
+            log.error("Error in fetching All the quizzes of module {}", e.getMessage());
+            throw e;
         }
     }
 

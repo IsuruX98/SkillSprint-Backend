@@ -68,9 +68,22 @@ public class QuizServiceImpl implements QuizService {
         try{
             List<Quiz> quizzes = quizRepo.findByModuleId(moduleId);
 
-            return quizzes.stream()
-                    .map(quiz -> mapper.map(quiz,QuizDTO.class))
-                    .collect(Collectors.toList());
+            if(!quizzes.isEmpty()){
+                List<QuizDTO> quizDTOS = new ArrayList<>();
+
+                quizzes.forEach(quiz -> quizDTOS.add(mapper.map(quiz, QuizDTO.class)));
+                return quizDTOS;
+
+//                return quizzes.stream()
+//                    .map(quiz -> mapper.map(quiz,QuizDTO.class))
+//                    .collect(Collectors.toList());
+            }
+            else{
+                List<QuizDTO> empty = new ArrayList<>();
+                return empty;
+            }
+
+
         }catch (Exception e){
             log.error("Error Occurred in fetching quizzes from the moduleID");
             return null;
