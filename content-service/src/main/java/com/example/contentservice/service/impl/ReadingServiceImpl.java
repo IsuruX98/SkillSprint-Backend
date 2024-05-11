@@ -75,7 +75,7 @@ public class ReadingServiceImpl implements ReadingService {
                 readings.forEach(reading -> readingDTOS.add(mapper.map(reading, ReadingDTO.class)));
                 return readingDTOS;
             }
-            else throw new NullPointerException("readings not found");
+            else return new ArrayList<>();
 
         }catch(Exception e){
             log.error("Readings not found");

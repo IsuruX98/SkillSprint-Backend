@@ -37,9 +37,11 @@ public class VideoController {
     }
 
     @GetMapping("/{moduleId}")
-    public ResponseEntity<List<VideoDTO>> getAllVideos(@PathVariable String moduleId){
-            return ResponseEntity.status(HttpStatus.OK).body(videoService.getVedioListbyModuleId(moduleId));
-        }
-
+    public List<VideoDTO> getAllVideos(@PathVariable String moduleId){
+            return videoService.getVedioListbyModuleId(moduleId);
     }
+
+
+
+}
 
