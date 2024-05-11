@@ -67,14 +67,14 @@ public class VideoServiceImpl implements VideoService {
                 List<Video> videos = videoRepository.findAllByModuleId(moduleId);
 
                 if(!videos.isEmpty()){
-                    List<VideoDTO> vedioDTOS = new ArrayList<>();
-                    videos.forEach(video -> vedioDTOS.add(mapper.map(videos, VideoDTO.class)));
-                    return vedioDTOS;
+                    List<VideoDTO> videoDTOS = new ArrayList<>();
+                    videos.forEach(video -> videoDTOS.add(mapper.map(video, VideoDTO.class)));
+                    return videoDTOS;
                 }
-                else throw new NullPointerException("vedios not found");
+                return new ArrayList<>();
 
             }catch(Exception e){
-                log.error("vedios not found");
+                log.error("videos not found");
                 throw e;
             }
         }

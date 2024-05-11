@@ -32,9 +32,9 @@ public class QuizCtrl {
     }
 
     @GetMapping("/module/{moduleId}")
-    public ResponseEntity<List<QuizDTO>> getAllQuizzesByModuleId(@PathVariable String moduleId) {
-        List<QuizDTO> quizzes = quizService.getAllQuizzesByModuleId(moduleId);
-        return ResponseEntity.ok(quizzes);       // checked from postman
+    public List<QuizDTO> getAllQuizzesByModuleId(@PathVariable String moduleId) {
+        return quizService.getAllQuizzesByModuleId(moduleId);
+               // checked from postman
     }
 
     @PutMapping("/{quizId}")

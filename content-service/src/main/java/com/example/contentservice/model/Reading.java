@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Reading extends CommonEntity{
 
     @Id
-    private ObjectId id;
+    private String id;
     private String title;
     private String description;
     private String duration;
