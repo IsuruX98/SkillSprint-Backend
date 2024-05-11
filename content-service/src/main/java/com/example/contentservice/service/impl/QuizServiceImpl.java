@@ -4,6 +4,7 @@ package com.example.contentservice.service.impl;
 import com.example.contentservice.dto.QuizDTO;
 import com.example.contentservice.dto.QuizResultDTO;
 import com.example.contentservice.dto.UserAnswerDTO;
+import com.example.contentservice.model.Question;
 import com.example.contentservice.model.Quiz;
 import com.example.contentservice.repository.QuizRepo;
 import com.example.contentservice.service.QuizService;
@@ -12,8 +13,12 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,11 +39,10 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public QuizDTO addQuiz(QuizDTO quizDTO) {
         try {
-            Quiz quiz = mapper.map(quizDTO,Quiz.class);
+            Quiz quiz = mapper.map(quizDTO, Quiz.class);
             Quiz savedQuiz = quizRepo.save(quiz);
-            return mapper.map(savedQuiz,QuizDTO.class);
-        }catch (Exception e){
-            log.error("Error occurred in adding Quiz : {} ",e.getMessage());
+            return mapper.map(savedQuiz, QuizDTO.class);
+        } catch (Exception e) {
             return null;
         }
     }
@@ -62,7 +66,7 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public List<QuizDTO> getAllQuizzesByModuleId(String moduleId) {
         try{
-            List<Quiz> quizzes = quizRepo.findByModuleId(moduleId);     // want to check this one
+            List<Quiz> quizzes = quizRepo.findByModuleId(moduleId);
 
             return quizzes.stream()
                     .map(quiz -> mapper.map(quiz,QuizDTO.class))
@@ -75,30 +79,41 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public QuizDTO editQuiz(String quizId, QuizDTO updatedQuizDTO) {
-        try{
+        try {
             Optional<Quiz> optionalQuiz = quizRepo.findById(quizId);
 
-            if(optionalQuiz.isPresent()){
-                Quiz quiz =  optionalQuiz.get();
+            if (optionalQuiz.isPresent()) {
+                Quiz quiz = optionalQuiz.get();
                 quiz.setModuleId(updatedQuizDTO.getModuleId());
                 quiz.setDescription(updatedQuizDTO.getDescription());
                 quiz.setTitle(updatedQuizDTO.getTitle());
-                quiz.setQuestion(updatedQuizDTO.getQuestion());
-                quiz.setOptions(updatedQuizDTO.getOptions());
-                quiz.setCorrectOption(updatedQuizDTO.getCorrectOption());
 
+                if (updatedQuizDTO.getQuestions() != null && updatedQuizDTO.getQuestions().length > 0) {
+                    Question[] questionsArray = updatedQuizDTO.getQuestions();
+                    quiz.setQuestions(questionsArray);
+                } else {
+                    quiz.setQuestions(new Question[0]);
+                }
+
+                // Set the correct answers array
+                quiz.setCorrectAnswers(updatedQuizDTO.getCorrectAnswers());
+
+                // Save the updated quiz
                 Quiz updatedQuiz = quizRepo.save(quiz);
-
-                return mapper.map(updatedQuiz,QuizDTO.class);
-            }else{
-                log.info("There is no Quiz under this ID ");
+                return mapper.map(updatedQuiz, QuizDTO.class);
+            } else {
+                log.info("There is no Quiz under this ID");
                 return null;
             }
-        }catch (Exception e){
-            log.error("Error occurred while Editing Quiz {}",e.getMessage());
-            return  null;
+        } catch (Exception e) {
+            log.error("Error occurred while Editing Quiz {}", e.getMessage());
+            return null;
         }
     }
+
+
+
+
 
     @Override
     public void deleteQuizById(String quizId) {
@@ -108,39 +123,39 @@ public class QuizServiceImpl implements QuizService {
             log.error("Error occurred while deleting {}",e.getMessage());
         }
     }
-
-    @Override
-    public void deleteAllQuizzesByModuleId(String moduleId) {
-        try{
-            quizRepo.deleteByModuleId(moduleId);     // want to check with this
-        }catch (Exception e){
-            log.info("Error Occurred While quiz by ID {}",e.getMessage());
-        }
-    }
-
-    @Override
-    public QuizResultDTO checkAnswer(UserAnswerDTO userAnswerDTO) {
-        try{
-            Optional<Quiz> optionalQuiz = quizRepo.findById(userAnswerDTO.getQuizId());
-
-            if (optionalQuiz.isPresent()){
-                Quiz quiz = optionalQuiz.get();
-                boolean isCorrect = (userAnswerDTO.getSelectedOption()==(quiz.getCorrectOption()));     // logic is here check if any errror
-
-                QuizResultDTO  quizResultDTO = new QuizResultDTO();
-                quizResultDTO.setQuizId(userAnswerDTO.getQuizId());
-                quizResultDTO.setUserId(userAnswerDTO.getUserId());
-                quizResultDTO.setStatus(isCorrect);
-                quizResultDTO.setCorrectOption(quiz.getCorrectOption());
-
-                return quizResultDTO;
-            }else{
-                log.info("Error in checking the answer");
-                return null;
-            }
-        }catch (Exception e){
-            log.error("Error occurred while checking answer: {}", e.getMessage());
-            return null;
-        }
-    }
+//
+//    @Override
+//    public void deleteAllQuizzesByModuleId(String moduleId) {
+//        try{
+//            quizRepo.deleteByModuleId(moduleId);     // want to check with this
+//        }catch (Exception e){
+//            log.info("Error Occurred While quiz by ID {}",e.getMessage());
+//        }
+//    }
+//
+//    @Override
+//    public QuizResultDTO checkAnswer(UserAnswerDTO userAnswerDTO) {
+//        try{
+//            Optional<Quiz> optionalQuiz = quizRepo.findById(userAnswerDTO.getQuizId());
+//
+//            if (optionalQuiz.isPresent()){
+//                Quiz quiz = optionalQuiz.get();
+//                boolean isCorrect = (userAnswerDTO.getSelectedOption()==(quiz.getCorrectOption()));     // logic is here check if any errror
+//
+//                QuizResultDTO  quizResultDTO = new QuizResultDTO();
+//                quizResultDTO.setQuizId(userAnswerDTO.getQuizId());
+//                quizResultDTO.setUserId(userAnswerDTO.getUserId());
+//                quizResultDTO.setStatus(isCorrect);
+//                quizResultDTO.setCorrectOption(quiz.getCorrectOption());
+//
+//                return quizResultDTO;
+//            }else{
+//                log.info("Error in checking the answer");
+//                return null;
+//            }
+//        }catch (Exception e){
+//            log.error("Error occurred while checking answer: {}", e.getMessage());
+//            return null;
+//        }
+//    }
 }

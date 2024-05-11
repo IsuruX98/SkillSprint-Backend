@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 public class UserAnswerDTO {
     private String quizId;
     private String userId;
-    private int selectedOption;
+    private int[] answers;     // convert to int[] from string[]
+
 }

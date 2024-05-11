@@ -19,7 +19,7 @@ public class Quiz extends CommonEntity {
     private String description;
     private String title;
     private String moduleId;
-    private String question;
-    private String[] options;
-    private int correctOption;
+    private Question[] questions;
+    private int[] correctAnswers;
+    private Boolean isPassed;
 }
