@@ -70,8 +70,8 @@ public class VideoServiceImpl implements VideoService {
                     List<VideoDTO> videoDTOS = new ArrayList<>();
                     videos.forEach(video -> videoDTOS.add(mapper.map(video, VideoDTO.class)));
                     return videoDTOS;
-                }
-                return new ArrayList<>();
+                }else
+                    return new ArrayList<>();
 
             }catch(Exception e){
                 log.error("videos not found");
