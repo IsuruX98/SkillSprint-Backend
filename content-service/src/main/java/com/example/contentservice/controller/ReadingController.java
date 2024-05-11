@@ -4,7 +4,6 @@ import com.example.contentservice.dto.ReadingDTO;
 import com.example.contentservice.service.ReadingService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,8 +48,8 @@ public class ReadingController {
     }
 
     @GetMapping("/reading-module/{moduleId}")
-    public ResponseEntity<List<ReadingDTO>> getAllReadingsByModule(@PathVariable String moduleId){
-        return ResponseEntity.status(HttpStatus.OK).body(readingService.findAllByModuleId(moduleId));
+    public List<ReadingDTO> getAllReadingsByModule(@PathVariable String moduleId){
+        return readingService.findAllByModuleId(moduleId);
     }
 
 

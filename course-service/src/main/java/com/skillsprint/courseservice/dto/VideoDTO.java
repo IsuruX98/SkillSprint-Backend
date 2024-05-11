@@ -1,17 +1,16 @@
-package com.example.contentservice.dto;
+package com.skillsprint.courseservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class ReadingDTO {
+@AllArgsConstructor
+public class VideoDTO {
     private String id;
     private String title;
-    private String description;
     private String duration;
+    private String url;
     private String moduleId;
 }

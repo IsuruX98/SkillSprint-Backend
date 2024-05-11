@@ -1,12 +1,15 @@
 package com.skillsprint.courseservice.service.impl;
 
 import com.cloudinary.Cloudinary;
-import com.skillsprint.courseservice.dto.CourseDTO;
+import com.skillsprint.courseservice.dto.*;
+import com.skillsprint.courseservice.feign.*;
 import com.skillsprint.courseservice.model.Category;
 import com.skillsprint.courseservice.model.Course;
 import com.skillsprint.courseservice.model.CourseWrapper;
+import com.skillsprint.courseservice.model.Module;
 import com.skillsprint.courseservice.repository.CategoryRepository;
 import com.skillsprint.courseservice.repository.CourseRepository;
+import com.skillsprint.courseservice.repository.ModuleRepository;
 import com.skillsprint.courseservice.service.CourseService;
 import com.skillsprint.courseservice.utils.CommonConstant;
 import lombok.AllArgsConstructor;
@@ -20,6 +23,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @AllArgsConstructor
@@ -31,12 +37,37 @@ public class CourseServiceImpl implements CourseService {
     CourseRepository courseRepository;
 
     @Autowired
+    ModuleRepository moduleRepository;
+
+    @Autowired
     CategoryRepository categoryRepository;
 
     ModelMapper mapper = new ModelMapper();
 
     @Autowired
     private Cloudinary cloudinary;
+    @Autowired
+    INotification iNotification;
+
+    @Autowired
+    IUser iUser;
+
+//    @Autowired
+//    IVideo iVideo;
+//
+//    @Autowired
+//    IReading iReading;
+
+    @Autowired
+    IContent iContent;
+
+    @Autowired
+    EmailBodyDTO emailBodyDTO;
+    @Autowired
+    MessageDTO messageDTO;
+
+
+    private final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     @Override
     public Object addCourse(CourseWrapper courseWrapper) {
@@ -170,14 +201,37 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Object approveCourse(String courseId) {
+    public Object approveCourse(String courseId,String userEmail) {
         try{
             Optional<Course> course = courseRepository.findById(courseId);
 
             if(course.isPresent()){
+
+
                 Course crs = course.get();
+                UserDTO userDTO=iUser.getUserDTOById(crs.getInstructorId());
+
                 crs.setStatus(CommonConstant.APPROVED);
                 courseRepository.save(crs);
+
+                emailBodyDTO.setTo(userDTO.getEmail());
+                emailBodyDTO.setMsg("Dear " + userDTO.getUserName() + ",\n\n" +
+                        "Congratulations! Your "+crs.getCourseName()+ " Course successfully added to the system."+"\n\n" +
+                        "Thank you for choosing SkillSprint.\n\n" +
+                        "Best regards,\n" +
+                        "SkillSprint Team");
+
+                emailBodyDTO.setSubject("SkillSprint Course Enrollment");
+
+                messageDTO.setNumber(userDTO.getContactNo());
+                messageDTO.setMessageBody("Dear " + userDTO.getUserName() + ",\n\n" +
+                        " \" Your "+crs.getCourseName()+"Course successfully added to the system.\n\n" +
+                        "Best regards,\n" +
+                        "SkillSprint Team");
+
+                executorService.submit(() -> iNotification.sendEmail(emailBodyDTO)); // Submit email sending task to executor service
+                executorService.submit(() -> iNotification.sendSms(messageDTO)); // Submit SMS sending task to executor service
+
                 return "Course Approved";
             }else
                 return "Course not found.";
@@ -217,6 +271,73 @@ public class CourseServiceImpl implements CourseService {
             }else
                 return Collections.emptyList();
 
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public DetailedCourseDTO getAllDetailedCourses(String courseId) {
+        try{
+                Course course = courseRepository.findCourseById(courseId);
+
+                if(course != null){
+                    DetailedCourseDTO detailedCourseDTO = new DetailedCourseDTO();
+
+                    detailedCourseDTO.setId(course.getId());
+                    detailedCourseDTO.setCourseName(course.getCourseName());
+                    detailedCourseDTO.setCategoryId(course.getCategoryId());
+                    detailedCourseDTO.setDescription(course.getDescription());
+                    detailedCourseDTO.setPrice(course.getPrice());
+                    detailedCourseDTO.setLevel(course.getLevel());
+                    detailedCourseDTO.setSkillgained(course.getSkillgained());
+                    detailedCourseDTO.setStatus(course.getStatus());
+                    detailedCourseDTO.setInstructorId(course.getInstructorId());
+                    detailedCourseDTO.setCoverImgUrl(course.getCoverImgUrl());
+
+                    List<Module> moduleList = moduleRepository.findAllByCourseId(courseId);
+
+                    if(!moduleList.isEmpty()){
+
+                        AtomicReference<List<ModuleResponseDTO>> moduleResponseDTOList1 = new AtomicReference<>(new ArrayList<>());
+
+
+                        moduleList.forEach(module -> {
+
+                            ModuleResponseDTO moduleResponseDTO = new ModuleResponseDTO();
+                            moduleResponseDTO.setId(module.getId());
+                            moduleResponseDTO.setModuleCode(module.getModuleCode());
+                            moduleResponseDTO.setModuleName(module.getModuleName());
+                            moduleResponseDTO.setCourseId(module.getCourseId());
+
+                            List<VideoDTO> videoDTOList = iContent.getAllVideos(module.getId());
+                            if(!videoDTOList.isEmpty())
+                                moduleResponseDTO.setVideoDTOList(videoDTOList);
+
+                            List<ReadingDTO> readingDTOList = iContent.getAllReadingsByModule(module.getId());
+                            if(!readingDTOList.isEmpty())
+                                moduleResponseDTO.setReadingDTOList(readingDTOList);
+
+                            List<QuizDTO> quizDTO = iContent.getAllQuizzesByModuleId(module.getId());
+                            if(!quizDTO.isEmpty())
+                                moduleResponseDTO.setQuizDTO(quizDTO.get(0));
+
+                            if(detailedCourseDTO.getModuleResponseDTOList() == null)
+                                detailedCourseDTO.setModuleResponseDTOList(new ArrayList<>());
+
+                            moduleResponseDTOList1.set(detailedCourseDTO.getModuleResponseDTOList());
+                            moduleResponseDTOList1.get().add(moduleResponseDTO);
+
+                        });
+
+                        List<ModuleResponseDTO> moduleResponseDTOList = moduleResponseDTOList1.get();
+                        detailedCourseDTO.setModuleResponseDTOList(moduleResponseDTOList);
+
+                    }
+                    return detailedCourseDTO;
+                }else
+                    throw new NullPointerException("Course not found");
         }catch(Exception e){
             log.error(e.getMessage());
             throw e;

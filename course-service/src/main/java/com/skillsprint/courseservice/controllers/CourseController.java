@@ -1,6 +1,7 @@
 package com.skillsprint.courseservice.controllers;
 
 import com.skillsprint.courseservice.dto.CourseDTO;
+import com.skillsprint.courseservice.dto.DetailedCourseDTO;
 import com.skillsprint.courseservice.model.CourseWrapper;
 import com.skillsprint.courseservice.service.CourseService;
 import lombok.AllArgsConstructor;
@@ -104,11 +105,11 @@ public class CourseController {
 
 
     @PutMapping("/{courseId}")
-    public ResponseEntity<Object> approveCourseByCourseId(@PathVariable String courseId, @RequestHeader String userRole) {
+    public ResponseEntity<Object> approveCourseByCourseId(@PathVariable String courseId, @RequestHeader String userRole, @RequestHeader String userEmail) {
         try {
             Object result;
             if ("admin".equals(userRole)) {
-                result = courseService.approveCourse(courseId);
+                result = courseService.approveCourse(courseId,userEmail);
                 if (result.equals("Course Approved")) {
                     return ResponseEntity.status(HttpStatus.OK).body(result);
                 } else {
@@ -132,6 +133,12 @@ public class CourseController {
     @GetMapping("all/")
     public ResponseEntity<List<CourseDTO>> getAllCourses(){
         return ResponseEntity.status(HttpStatus.OK).body(courseService.getAll());
+    }
+
+
+    @GetMapping("all-courses/{courseId}")
+    public ResponseEntity<DetailedCourseDTO> getAllCoursesByCourseId(@PathVariable  String courseId){
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.getAllDetailedCourses(courseId));
     }
 
 

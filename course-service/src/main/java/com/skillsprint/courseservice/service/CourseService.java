@@ -1,6 +1,7 @@
 package com.skillsprint.courseservice.service;
 
 import com.skillsprint.courseservice.dto.CourseDTO;
+import com.skillsprint.courseservice.dto.DetailedCourseDTO;
 import com.skillsprint.courseservice.model.Course;
 import com.skillsprint.courseservice.model.CourseWrapper;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,9 +19,11 @@ public interface CourseService {
 
     List<CourseDTO> getCoursesByCategoryCode(String categoryCode);
 
-    Object approveCourse(String courseId);
+    Object approveCourse(String courseId,String userEmail);
 
     List<CourseDTO> findAllByInstructorId(String instructorId);
 
     List<CourseDTO> getAll();
+
+    DetailedCourseDTO getAllDetailedCourses(String courseId);
 }
