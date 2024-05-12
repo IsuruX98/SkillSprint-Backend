@@ -18,7 +18,7 @@ public interface IContent {
 //    List<QuizDTO> getAllQuizzesByModuleId(@PathVariable String moduleId);
 
     @GetMapping("/api/v1/quiz/module/{moduleId}")
-    ResponseEntity<List<QuizDTO>> getAllQuizzesByModuleId(@PathVariable String moduleId);
+    ResponseEntity<QuizDTO> getQuizByModuleId(@PathVariable String moduleId);
 
     @GetMapping("api/v1/reading-controller/reading-module/{moduleId}")
     ResponseEntity<List<ReadingDTO>> getAllReadingsByModule(@PathVariable String moduleId);
