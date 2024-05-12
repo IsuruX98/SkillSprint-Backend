@@ -4,12 +4,14 @@ package com.skillsprint.courseservice.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 public class UserDTO {
     protected String userId;
     protected String userName;
