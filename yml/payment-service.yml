@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skillsprint-payment-service-app
+  labels:
+    app: skillsprint-payment-service-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : skillsprint-payment-service-app
+  template:
+    metadata:
+      labels:
+        app: skillsprint-payment-service-app
+    spec:
+      containers:
+      - name: skillsprint-payment-service-app
+        image: isurux98/skillsprint-payment-service:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8085
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  skillsprint-payment-service-svc
+spec:
+  selector:
+    app:  skillsprint-payment-service-app
+  ports:
+  - port:  80
+    targetPort:  8085
