@@ -53,10 +53,10 @@ public class CourseController {
     }
 
 
-    //@TODO - not completed......
+    //@TODO - not tested
     @PutMapping("/")
-    public ResponseEntity<Object> updateCourseByCourseCode(@RequestBody CourseDTO courseDTO) {
-        Object result = courseService.updateCourseByCourseId(courseDTO);
+    public ResponseEntity<Object> updateCourse(@RequestBody CourseWrapper courseWrapper) {
+        Object result = courseService.updateCourseByCourseId(courseWrapper);
 
         if (result instanceof String) {
             String message = (String) result;
