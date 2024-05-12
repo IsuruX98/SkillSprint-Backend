@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skillsprint-notification-service-app
+  labels:
+    app: skillsprint-notification-service-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : skillsprint-notification-service-app
+  template:
+    metadata:
+      labels:
+        app: skillsprint-notification-service-app
+    spec:
+      containers:
+      - name: skillsprint-notification-service-app
+        image: isurux98/skillsprint-notification-service:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8084
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  skillsprint-notification-service-svc
+spec:
+  selector:
+    app:  skillsprint-notification-service-app
+  ports:
+  - port:  80
+    targetPort:  8084

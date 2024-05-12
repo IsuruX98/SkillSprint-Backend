@@ -313,18 +313,19 @@ public class CourseServiceImpl implements CourseService {
                             moduleResponseDTO.setModuleName(module.getModuleName());
                             moduleResponseDTO.setCourseId(module.getCourseId());
 
-                            List<VideoDTO> videoDTOList = iContent.getAllVideos(module.getId());
-                            if(!videoDTOList.isEmpty())
+                            List<VideoDTO> videoDTOList = iContent.getAllVideos(module.getId()).getBody();
+                            if(videoDTOList != null)
                                 moduleResponseDTO.setVideoDTOList(videoDTOList);
 
-                            List<ReadingDTO> readingDTOList = iContent.getAllReadingsByModule(module.getId());
-                            if(!readingDTOList.isEmpty())
+                            List<ReadingDTO> readingDTOList = iContent.getAllReadingsByModule(module.getId()).getBody();
+                            if(readingDTOList != null)
                                 moduleResponseDTO.setReadingDTOList(readingDTOList);
 
-                            List<QuizDTO> quizDTO = iContent.getAllQuizzesByModuleId(module.getId());
-                            if(!quizDTO.isEmpty())
-                                moduleResponseDTO.setQuizDTO(quizDTO.get(0));
+                            QuizDTO quizDTO = iContent.getQuizByModuleId(module.getId()).getBody();
+                            if(quizDTO != null) {
 
+                                moduleResponseDTO.setQuizDTO(quizDTO);
+                            }
                             if(detailedCourseDTO.getModuleResponseDTOList() == null)
                                 detailedCourseDTO.setModuleResponseDTOList(new ArrayList<>());
 

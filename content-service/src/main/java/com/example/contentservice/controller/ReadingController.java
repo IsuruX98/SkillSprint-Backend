@@ -48,8 +48,13 @@ public class ReadingController {
     }
 
     @GetMapping("/reading-module/{moduleId}")
-    public List<ReadingDTO> getAllReadingsByModule(@PathVariable String moduleId){
-        return readingService.findAllByModuleId(moduleId);
+    public ResponseEntity<List<ReadingDTO>> getAllReadingsByModule(@PathVariable String moduleId){
+        List<ReadingDTO> readingDTOList = readingService.findAllByModuleId(moduleId);
+
+        if(readingDTOList.isEmpty())
+            return ResponseEntity.noContent().build();
+        else
+            return ResponseEntity.ok(readingDTOList);
     }
 
 

@@ -36,9 +36,14 @@ public class VideoController {
         }
     }
 
-    @GetMapping("/{moduleId}")
-    public List<VideoDTO> getAllVideos(@PathVariable String moduleId){
-            return videoService.getVedioListbyModuleId(moduleId);
+    @GetMapping("{moduleId}")
+    public ResponseEntity<List<VideoDTO>> getAllVideos(@PathVariable String moduleId){
+            List<VideoDTO> videoDTOList = videoService.getVedioListbyModuleId(moduleId);
+            if(videoDTOList.isEmpty()){
+                return ResponseEntity.noContent().build();
+            }
+            else
+                return ResponseEntity.ok(videoDTOList);
     }
 
 
