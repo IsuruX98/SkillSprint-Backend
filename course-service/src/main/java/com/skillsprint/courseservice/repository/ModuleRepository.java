@@ -12,4 +12,5 @@ public interface ModuleRepository extends MongoRepository<Module, String> {
     Module findByModuleCode(String moduleCode);
 
     List<Module> findAllByCourseId(String courseId);
+
 }
