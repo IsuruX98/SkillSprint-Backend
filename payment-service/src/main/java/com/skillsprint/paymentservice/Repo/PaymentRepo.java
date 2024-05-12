@@ -7,11 +7,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PaymentRepo extends MongoRepository<Payment,String> {
+public interface PaymentRepo extends MongoRepository<Payment, String> {
 
     List<Payment> findAllByCourseID(String courseId);
 
     List<Payment> findAllByUserID(String studentId);
 
-    Payment findByCourseIDAndCourseID(String courseId, String studentId);
+    Payment findByCourseIDAndUserID(String courseId, String studentId);
 }

@@ -70,7 +70,7 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentResDTO getPaymentByCourseIdUserID(String courseId, String studentId) {
         try {
             // Call the repository method to get the payment by course ID and student ID
-            Payment payment = repo.findByCourseIDAndCourseID(courseId, studentId);
+            Payment payment = repo.findByCourseIDAndUserID(courseId, studentId);
 
             // Check if the payment exists
             if (payment != null) {
