@@ -49,24 +49,31 @@ public class ProgressServiceImpl implements ProgressService {
     }
 
     @Override
-    public ProgressDTO updateProgress(String id,int indexModule) {
-        ProgressDTO progressDTO = this.getProgressById(id);
-        double x = progressDTO.getPercentage()+((double) 100 / progressDTO.getNoOfModules());
-        if(x>100){
-            log.info("Percentage can not be more than 100%");
+    public ProgressDTO updateProgress(String userId, String courseId, int indexModule) {
+        Progress progress = (Progress) progressRepository.findByUserIdAndCourseId(userId, courseId)
+                .orElseThrow(() -> new RuntimeException("Progress not found with userId: " + userId + " and courseId: " + courseId));
+
+        ProgressDTO progressDTO = ProgressMapper.toDTO(progress);
+        double x = progressDTO.getPercentage() + ((double) 100 / progressDTO.getNoOfModules());
+
+        if (x > 100) {
+            log.info("Percentage cannot be more than 100%");
             return null;
-        }else{
+        } else {
             log.info(String.valueOf(x));
             progressDTO.setPercentage(x);
-            Boolean[]arr =progressDTO.getIsDone();
+            Boolean[] arr = progressDTO.getIsDone();
             arr[indexModule] = true;
             progressDTO.setIsDone(arr);
-            Progress progress = ProgressMapper.toEntity(progressDTO);
+
+            // Update the Progress entity with the modified data
+            progress = ProgressMapper.toEntity(progressDTO);
             progressRepository.save(progress);
+
             return progressDTO;
         }
-
     }
+
 
     @Override
     public void deleteProgressById(String id) {

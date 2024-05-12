@@ -32,9 +32,9 @@ public class ProgressController {
         return new ResponseEntity<>(progressDTO, HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}/{indexModule}")
-    public ResponseEntity<ProgressDTO> updateProgress(@PathVariable String id,@PathVariable int indexModule) {
-        ProgressDTO updatedProgress = progressService.updateProgress(id,indexModule);
+    @PatchMapping("/{userId}/{courseId}/{indexModule}")
+    public ResponseEntity<ProgressDTO> updateProgress(@PathVariable String userId,@PathVariable String courseId,@PathVariable int indexModule) {
+        ProgressDTO updatedProgress = progressService.updateProgress(userId,courseId,indexModule);
         return new ResponseEntity<>(updatedProgress, HttpStatus.OK);
     }
 
