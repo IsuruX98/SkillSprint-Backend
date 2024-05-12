@@ -2,12 +2,15 @@ spring:
   application:
     name: PAYMENT-SERVICE
 
-server:
-  port: 8085
-
   data:
     mongodb:
       uri: mongodb+srv://root:1234@cluster0.ksoh91d.mongodb.net/SkillSprintDB?retryWrites=true&w=majority&appName=Cluster0
+      database : PaymentDB
+
+server:
+  port: 8085
+
+
 
 #eureka:
 #  instance:
