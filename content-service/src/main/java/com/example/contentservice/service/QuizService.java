@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface QuizService {
-    QuizDTO addQuiz(QuizDTO quizDTO) ;
+    String addQuiz(QuizDTO quizDTO) ;
     QuizDTO getQuizById(String quizId);
-    List<QuizDTO> getAllQuizzesByModuleId(String moduleId);
+    QuizDTO getQuizByModuleId(String moduleId);
     QuizDTO editQuiz(String quizId, QuizDTO updatedQuizDTO);
     void deleteQuizById(String quizId);
 //    void deleteAllQuizzesByModuleId(String moduleId);

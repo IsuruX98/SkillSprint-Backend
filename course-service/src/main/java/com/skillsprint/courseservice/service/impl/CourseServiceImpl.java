@@ -20,8 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
-
-
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -52,12 +51,6 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     IUser iUser;
 
-//    @Autowired
-//    IVideo iVideo;
-//
-//    @Autowired
-//    IReading iReading;
-
     @Autowired
     IContent iContent;
 
@@ -65,6 +58,8 @@ public class CourseServiceImpl implements CourseService {
     EmailBodyDTO emailBodyDTO;
     @Autowired
     MessageDTO messageDTO;
+    @Autowired
+    UserDTO userDTO;
 
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
@@ -79,11 +74,13 @@ public class CourseServiceImpl implements CourseService {
             Course course = mapper.map(courseWrapper, Course.class);
             course.setStatus(CommonConstant.PENDING);
 
-            Map<String, String> uploadOptions = new HashMap<>();
-            uploadOptions.put("resource_type","image");
+//            Map<String, String> uploadOptions = new HashMap<>();
+//            uploadOptions.put("resource_type","image");
+//
+//            Map uploadResult = cloudinary.uploader().upload(courseWrapper.getFile().getBytes(), uploadOptions);
+//            String url = uploadResult.get("url").toString();
 
-            Map uploadResult = cloudinary.uploader().upload(courseWrapper.getFile().getBytes(), uploadOptions);
-            String url = uploadResult.get("url").toString();
+            String url = cloudinaryUrl(courseWrapper);
 
             course.setCoverImgUrl(url);
 
@@ -121,28 +118,31 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Object updateCourseByCourseId(CourseDTO courseDTO) {
+    public String updateCourseByCourseId(CourseWrapper courseWrapper) {
 
         try{
-            Course course = courseRepository.findCourseById(courseDTO.getId());
+            Course course = courseRepository.findCourseById(courseWrapper.getId());
 
             if(course == null)
                 return "Course not found";
 
-            if(StringUtils.hasLength(courseDTO.getCourseName()))
-                course.setCourseName(courseDTO.getCourseName());
-            if(StringUtils.hasLength(courseDTO.getCategoryId()))
-                course.setCategoryId(courseDTO.getCategoryId());
-            if(StringUtils.hasLength(courseDTO.getDescription()))
-                course.setDescription(courseDTO.getDescription());
-            if(courseDTO.getPrice() != null)
-                course.setPrice(courseDTO.getPrice());
-            if(StringUtils.hasLength(courseDTO.getLevel()))
-                course.setLevel(courseDTO.getLevel());
-            if(courseDTO.getSkillgained() != null)
-                course.setSkillgained(courseDTO.getSkillgained());
-            if(StringUtils.hasLength(courseDTO.getInstructorId()))
-                course.setInstructorId(courseDTO.getInstructorId());
+            if(StringUtils.hasLength(courseWrapper.getCourseName()))
+                course.setCourseName(courseWrapper.getCourseName());
+            if(StringUtils.hasLength(courseWrapper.getCategoryId()))
+                course.setCategoryId(courseWrapper.getCategoryId());
+            if(StringUtils.hasLength(courseWrapper.getDescription()))
+                course.setDescription(courseWrapper.getDescription());
+            if(courseWrapper.getPrice() != null)
+                course.setPrice(courseWrapper.getPrice());
+            if(StringUtils.hasLength(courseWrapper.getLevel()))
+                course.setLevel(courseWrapper.getLevel());
+            if(courseWrapper.getSkillgained() != null)
+                course.setSkillgained(courseWrapper.getSkillgained());
+            if(StringUtils.hasLength(courseWrapper.getInstructorId()))
+                course.setInstructorId(courseWrapper.getInstructorId());
+            if(!courseWrapper.getFile().isEmpty()){
+                course.setCoverImgUrl(cloudinaryUrl(courseWrapper));
+            }
 
             courseRepository.save(course);
             log.info("Course updated successfully: {}", course);
@@ -209,7 +209,7 @@ public class CourseServiceImpl implements CourseService {
 
 
                 Course crs = course.get();
-                UserDTO userDTO=iUser.getUserDTOById(crs.getInstructorId());
+                 userDTO=iUser.getUserDTOById(crs.getInstructorId());
 
                 crs.setStatus(CommonConstant.APPROVED);
                 courseRepository.save(crs);
@@ -311,18 +311,19 @@ public class CourseServiceImpl implements CourseService {
                             moduleResponseDTO.setModuleName(module.getModuleName());
                             moduleResponseDTO.setCourseId(module.getCourseId());
 
-                            List<VideoDTO> videoDTOList = iContent.getAllVideos(module.getId());
-                            if(!videoDTOList.isEmpty())
+                            List<VideoDTO> videoDTOList = iContent.getAllVideos(module.getId()).getBody();
+                            if(videoDTOList != null)
                                 moduleResponseDTO.setVideoDTOList(videoDTOList);
 
-                            List<ReadingDTO> readingDTOList = iContent.getAllReadingsByModule(module.getId());
-                            if(!readingDTOList.isEmpty())
+                            List<ReadingDTO> readingDTOList = iContent.getAllReadingsByModule(module.getId()).getBody();
+                            if(readingDTOList != null)
                                 moduleResponseDTO.setReadingDTOList(readingDTOList);
 
-                            List<QuizDTO> quizDTO = iContent.getAllQuizzesByModuleId(module.getId());
-                            if(!quizDTO.isEmpty())
-                                moduleResponseDTO.setQuizDTO(quizDTO.get(0));
+                            QuizDTO quizDTO = iContent.getQuizByModuleId(module.getId()).getBody();
+                            if(quizDTO != null) {
 
+                                moduleResponseDTO.setQuizDTO(quizDTO);
+                            }
                             if(detailedCourseDTO.getModuleResponseDTOList() == null)
                                 detailedCourseDTO.setModuleResponseDTOList(new ArrayList<>());
 
@@ -342,5 +343,14 @@ public class CourseServiceImpl implements CourseService {
             log.error(e.getMessage());
             throw e;
         }
+    }
+
+
+    public String cloudinaryUrl(CourseWrapper courseWrapper) throws IOException {
+        Map<String, String> uploadOptions = new HashMap<>();
+        uploadOptions.put("resource_type","image");
+
+        Map uploadResult = cloudinary.uploader().upload(courseWrapper.getFile().getBytes(), uploadOptions);
+        return uploadResult.get("url").toString();
     }
 }

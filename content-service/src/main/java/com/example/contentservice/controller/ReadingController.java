@@ -1,6 +1,7 @@
 package com.example.contentservice.controller;
 
 import com.example.contentservice.dto.ReadingDTO;
+import com.example.contentservice.dto.ResponseDTO;
 import com.example.contentservice.service.ReadingService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/reading-controller")
@@ -48,8 +51,13 @@ public class ReadingController {
     }
 
     @GetMapping("/reading-module/{moduleId}")
-    public List<ReadingDTO> getAllReadingsByModule(@PathVariable String moduleId){
-        return readingService.findAllByModuleId(moduleId);
+    public ResponseEntity<List<ReadingDTO>> getAllReadingsByModule(@PathVariable String moduleId){
+        List<ReadingDTO> readingDTOList = readingService.findAllByModuleId(moduleId);
+
+        if(readingDTOList.isEmpty())
+            return ResponseEntity.noContent().build();
+        else
+            return ResponseEntity.ok(readingDTOList);
     }
 
 
@@ -58,6 +66,24 @@ public class ReadingController {
     public ResponseEntity<Object> updateReadingByReadingId(@RequestBody ReadingDTO readingDTO){
         return ResponseEntity.status(HttpStatus.OK).body(readingService.updateReading(readingDTO));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteReadingById(@PathVariable String id) {
+        try {
+            readingService.deleteReadingById(id);
+            return ResponseEntity.ok("Reading with ID " + id + " has been deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete reading with ID " + id + ": " + e.getMessage());
+        }
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<ResponseDTO> handleIllegalArgumentException(IllegalArgumentException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return ResponseEntity.badRequest().body(new ResponseDTO("Error", response));
+    }
+
 
 
 }

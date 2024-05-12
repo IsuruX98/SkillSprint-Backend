@@ -15,8 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -37,6 +40,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     EmailBodyDTO emailBodyDTO;
     @Autowired
     MessageDTO messageDTO;
+    @Autowired
+    UserDTO userDTO;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(2); // Create a thread pool with 2 threads for concurrent execution
 
@@ -45,7 +50,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     public Object courseEnrollment(String courseId, String userName, String userRole, String courseName) {
         try{
 
-            UserDTO userDTO = iEnrollment.getUserByEmail(userName, userRole);
+             userDTO = iEnrollment.getUserByEmail(userName, userRole);
 
             Enrollment enrollment = new Enrollment();
             enrollment.setCourseId(courseId);
@@ -63,7 +68,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
             messageDTO.setNumber(userDTO.getContactNo());
             messageDTO.setMessageBody("Dear " + userDTO.getUserName() + ",\n\n" +
-                    " You have successfully enrolled in the ..... Course.\n\n" +
+                    " You have successfully enrolled in the "+courseName+ "Course.\n\n" +
                     "Best regards,\n" +
                     "SkillSprint Team");
 
@@ -81,10 +86,32 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Override
     public Object courseUnenrollment(String courseId, String userEmail, String userRole) {
         try{
-            return null;  //todo - course Unenrollment
+            return null;
         } catch(Exception e){
             log.error(e.getMessage());
             throw e;
         }
     }
+
+    public List<String> getCourseIdsByUserId(String userMail,String userRole) {
+        try {
+
+            userDTO = iEnrollment.getUserByEmail(userMail, userRole);
+            List<Enrollment> enrollments = enrollmentRepository.findByUserId(userDTO.getUserId());
+
+            // Extract course IDs from the list of enrollments
+            List<String> courseIds = enrollments.stream()
+                    .map(Enrollment::getCourseId)
+                    .collect(Collectors.toList());
+
+            return courseIds;
+        } catch (Exception e) {
+            log.error("Error occurred while fetching course IDs by user ID: {}", e.getMessage());
+            throw e;
+        }
+    }
+
+
+
+
 }

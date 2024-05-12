@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface QuizRepo extends MongoRepository<Quiz, String> {
-    List<Quiz> findByModuleId(String moduleId);
+    Quiz findFirstByModuleId(String moduleId);
 
     void deleteByModuleId(String moduleId);
 }

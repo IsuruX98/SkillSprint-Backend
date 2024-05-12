@@ -37,9 +37,7 @@ public class UserController {
     }
     @GetMapping
     public UserDTO getUserByEmail(@RequestParam("email") String email, @RequestHeader("userRole") String userRole) {
-        if (!"student".equalsIgnoreCase(userRole)) {
-            return null;
-        }
+
         return userService.getUserByEmail(email);
     }
 

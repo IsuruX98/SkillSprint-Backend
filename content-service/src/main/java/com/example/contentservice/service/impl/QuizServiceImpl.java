@@ -37,13 +37,23 @@ public class QuizServiceImpl implements QuizService {
 
 
     @Override
-    public QuizDTO addQuiz(QuizDTO quizDTO) {
+    public String addQuiz(QuizDTO quizDTO) {
         try {
-            Quiz quiz = mapper.map(quizDTO, Quiz.class);
-            Quiz savedQuiz = quizRepo.save(quiz);
-            return mapper.map(savedQuiz, QuizDTO.class);
+
+            Quiz avilableQuiz = quizRepo.findFirstByModuleId(quizDTO.getModuleId());
+
+            if(avilableQuiz == null){
+                Quiz quiz = mapper.map(quizDTO, Quiz.class);
+                quizRepo.save(quiz);
+                return "Quiz Added Successfully";
+            }
+            else
+                return "Quiz Already Available for this module";
+
+
         } catch (Exception e) {
-            return null;
+            log.error(e.getMessage());
+            throw e;
         }
     }
 
@@ -64,16 +74,19 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public List<QuizDTO> getAllQuizzesByModuleId(String moduleId) {
+    public QuizDTO getQuizByModuleId(String moduleId) {
         try{
-            List<Quiz> quizzes = quizRepo.findByModuleId(moduleId);
+            Quiz quiz = quizRepo.findFirstByModuleId(moduleId);
 
-            return quizzes.stream()
-                    .map(quiz -> mapper.map(quiz,QuizDTO.class))
-                    .collect(Collectors.toList());
+            if(quiz != null)
+                return mapper.map(quiz, QuizDTO.class);
+            else
+                return null;
+
+
         }catch (Exception e){
             log.error("Error Occurred in fetching quizzes from the moduleID");
-            return null;
+            throw e;
         }
     }
 

@@ -13,7 +13,7 @@ public interface CourseService {
 
     CourseDTO getCourseById(String courseId);
 
-    Object updateCourseByCourseId(CourseDTO courseDTO);
+    String updateCourseByCourseId(CourseWrapper courseWrapper);
 
     Object deleteCourseByCourseId(String courseId);
 

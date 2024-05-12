@@ -13,4 +13,7 @@ public interface ReadingService {
     List<ReadingDTO> findAllByModuleId(String moduleId);
 
     Object updateReading(ReadingDTO readingDTO);
+
+    void deleteReadingById(String id);
+
 }

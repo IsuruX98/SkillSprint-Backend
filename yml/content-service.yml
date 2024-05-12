@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skillsprint-content-service-app
+  labels:
+    app: skillsprint-content-service-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : skillsprint-content-service-app
+  template:
+    metadata:
+      labels:
+        app: skillsprint-content-service-app
+    spec:
+      containers:
+      - name: skillsprint-content-service-app
+        image: isurux98/skillsprint-content-service:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8087
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  skillsprint-content-service-svc
+spec:
+  selector:
+    app:  skillsprint-content-service-app
+  ports:
+  - port:  80
+    targetPort:  8087
