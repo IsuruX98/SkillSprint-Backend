@@ -65,6 +65,8 @@ public class CourseServiceImpl implements CourseService {
     EmailBodyDTO emailBodyDTO;
     @Autowired
     MessageDTO messageDTO;
+    @Autowired
+    UserDTO userDTO;
 
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
@@ -209,7 +211,7 @@ public class CourseServiceImpl implements CourseService {
 
 
                 Course crs = course.get();
-                UserDTO userDTO=iUser.getUserDTOById(crs.getInstructorId());
+                 userDTO=iUser.getUserDTOById(crs.getInstructorId());
 
                 crs.setStatus(CommonConstant.APPROVED);
                 courseRepository.save(crs);

@@ -37,6 +37,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     EmailBodyDTO emailBodyDTO;
     @Autowired
     MessageDTO messageDTO;
+    @Autowired
+    UserDTO userDTO;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(2); // Create a thread pool with 2 threads for concurrent execution
 
@@ -45,7 +47,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     public Object courseEnrollment(String courseId, String userName, String userRole, String courseName) {
         try{
 
-            UserDTO userDTO = iEnrollment.getUserByEmail(userName, userRole);
+             userDTO = iEnrollment.getUserByEmail(userName, userRole);
 
             Enrollment enrollment = new Enrollment();
             enrollment.setCourseId(courseId);
@@ -63,7 +65,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
             messageDTO.setNumber(userDTO.getContactNo());
             messageDTO.setMessageBody("Dear " + userDTO.getUserName() + ",\n\n" +
-                    " You have successfully enrolled in the ..... Course.\n\n" +
+                    " You have successfully enrolled in the "+courseName+ "Course.\n\n" +
                     "Best regards,\n" +
                     "SkillSprint Team");
 
