@@ -1,6 +1,7 @@
 package com.skillsprint.learnerservice.Service.ServiceImpl;
 import com.skillsprint.learnerservice.Service.EnrollmentService;
 import com.skillsprint.learnerservice.dto.EmailBodyDTO;
+import com.skillsprint.learnerservice.dto.EnrollmentDTO;
 import com.skillsprint.learnerservice.dto.MessageDTO;
 import com.skillsprint.learnerservice.dto.UserDTO;
 import com.skillsprint.learnerservice.feing.IEnrollment;
@@ -10,6 +11,7 @@ import com.skillsprint.learnerservice.repository.EnrollmentRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,29 +86,34 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     }
 
     @Override
-    public Object courseUnenrollment(String courseId, String userEmail, String userRole) {
-        try{
-            return null;
-        } catch(Exception e){
+    public void courseUnenrollment(String id) throws IllegalArgumentException {
+        try {
+            if (enrollmentRepository.existsById(id)) {
+                enrollmentRepository.deleteById(id);
+            } else {
+                throw new IllegalArgumentException("Enrollment not available");
+            }
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw e;
         }
     }
 
-    public List<String> getCourseIdsByUserId(String userMail,String userRole) {
-        try {
 
+    @Override
+    public List<EnrollmentDTO> getEnrollmentsByUserId(String userMail, String userRole) {
+        try {
             userDTO = iEnrollment.getUserByEmail(userMail, userRole);
             List<Enrollment> enrollments = enrollmentRepository.findByUserId(userDTO.getUserId());
 
-            // Extract course IDs from the list of enrollments
-            List<String> courseIds = enrollments.stream()
-                    .map(Enrollment::getCourseId)
+            // Map Enrollment objects to EnrollmentDTO objects
+            List<EnrollmentDTO> enrollmentDTOs = enrollments.stream()
+                    .map(enrollment -> new EnrollmentDTO(enrollment.getId().toString(), enrollment.getCourseId()))
                     .collect(Collectors.toList());
 
-            return courseIds;
+            return enrollmentDTOs;
         } catch (Exception e) {
-            log.error("Error occurred while fetching course IDs by user ID: {}", e.getMessage());
+            log.error("Error occurred while fetching enrollments by user ID: {}", e.getMessage());
             throw e;
         }
     }

@@ -1,5 +1,6 @@
 package com.skillsprint.learnerservice.controllers;
 import com.skillsprint.learnerservice.Service.EnrollmentService;
+import com.skillsprint.learnerservice.dto.EnrollmentDTO;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +28,22 @@ public class EnrollmentController {
     @GetMapping("/user-courses")
     public ResponseEntity<Object> getCoursesByUserId(@RequestHeader String userEmail, @RequestHeader String userRole) {
         try {
-            List<String> courseIds = enrollmentService.getCourseIdsByUserId(userEmail, userRole);
-            return ResponseEntity.status(HttpStatus.OK).body(courseIds);
+            List<EnrollmentDTO> enrollments = enrollmentService.getEnrollmentsByUserId(userEmail, userRole);
+            return ResponseEntity.status(HttpStatus.OK).body(enrollments);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to fetch courses: " + e.getMessage());
         }
     }
 
 
-    @DeleteMapping("unenroll/{courseId}")
-    public ResponseEntity<Object> courseUnenrollment(@PathVariable String courseId, @RequestHeader String userEmail, String userRole){
-        return ResponseEntity.status(HttpStatus.OK).body(enrollmentService.courseUnenrollment(courseId, userEmail, userRole));
+    @DeleteMapping("unenroll/{id}")
+    public ResponseEntity<Object> courseUnenrollment(@PathVariable String id){
+        try {
+            enrollmentService.courseUnenrollment(id);
+            return ResponseEntity.ok( "Successfully unrolled!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to unenroll ");
+        }
     }
 
 

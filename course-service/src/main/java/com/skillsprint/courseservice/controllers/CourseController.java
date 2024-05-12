@@ -104,13 +104,32 @@ public class CourseController {
     }
 
 
-    @PutMapping("/{courseId}")
+    @PutMapping("approve/{courseId}")
     public ResponseEntity<Object> approveCourseByCourseId(@PathVariable String courseId, @RequestHeader String userRole, @RequestHeader String userEmail) {
         try {
             Object result;
             if ("admin".equals(userRole)) {
                 result = courseService.approveCourse(courseId,userEmail);
                 if (result.equals("Course Approved")) {
+                    return ResponseEntity.status(HttpStatus.OK).body(result);
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to approve course");
+        }
+    }
+
+    @PutMapping("decline/{courseId}")
+    public ResponseEntity<Object> declineCourseByCourseId(@PathVariable String courseId, @RequestHeader String userRole, @RequestHeader String userEmail) {
+        try {
+            Object result;
+            if ("admin".equals(userRole)) {
+                result = courseService.declineCourse(courseId,userEmail);
+                if (result.equals("Course Declined")) {
                     return ResponseEntity.status(HttpStatus.OK).body(result);
                 } else {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
