@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface EnrollmentRepository extends MongoRepository<Enrollment, ObjectId> {
+public interface EnrollmentRepository extends MongoRepository<Enrollment, String> {
     List<Enrollment> findByUserId(String userId);
 
 }

@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Enrollment {
 
     @Id
-    private ObjectId id;
+    private String id;
     private String courseId;
     private String userId;
 }
