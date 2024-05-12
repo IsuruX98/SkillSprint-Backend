@@ -15,8 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -83,10 +86,32 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Override
     public Object courseUnenrollment(String courseId, String userEmail, String userRole) {
         try{
-            return null;  //todo - course Unenrollment
+            return null;
         } catch(Exception e){
             log.error(e.getMessage());
             throw e;
         }
     }
+
+    public List<String> getCourseIdsByUserId(String userMail,String userRole) {
+        try {
+
+            userDTO = iEnrollment.getUserByEmail(userMail, userRole);
+            List<Enrollment> enrollments = enrollmentRepository.findByUserId(userDTO.getUserId());
+
+            // Extract course IDs from the list of enrollments
+            List<String> courseIds = enrollments.stream()
+                    .map(Enrollment::getCourseId)
+                    .collect(Collectors.toList());
+
+            return courseIds;
+        } catch (Exception e) {
+            log.error("Error occurred while fetching course IDs by user ID: {}", e.getMessage());
+            throw e;
+        }
+    }
+
+
+
+
 }
