@@ -36,7 +36,7 @@ public class StripeClient {
     private Customer getCustomer(String id) throws Exception {
         return Customer.retrieve(id);
     }
-    public Charge chargeNewCard(String token, double amount) throws Exception {
+    public Charge chargeNewCard(String token, double amount,String courseName,String userName,String courseId,String userId,String userEmail,String userMobile) throws Exception {
         Map<String, Object> chargeParams = new HashMap<String, Object>();
         chargeParams.put("amount", (int)(amount * 100));
         chargeParams.put("currency", "USD");
@@ -47,7 +47,12 @@ public class StripeClient {
 
         LocalDateTime currentTime = LocalDateTime.now();
 
-        paymentService.addPayment(new PaymentResDTO((random.nextInt(Integer.MAX_VALUE)),"1234","c123", (long) amount,charge.getId(),charge.getPaid(),currentTime.toString()));
+        paymentService.addPayment(new PaymentResDTO((random.nextInt(Integer.MAX_VALUE)),
+                                                        userId,
+                                                        courseId,
+                                                        courseName,
+                                                        userName,
+                (long) amount,charge.getId(),charge.getPaid(),currentTime.toString()));
         return charge;
     }
     public Charge chargeCustomerCard(String customerId, int amount) throws Exception {

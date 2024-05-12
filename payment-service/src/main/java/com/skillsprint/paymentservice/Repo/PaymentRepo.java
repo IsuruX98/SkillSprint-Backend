@@ -12,4 +12,6 @@ public interface PaymentRepo extends MongoRepository<Payment,String> {
     List<Payment> findAllByCourseID(String courseId);
 
     List<Payment> findAllByUserID(String studentId);
+
+    Payment findByCourseIDAndCourseID(String courseId, String studentId);
 }

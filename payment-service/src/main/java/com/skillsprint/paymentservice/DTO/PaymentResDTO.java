@@ -12,6 +12,8 @@ public class PaymentResDTO {
     private Integer paymentID = 0;
     private String userID;
     private String courseID;
+    private String courseName;
+    private String studentName;
     private Long amount;
     private String stripeID;
     private Boolean isPaid;
