@@ -242,6 +242,46 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public Object declineCourse(String courseId,String userEmail) {
+        try{
+            Optional<Course> course = courseRepository.findById(courseId);
+
+            if(course.isPresent()){
+
+
+                Course crs = course.get();
+                userDTO=iUser.getUserDTOById(crs.getInstructorId());
+
+                crs.setStatus(CommonConstant.DECLINED);
+                courseRepository.save(crs);
+
+                emailBodyDTO.setTo(userDTO.getEmail());
+                emailBodyDTO.setMsg("Dear " + userDTO.getUserName() + ",\n\n" +
+                        "Your "+crs.getCourseName()+ " Course declined by admin."+"\n\n" +
+                        "Thank you for choosing SkillSprint.\n\n" +
+                        "Best regards,\n" +
+                        "SkillSprint Team");
+
+                emailBodyDTO.setSubject("SkillSprint Course Enrollment");
+
+                messageDTO.setNumber(userDTO.getContactNo());
+                messageDTO.setMessageBody("Dear " + userDTO.getUserName() + ",\n\n" +
+                        " \" Your "+crs.getCourseName()+" Course declined by admin.\n\n" +
+                        "Best regards,\n" +
+                        "SkillSprint Team");
+
+                executorService.submit(() -> iNotification.sendEmail(emailBodyDTO)); // Submit email sending task to executor service
+                executorService.submit(() -> iNotification.sendSms(messageDTO)); // Submit SMS sending task to executor service
+
+                return "Course Declined";
+            }else
+                return "Course not found.";
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw e;
+        }
+    }
+    @Override
     public List<CourseDTO> findAllByInstructorId(String instructorId) {
         try{
             List<Course> courseList = courseRepository.findAllByInstructorId(instructorId);

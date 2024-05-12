@@ -26,4 +26,6 @@ public interface CourseService {
     List<CourseDTO> getAll();
 
     DetailedCourseDTO getAllDetailedCourses(String courseId);
+
+    Object declineCourse(String courseId,String userEmail);
 }
