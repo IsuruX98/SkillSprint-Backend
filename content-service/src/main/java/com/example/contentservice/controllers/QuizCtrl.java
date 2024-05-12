@@ -1,5 +1,6 @@
 package com.example.contentservice.controllers;
 
+import ch.qos.logback.core.net.ObjectWriter;
 import com.example.contentservice.dto.QuizDTO;
 import com.example.contentservice.dto.QuizResultDTO;
 import com.example.contentservice.dto.UserAnswerDTO;
@@ -22,13 +23,13 @@ public class QuizCtrl {
     private final QuizService quizService;
 
     @PostMapping("/add")
-    public ResponseEntity<QuizDTO> addQuiz(@RequestBody QuizDTO quizDTO) {
+    public ResponseEntity<Object> addQuiz(@RequestBody QuizDTO quizDTO) {
 
         log.info("quiz DTO {}", (Object) quizDTO.getQuestions());
 
-        QuizDTO addedQuiz = quizService.addQuiz(quizDTO);
-        if (addedQuiz != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(addedQuiz);
+        Object response = quizService.addQuiz(quizDTO);
+        if (response != null) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -46,13 +47,15 @@ public class QuizCtrl {
     }
 
     @GetMapping("/module/{moduleId}")
-    public ResponseEntity<List<QuizDTO>> getAllQuizzesByModuleId(@PathVariable String moduleId) {
+    public ResponseEntity<QuizDTO> getQuizByModuleId(@PathVariable String moduleId) {
         try {
-            List<QuizDTO> quizzes = quizService.getAllQuizzesByModuleId(moduleId);
-            if (quizzes.isEmpty()) {
+            QuizDTO quiz = quizService.getQuizByModuleId(moduleId);
+
+            if (quiz == null)
                 return ResponseEntity.noContent().build();
-            }
-            return ResponseEntity.ok(quizzes);
+            else
+                return ResponseEntity.ok(quiz);
+
         } catch (Exception e) {
             log.error("Error in fetching All the quizzes of module {}", e.getMessage());
             throw e;
