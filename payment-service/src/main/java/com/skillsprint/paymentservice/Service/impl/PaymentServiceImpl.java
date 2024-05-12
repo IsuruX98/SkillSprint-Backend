@@ -67,6 +67,26 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    public PaymentResDTO getPaymentByCourseIdUserID(String courseId, String studentId) {
+        try {
+            // Call the repository method to get the payment by course ID and student ID
+            Payment payment = repo.findByCourseIDAndCourseID(courseId, studentId);
+
+            // Check if the payment exists
+            if (payment != null) {
+                // Map the Payment object to a PaymentResDTO object
+                return mapper.map(payment, PaymentResDTO.class);
+            } else {
+                return null; // Payment not found
+            }
+        } catch (Exception e) {
+            log.error("Error occurred while retrieving payment by course ID and student ID: {}", e.getMessage());
+            return null; // Return null if an error occurs
+        }
+    }
+
+
+    @Override
     public PaymentResDTO getPaymentById(int paymentId) {
         Payment payment = repo.findById(String.valueOf(paymentId)).orElse(null);
         return payment != null ? mapper.map(payment, PaymentResDTO.class) : null;

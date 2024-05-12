@@ -4,6 +4,7 @@ package com.skillsprint.paymentservice.Ctrl;
 import com.skillsprint.paymentservice.DTO.PaymentResDTO;
 import com.skillsprint.paymentservice.Service.PaymentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,5 +29,19 @@ public class PaymentCtrl {
     @GetMapping("/student/{studentId}")
     public List<PaymentResDTO> getAllPaymentsByStudent(@PathVariable String studentId) {
         return paymentService.getAllPaymentsByStudent(studentId);
+    }
+
+    @GetMapping("/course/{courseId}/user/{studentId}")
+    public ResponseEntity<PaymentResDTO> getPaymentByCourseIdAndUserId(
+            @PathVariable("courseId") String courseId,
+            @PathVariable("studentId") String studentId) {
+
+        PaymentResDTO payment = paymentService.getPaymentByCourseIdUserID(courseId, studentId);
+
+        if (payment != null) {
+            return ResponseEntity.ok(payment);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
