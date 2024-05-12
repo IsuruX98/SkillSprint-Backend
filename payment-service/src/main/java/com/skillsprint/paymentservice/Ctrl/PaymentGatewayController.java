@@ -17,18 +17,19 @@ public class PaymentGatewayController {
         this.stripeClient = stripeClient;
     }
 
-    @PostMapping("/charge")
-    public Charge chargeCard(@RequestHeader(value="token") String token,
-                             @RequestHeader(value="amount") Double amount,
-                             @RequestHeader(value="courseName") String courseName,
-                             @RequestHeader(value="userName") String userName,
-                             @RequestHeader(value="userId") String userId,
-                             @RequestHeader(value="courseId") String courseId,
-                             @RequestHeader(value="userEmail") String userEmail,
-                             @RequestHeader(value="userMobile") String userMobile
-                             ) throws Exception {
-
-        return this.stripeClient.chargeNewCard(token, amount,courseName,userName,userId,courseId,userEmail,userMobile);
+    @PostMapping("/charge/{userId}/{courseId}/{courseName}/{userName}/{userEmail}/{userMobile}")
+    public Charge chargeCard(
+            @RequestHeader(value="token") String token,
+            @RequestHeader(value="amount") Double amount,
+            @PathVariable(value="userId") String userId,
+            @PathVariable(value="courseId") String courseId,
+            @PathVariable(value="courseName") String courseName,
+            @PathVariable(value="userName") String userName,
+            @PathVariable(value="userEmail") String userEmail,
+            @PathVariable(value="userMobile") String userMobile
+    ) throws Exception {
+        return this.stripeClient.chargeNewCard(token, amount, courseName, userName, userId, courseId, userEmail, userMobile);
     }
+
 
 }
