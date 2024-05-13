@@ -23,6 +23,7 @@ public class AuthController {
     ResponseDTO responseDTO;
     JWTResponse jwtResponse;
 
+    //register controller method
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserDTO request) {
         jwtResponse = authService.signin(request);
@@ -31,6 +32,7 @@ public class AuthController {
                 .body(new ResponseDTO( "Success", jwtResponse));
     }
 
+    //login controller method
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> login(@RequestBody AuthDTO request) {
         jwtResponse=authService.login(request);
@@ -42,11 +44,14 @@ public class AuthController {
                 .body(new ResponseDTO( "Success", response));
     }
 
+    //method for validate token
     @GetMapping("/validate")
     public String validateToken(@RequestParam("token") String token){
         authService.validateTokenAndGetUser(token);
         return "token is valid";
     }
+
+    //method for handleArgumentException_ that return response when exception occuer
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<ResponseDTO> handleIllegalArgumentException(IllegalArgumentException ex) {
         Map<String, Object> response = new HashMap<>();

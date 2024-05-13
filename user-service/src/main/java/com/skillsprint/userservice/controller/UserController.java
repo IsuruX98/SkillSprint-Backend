@@ -41,8 +41,6 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
-
-
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUserById(@PathVariable String userId) {
         userService.deleteUserById(userId);
@@ -67,6 +65,7 @@ public class UserController {
          return ResponseEntity.ok(userDTOS);
         }
 
+    //method for handle argument exception _ this return response when argument exception occur
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<ResponseDTO> handleIllegalArgumentException(IllegalArgumentException ex) {
         Map<String, Object> response = new HashMap<>();

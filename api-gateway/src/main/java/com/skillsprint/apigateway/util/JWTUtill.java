@@ -21,6 +21,7 @@ public class JWTUtill {
     @Value("${token.expirationms}")
     Long jwtExpirationMs;
 
+    //validate the token
     public void validateToken(String token) {
         try {
             Claims claims = Jwts.parser()

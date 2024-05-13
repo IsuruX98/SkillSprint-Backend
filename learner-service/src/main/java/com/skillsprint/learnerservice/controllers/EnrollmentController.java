@@ -11,13 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/course-enrollment")
-@AllArgsConstructor
-@NoArgsConstructor
+@RequestMapping("/api/v1/course-enrollment")  // Endpoint for course-enrollment
 public class EnrollmentController {
 
     @Autowired
-    EnrollmentService enrollmentService;
+    EnrollmentService enrollmentService; // Service dependency injection
 
     @PostMapping("/{courseId}")
     //@PreAuthorize("hasAuthority('admin:create')")

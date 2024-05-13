@@ -120,15 +120,14 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
 
-    //Todo Update and Delete Reading.
 
     @Override
     public void deleteReadingById(String id) throws IllegalArgumentException {
         try {
-            if (readingRepository.existsById(id)) {
+            if (readingRepository.existsById(id)) { //check weather use exist
                 readingRepository.deleteById(id);
             } else {
-                throw new IllegalArgumentException("Reading not found with ID: " + id);
+                throw new IllegalArgumentException("Reading not found with ID: " + id); //if not throw exception
             }
         } catch (Exception e) {
             log.error("Error occurred while deleting {}", e.getMessage());

@@ -6,12 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2ece0b65-a62a-4832-bad3-b2d8f1a80a62" name="Changes" comment="updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/service/impl/CourseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/service/impl/CourseServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learner-service/src/main/java/com/skillsprint/learnerservice/Service/ServiceImpl/EnrollmentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/learner-service/src/main/java/com/skillsprint/learnerservice/Service/ServiceImpl/EnrollmentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learner-service/src/main/java/com/skillsprint/learnerservice/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/learner-service/src/main/java/com/skillsprint/learnerservice/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/skillsprint/notificationservice/controllers/SmsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/skillsprint/notificationservice/controllers/SmsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/skillsprint/userservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/skillsprint/userservice/controller/UserController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +92,7 @@
       <workItem from="1715369562913" duration="596000" />
       <workItem from="1715404895633" duration="756000" />
       <workItem from="1715504323113" duration="721000" />
+      <workItem from="1715536756432" duration="592000" />
     </task>
     <task id="LOCAL-00001" summary="API-Gateway_added">
       <option name="closed" value="true" />
