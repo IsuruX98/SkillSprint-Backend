@@ -20,7 +20,7 @@ import static javax.crypto.Cipher.SECRET_KEY;
 
 @Transactional
 @Service
-public class AuthService {
+public class AuthService implements com.skillsprint.userservice.service.ServiceInterfaces.AuthService {
 
 
     private JWTResponse jwtResponse;
@@ -37,7 +37,7 @@ public class AuthService {
 
     public JWTResponse signin(UserDTO request){
 
-        if (userRepo.existsUserByEmail(request.getEmail())) {
+        if (userRepo.existsUserByEmail(request.getEmail())) {      //check  user exist by that email
             throw new IllegalArgumentException("User with this email already exists.");
         }
         User user=new User();
@@ -52,8 +52,8 @@ public class AuthService {
         user.setUserName(request.getUserName());
 
 
-        var user_= userService.saveUser(user);
-        String jwt =jwtService.generateToken(user_);
+        var user_= userService.saveUser(user);  //call user service save user method
+        String jwt =jwtService.generateToken(user_);  //generate token for registered user
 
         return JWTResponse
                 .builder().token(jwt)
@@ -71,10 +71,11 @@ public class AuthService {
             throw new IllegalArgumentException("Invalid email or password!");
         }
 
-        if(userRepo.existsUserByEmail(request.getEmail())){
+        if(userRepo.existsUserByEmail(request.getEmail())){  //check  weather user exist
             var user = userRepo.findUserByEmail(request.getEmail())
                     .orElseThrow(() -> new IllegalArgumentException("User not found!"));
-            var jwt = jwtService.generateToken(user);
+
+            var jwt = jwtService.generateToken(user); // generate token for user
             JWTResponse.builder().user(user);
             return JWTResponse
                     .builder().token(jwt)
@@ -83,7 +84,7 @@ public class AuthService {
         }
         return JWTResponse.builder().build();
     }
-    public void validateTokenAndGetUser(String token) {
+    public void validateTokenAndGetUser(String token) {    //validate token
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(String.valueOf(SECRET_KEY))
@@ -99,6 +100,6 @@ public class AuthService {
 
     public void logout(HttpServletRequest request) {
         SecurityContextHolder.clearContext();
-    }
+    }  //logout
 
 }

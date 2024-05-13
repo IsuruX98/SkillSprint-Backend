@@ -12,12 +12,13 @@ public class CorsConfig {
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration config = new CorsConfiguration();
         // Configure allowed origins, headers, methods, etc.
-        config.addAllowedOrigin("*"); // Allow requests from any origin (you can restrict this to your frontend's origin)
+        config.addAllowedOrigin("*"); // Allow requests from any origin
         config.addAllowedHeader("*");
         config.addAllowedMethod("GET");
         config.addAllowedMethod("POST");
         config.addAllowedMethod("PUT");
         config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("PATCH");
 
         return new CorsWebFilter(source -> config);
     }

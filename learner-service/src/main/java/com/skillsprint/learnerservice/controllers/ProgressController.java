@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/progress")
+@RequestMapping("/api/v1/progress") // Endpoint for progress
 public class ProgressController {
 
-    private final ProgressService progressService;
+    private final ProgressService progressService; // Service dependency injection
 
     @Autowired
     public ProgressController(ProgressService progressService) {

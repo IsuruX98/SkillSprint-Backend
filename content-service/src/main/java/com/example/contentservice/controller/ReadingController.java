@@ -16,15 +16,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/reading-controller")
-@AllArgsConstructor
-@NoArgsConstructor
 public class ReadingController {
 
     @Autowired
-    ReadingService readingService;
+    ReadingService readingService; // Service dependency injection
 
-
-    //TODO - not tested yet.
 
     @PostMapping("")
     public ResponseEntity<Object> addReading(@RequestBody ReadingDTO readingDTO) {
@@ -77,11 +73,14 @@ public class ReadingController {
         }
     }
 
+
+
+    //exception handler method
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<ResponseDTO> handleIllegalArgumentException(IllegalArgumentException ex) {
         Map<String, Object> response = new HashMap<>();
         response.put("message", ex.getMessage());
-        return ResponseEntity.badRequest().body(new ResponseDTO("Error", response));
+        return ResponseEntity.badRequest().body(new ResponseDTO("Error", response)); //return response when argument exception occurred
     }
 
 

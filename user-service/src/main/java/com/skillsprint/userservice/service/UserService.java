@@ -19,7 +19,7 @@ import java.util.List;
 
 @Transactional
 @Service
-public class UserService {
+public class UserService implements com.skillsprint.userservice.service.ServiceInterfaces.UserService {
 
     @Autowired
     UserRepo userRepo;
@@ -28,12 +28,12 @@ public class UserService {
     @Autowired
     ModelMapper modelMapper;
     public User saveUser(User user) {
-        user.setUpdatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now()); //set time for updatedAt
         return userRepo.save(user);
     }
 
     public UserDTO getUserById(String userId) {
-        User user = userRepo.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+        User user = userRepo.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId)); // get user by id and assign to user object if not available throw exception
         user.setUserName(user.getUser_Name());
         return modelMapper.map(user, UserDTO.class);
     }
@@ -43,7 +43,7 @@ public class UserService {
         List<User> userList = userRepo.findAll();
         List<UserDTO> userDTOS=new ArrayList<>();
 
-        if(!userList.isEmpty()){
+        if(!userList.isEmpty()){  //check userList empty or not
             userList.forEach(user -> userDTOS.add(modelMapper.map(user, UserDTO.class)));
             return userDTOS;
         }else
@@ -52,12 +52,12 @@ public class UserService {
 
 
     public UserDTO getUserByEmail(String email) {
-        User user = userRepo.findUserByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
+        User user = userRepo.findUserByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email)); // get user by id and assign to user object if not available throw exception
         return modelMapper.map(user,UserDTO.class);
     }
 
     public void deleteUserById(String userId) {
-        User user = userRepo.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+        User user = userRepo.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId)); // get user by id and assign to user object if not available throw exception
         userRepo.delete(user);
     }
 

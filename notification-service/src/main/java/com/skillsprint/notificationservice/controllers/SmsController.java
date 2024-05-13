@@ -1,22 +1,15 @@
 package com.skillsprint.notificationservice.controllers;
 import com.skillsprint.notificationservice.DTO.MessageDTO;
-import com.skillsprint.notificationservice.service.SmsService;
+import com.skillsprint.notificationservice.service.ServiceImpl.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 
 @RestController
 @RequestMapping("api/v1/messages/")
 public class SmsController {
 
     @Autowired
-    private final SmsService smsService; // Assuming you have a TwilioService class that contains the SendMessage method
+    private final com.skillsprint.notificationservice.service.SmsService smsService;
 
     public SmsController(SmsService smsService) {
         this.smsService = smsService;
@@ -25,9 +18,10 @@ public class SmsController {
 
   @PostMapping("/sendSms")
     public void sendSms(@RequestBody MessageDTO messageDTO) {
-        smsService.SendMessage(messageDTO);
+        smsService.SendMessage(messageDTO);  //call sendMessage service method
     }
 /*
+Method for notify.lk api
     @PostMapping("/sendSms")
     public void sendSms(@RequestBody MessageDTO messageDTO) throws UnsupportedEncodingException {
         // Construct the URL with parameters
