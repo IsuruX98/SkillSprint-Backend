@@ -5,9 +5,8 @@ spring:
     mongodb:
       uri: mongodb+srv://root:1234@cluster0.ksoh91d.mongodb.net/SkillSprintDB?retryWrites=true&w=majority&appName=Cluster0
 
-
 server:
-  port: 8075
+  port: 9192
 
 eureka:
   instance:

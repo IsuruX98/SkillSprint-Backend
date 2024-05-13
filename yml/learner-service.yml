@@ -19,7 +19,7 @@ spec:
         image: isurux98/skillsprint-learner-service:latest
         imagePullPolicy: Always
         ports:
-          - containerPort: 8075
+          - containerPort: 9192
 
 ---
 
@@ -32,4 +32,4 @@ spec:
     app:  skillsprint-learner-service-app
   ports:
   - port:  80
-    targetPort:  8075
+    targetPort:  9192
