@@ -1,5 +1,6 @@
 package com.skillsprint.learnerservice.controllers;
 import com.skillsprint.learnerservice.Service.EnrollmentService;
+import com.skillsprint.learnerservice.dto.EnrollmentAllDTO;
 import com.skillsprint.learnerservice.dto.EnrollmentDTO;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,15 @@ public class EnrollmentController {
             return ResponseEntity.ok( "Successfully unrolled!");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to unenroll ");
+        }
+    }
+    @GetMapping("/getAll")
+    public ResponseEntity<Object> getAllEnrollment(@RequestHeader String userRole) {
+        try {
+            List<EnrollmentAllDTO> enrollments = enrollmentService.getAllEnrollment();
+            return ResponseEntity.status(HttpStatus.OK).body(enrollments);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to fetch courses: " + e.getMessage());
         }
     }
 

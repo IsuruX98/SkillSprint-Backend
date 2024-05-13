@@ -1,9 +1,6 @@
 package com.skillsprint.learnerservice.Service.ServiceImpl;
 import com.skillsprint.learnerservice.Service.EnrollmentService;
-import com.skillsprint.learnerservice.dto.EmailBodyDTO;
-import com.skillsprint.learnerservice.dto.EnrollmentDTO;
-import com.skillsprint.learnerservice.dto.MessageDTO;
-import com.skillsprint.learnerservice.dto.UserDTO;
+import com.skillsprint.learnerservice.dto.*;
 import com.skillsprint.learnerservice.feing.IEnrollment;
 import com.skillsprint.learnerservice.feing.INotification;
 import com.skillsprint.learnerservice.model.Enrollment;
@@ -12,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -111,6 +109,23 @@ public class EnrollmentServiceImpl implements EnrollmentService {
             // Map Enrollment objects to EnrollmentDTO objects
             List<EnrollmentDTO> enrollmentDTOs = enrollments.stream()
                     .map(enrollment -> new EnrollmentDTO(enrollment.getId().toString(), enrollment.getCourseId()))
+                    .collect(Collectors.toList());
+
+            return enrollmentDTOs;
+        } catch (Exception e) {
+            log.error("Error occurred while fetching enrollments by user ID: {}", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<EnrollmentAllDTO> getAllEnrollment() {
+        try {
+            List<Enrollment> enrollments = enrollmentRepository.findAll();
+
+            ModelMapper modelMapper = new ModelMapper();
+            List<EnrollmentAllDTO> enrollmentDTOs = enrollments.stream()
+                    .map(enrollment -> modelMapper.map(enrollment, EnrollmentAllDTO.class))
                     .collect(Collectors.toList());
 
             return enrollmentDTOs;
