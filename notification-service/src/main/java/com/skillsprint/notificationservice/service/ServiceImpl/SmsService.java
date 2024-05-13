@@ -1,4 +1,4 @@
-package com.skillsprint.notificationservice.service;
+package com.skillsprint.notificationservice.service.ServiceImpl;
 
 import com.skillsprint.notificationservice.DTO.MessageDTO;
 import com.skillsprint.notificationservice.config.TwilioConfig;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SmsService {
+public class SmsService implements com.skillsprint.notificationservice.service.SmsService {
 
     @Autowired
     private TwilioConfig twilioConfig;
