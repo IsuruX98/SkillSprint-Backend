@@ -32,6 +32,16 @@ public class ProgressController {
         return new ResponseEntity<>(progressDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/{userId}/{courseId}")  //  take the progress based on the course and user id
+    public ResponseEntity<ProgressDTO> getProgressByUserIdAndCourseId(@PathVariable String userId, @PathVariable String courseId) {
+        ProgressDTO progressDTO = progressService.getProgressByUserIdAndCourseId(userId, courseId);
+        if (progressDTO != null) {
+            return new ResponseEntity<>(progressDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PatchMapping("/{userId}/{courseId}/{indexModule}")
     public ResponseEntity<ProgressDTO> updateProgress(@PathVariable String userId,@PathVariable String courseId,@PathVariable int indexModule) {
         ProgressDTO updatedProgress = progressService.updateProgress(userId,courseId,indexModule);

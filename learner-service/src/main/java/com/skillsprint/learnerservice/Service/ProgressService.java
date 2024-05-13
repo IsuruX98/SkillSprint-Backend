@@ -11,4 +11,6 @@ public interface ProgressService {
     ProgressDTO updateProgress(String userId, String courseId, int indexModule);
     void deleteProgressById(String id);
     List<ProgressDTO> getAllProgresses();
+    ProgressDTO getProgressByUserIdAndCourseId(String userId, String courseId);
+
 }

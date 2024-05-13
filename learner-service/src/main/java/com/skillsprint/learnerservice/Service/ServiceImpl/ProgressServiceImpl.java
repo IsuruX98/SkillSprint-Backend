@@ -85,4 +85,16 @@ public class ProgressServiceImpl implements ProgressService {
         List<Progress> progresses = progressRepository.findAll();
         return ProgressMapper.toDTOList(progresses);
     }
+
+    @Override
+    public ProgressDTO getProgressByUserIdAndCourseId(String userId, String courseId) {
+        Progress progress = (Progress) progressRepository.findByUserIdAndCourseId(userId, courseId)
+                .orElse(null);
+        if (progress != null) {
+            return ProgressMapper.toDTO(progress);
+        } else {
+            return null;
+        }
+    }
+
 }
