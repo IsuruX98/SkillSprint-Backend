@@ -20,7 +20,7 @@ import static javax.crypto.Cipher.SECRET_KEY;
 
 @Transactional
 @Service
-public class AuthService {
+public class AuthService implements com.skillsprint.userservice.service.ServiceInterfaces.AuthService {
 
 
     private JWTResponse jwtResponse;

@@ -5,7 +5,7 @@ import com.skillsprint.userservice.DTO.AuthDTO;
 import com.skillsprint.userservice.DTO.JWTResponse;
 import com.skillsprint.userservice.DTO.ResponseDTO;
 import com.skillsprint.userservice.DTO.UserDTO;
-import com.skillsprint.userservice.service.AuthService;
+import com.skillsprint.userservice.service.ServiceInterfaces.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
