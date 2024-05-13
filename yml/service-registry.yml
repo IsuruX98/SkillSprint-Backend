@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
         - name: eureka
-          image: isurux98/service-registry:latest
+          image: isurux98/skillsprint-service-registry:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8761
