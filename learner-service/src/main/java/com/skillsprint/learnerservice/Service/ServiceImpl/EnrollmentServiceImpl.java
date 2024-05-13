@@ -52,13 +52,14 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     public Object courseEnrollment(String courseId, String userName, String userRole, String courseName) {
         try{
 
-             userDTO = iEnrollment.getUserByEmail(userName, userRole);
+             userDTO = iEnrollment.getUserByEmail(userName, userRole); //get user by calling getUserBy method in User Service
 
             Enrollment enrollment = new Enrollment();
             enrollment.setCourseId(courseId);
             enrollment.setUserId(userDTO.getUserId());
             enrollmentRepository.save(enrollment);
 
+            //send mail
             emailBodyDTO.setTo(userDTO.getEmail());
             emailBodyDTO.setMsg("Dear " + userDTO.getUserName() + ",\n\n" +
                     "Congratulations! You have successfully enrolled in the "+courseName+ " Course.\n\n" +
@@ -68,6 +69,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
             emailBodyDTO.setSubject("SkillSprint Course Enrollment");
 
+            //send message
             messageDTO.setNumber(userDTO.getContactNo());
             messageDTO.setMessageBody("Dear " + userDTO.getUserName() + ",\n\n" +
                     " You have successfully enrolled in the "+courseName+ "Course.\n\n" +

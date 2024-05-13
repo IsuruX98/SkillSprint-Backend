@@ -16,7 +16,7 @@ import java.net.URLEncoder;
 public class SmsController {
 
     @Autowired
-    private final SmsService smsService; // Assuming you have a TwilioService class that contains the SendMessage method
+    private final SmsService smsService;
 
     public SmsController(SmsService smsService) {
         this.smsService = smsService;
@@ -25,9 +25,10 @@ public class SmsController {
 
   @PostMapping("/sendSms")
     public void sendSms(@RequestBody MessageDTO messageDTO) {
-        smsService.SendMessage(messageDTO);
+        smsService.SendMessage(messageDTO);  //call sendMessage service method
     }
 /*
+Method for notify.lk api
     @PostMapping("/sendSms")
     public void sendSms(@RequestBody MessageDTO messageDTO) throws UnsupportedEncodingException {
         // Construct the URL with parameters

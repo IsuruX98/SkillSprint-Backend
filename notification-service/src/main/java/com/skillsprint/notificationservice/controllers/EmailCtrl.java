@@ -11,14 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/email")
-@AllArgsConstructor
-@NoArgsConstructor
+@RequestMapping("/api/v1/email") // Endpoint for mail sending
 public class EmailCtrl {
-    private  EmailSendService emailSendService;
+    private  EmailSendService emailSendService; // Service dependency injection
     @PostMapping("/send-email")
     public ResponseEntity sendEmail(@RequestBody EmailBodyDTO dto){
-        emailSendService.sendEmail(dto.getTo(), dto.getSubject(), dto.getMsg());
+        emailSendService.sendEmail(dto.getTo(), dto.getSubject(), dto.getMsg()); //call sendEMail method and set parameters from request body
         return ResponseEntity.ok("Sent Email");
     }
 }

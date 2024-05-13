@@ -14,13 +14,13 @@ public class SmsService {
     private TwilioConfig twilioConfig;
 
     public void SendMessage(MessageDTO messageDTO){
-        PhoneNumber to = new PhoneNumber(messageDTO.getNumber());
-        PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());
+        PhoneNumber to = new PhoneNumber(messageDTO.getNumber()); //set receiver phone number
+        PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());//set sender phone number
 
-        String messageBody = messageDTO.getMessageBody();
+        String messageBody = messageDTO.getMessageBody(); //set message body
         Message message = Message
                 .creator(to, from,
                         messageBody)
-                .create();
+                .create();  //send the message
     }
 }

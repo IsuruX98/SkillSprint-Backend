@@ -26,7 +26,7 @@ public class JWTService {
     @Value("${token.expirationms}")
     Long jwtExpirationMs;
 
-    public String extractUserName(String token) {
+    public String extractUserName(String token) { //get username from token
         return extractClaim(token, Claims::getSubject);
     }
 

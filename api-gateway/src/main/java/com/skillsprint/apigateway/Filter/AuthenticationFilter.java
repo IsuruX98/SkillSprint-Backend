@@ -25,15 +25,14 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
     @Override
     public GatewayFilter apply(Config config) {
-        System.out.println("wd");
+
         return ((exchange, chain) -> {
-            System.out.println("wd1");
             ServerHttpRequest request = exchange.getRequest();
-            System.out.println("wd2");
+
 
             if (validator.isSecured.test(request)) {
-                HttpHeaders headers = request.getHeaders();
-                if (!headers.containsKey(HttpHeaders.AUTHORIZATION)) {
+                HttpHeaders headers = request.getHeaders(); //get headers from request
+                if (!headers.containsKey(HttpHeaders.AUTHORIZATION)) { //check weather token is available in request header
                     return Mono.error(new RuntimeException("Missing authorization header"));
                 }
 
@@ -41,12 +40,14 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 if (authHeader != null && authHeader.startsWith("Bearer ")) {
                     String token = authHeader.substring(7);
                     try {
-                        jwtUtil.validateToken(authHeader);
+                        jwtUtil.validateToken(authHeader); //validate the token
 
-                            String userRole = jwtUtil.extractRole(token);
+                            String userRole = jwtUtil.extractRole(token); //extract role from token
                               System.out.println(token);
-                            String userEmail = jwtUtil.extractUserName(token);
+                            String userEmail = jwtUtil.extractUserName(token); //extract mail from token
                         System.out.println(userEmail);
+
+                        //add userRole and userEmail to request header
                         ServerHttpRequest modifiedRequest = request.mutate()
                                     .header("userRole", userRole)
                                     .header("userEmail",userEmail)
