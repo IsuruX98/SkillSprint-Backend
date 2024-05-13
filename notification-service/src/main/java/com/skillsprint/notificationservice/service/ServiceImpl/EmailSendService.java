@@ -1,14 +1,17 @@
-package com.skillsprint.notificationservice.service;
+package com.skillsprint.notificationservice.service.ServiceImpl;
 
+
+import com.skillsprint.notificationservice.service.EmailService;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-public class EmailSendService {
 
-    public static void sendEmail(String to, String subject, String body) {
+public class EmailSendService implements EmailService {
+
+    public  void sendEmail(String to, String subject, String body) {
         // Email configuration
         String username = "skillsprintteam@outlook.com";
         String password = "16820skill";

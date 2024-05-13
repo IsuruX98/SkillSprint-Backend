@@ -19,7 +19,7 @@ import java.util.List;
 
 @Transactional
 @Service
-public class UserService {
+public class UserService implements com.skillsprint.userservice.service.ServiceInterfaces.UserService {
 
     @Autowired
     UserRepo userRepo;

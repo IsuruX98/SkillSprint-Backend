@@ -2,7 +2,7 @@ package com.skillsprint.userservice.controller;
 
 import com.skillsprint.userservice.DTO.ResponseDTO;
 import com.skillsprint.userservice.DTO.UserDTO;
-import com.skillsprint.userservice.service.UserService;
+import com.skillsprint.userservice.service.ServiceInterfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
