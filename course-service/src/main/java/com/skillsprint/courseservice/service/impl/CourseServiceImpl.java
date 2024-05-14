@@ -317,6 +317,24 @@ public class CourseServiceImpl implements CourseService {
         }
     }
 
+
+    @Override
+    public List<CourseDTO> getAllAproved() {
+        try{
+            List<Course> courseList = courseRepository.findAllByStatus(CommonConstant.APPROVED);
+            List<CourseDTO> courseDTOList = new ArrayList<>();
+
+            if(!courseList.isEmpty()){
+                courseList.forEach(course -> courseDTOList.add(mapper.map(course, CourseDTO.class)));
+                return courseDTOList;
+            }else
+                return Collections.emptyList();
+
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw e;
+        }
+    }
     @Override
     public DetailedCourseDTO getAllDetailedCourses(String courseId) {
         try{
