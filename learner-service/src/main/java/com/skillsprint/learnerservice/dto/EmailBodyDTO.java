@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Component
 public class EmailBodyDTO {
     private String to;
     private String subject;
