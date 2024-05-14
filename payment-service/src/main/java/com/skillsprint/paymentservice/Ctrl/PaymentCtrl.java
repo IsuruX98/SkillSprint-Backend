@@ -5,6 +5,7 @@ import com.skillsprint.paymentservice.DTO.PaymentResDTO;
 import com.skillsprint.paymentservice.Service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,4 +48,16 @@ public class PaymentCtrl {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<PaymentResDTO>> getAllPayments() {
+        List<PaymentResDTO> payments = paymentService.getAllPayments();
+        if (payments != null) {
+            return ResponseEntity.ok(payments);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+
 }
