@@ -154,6 +154,12 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body(courseService.getAll());
     }
 
+    @GetMapping("all-approved/")
+    public ResponseEntity<List<CourseDTO>> getAllApprovedCourses(){
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.getAllAproved());
+    }
+
+
 
     @GetMapping("all-courses/{courseId}")
     public ResponseEntity<DetailedCourseDTO> getAllCoursesByCourseId(@PathVariable  String courseId){
