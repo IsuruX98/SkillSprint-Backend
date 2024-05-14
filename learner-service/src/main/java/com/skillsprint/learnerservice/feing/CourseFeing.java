@@ -1,6 +1,6 @@
 package com.skillsprint.learnerservice.feing;
 
-import com.skillsprint.learnerservice.DTO.ModuleDTO;
+import com.skillsprint.learnerservice.dto.ModuleDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,7 +1,7 @@
 package com.skillsprint.learnerservice.Service.ServiceImpl;
 
-import com.skillsprint.learnerservice.DTO.ProgressDTO;
-import com.skillsprint.learnerservice.DTO.ProgressMapper;
+import com.skillsprint.learnerservice.dto.ProgressDTO;
+import com.skillsprint.learnerservice.dto.ProgressMapper;
 import com.skillsprint.learnerservice.Service.ProgressService;
 import com.skillsprint.learnerservice.model.Progress;
 import com.skillsprint.learnerservice.repository.ProgressRepository;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -26,6 +27,11 @@ public class ProgressServiceImpl implements ProgressService {
 
     @Override
     public ProgressDTO createProgress(ProgressDTO progressDTO) {
+
+        Optional<Object> existingProgressOptional = progressRepository.findByUserIdAndCourseId(progressDTO.getUserId(), progressDTO.getCourseId());
+        if(existingProgressOptional.isPresent()){
+            throw new RuntimeException("Progress already exists same user and course ");
+        }
         Random random = new Random();
         progressDTO.setId(String.valueOf(random.nextInt(Integer.MAX_VALUE)));
         this.increment = (double) 100 / progressDTO.getNoOfModules();

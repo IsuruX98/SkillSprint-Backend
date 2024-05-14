@@ -6,6 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="2ece0b65-a62a-4832-bad3-b2d8f1a80a62" name="Changes" comment="updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/skillsprint/apigateway/Filter/RouteValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/skillsprint/apigateway/Filter/RouteValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/controllers/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/controllers/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/repository/CourseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/repository/CourseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/service/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/service/CourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/service/impl/CourseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/skillsprint/courseservice/service/impl/CourseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learner-service/src/main/java/com/skillsprint/learnerservice/dto/EmailBodyDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/learner-service/src/main/java/com/skillsprint/learnerservice/dto/EmailBodyDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learner-service/src/main/java/com/skillsprint/learnerservice/dto/MessageDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/learner-service/src/main/java/com/skillsprint/learnerservice/dto/MessageDTO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +54,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "chamithDev",
-    "last_opened_file_path": "C:/Users/Chamith/Documents/TravelPlus/TravelPlus_backend/travelPlus",
+    "last_opened_file_path": "C:/Users/Chamith/Documents/3rd year Projects/3Y2S projects/DS/SkillSprint-Backend/user-service",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -94,6 +101,8 @@
       <workItem from="1715504323113" duration="721000" />
       <workItem from="1715536756432" duration="592000" />
       <workItem from="1715587999387" duration="1800000" />
+      <workItem from="1715622190357" duration="596000" />
+      <workItem from="1715698616626" duration="1244000" />
     </task>
     <task id="LOCAL-00001" summary="API-Gateway_added">
       <option name="closed" value="true" />

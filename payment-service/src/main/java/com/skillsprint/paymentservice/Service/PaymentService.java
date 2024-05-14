@@ -11,4 +11,7 @@ public interface PaymentService {
     List<PaymentResDTO> getAllPaymentsByStudent(String studentId);
     PaymentResDTO getPaymentByCourseIdUserID(String courseId,String studentId);
     PaymentResDTO getPaymentById(int paymentId);
+
+    List<PaymentResDTO> getAllPayments();
+
 }

@@ -1,4 +1,4 @@
-package com.skillsprint.learnerservice.DTO;
+package com.skillsprint.learnerservice.dto;
 
 import lombok.Data;
 

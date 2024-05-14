@@ -85,6 +85,20 @@ public class PaymentServiceImpl implements PaymentService {
         }
     }
 
+    @Override
+    public List<PaymentResDTO> getAllPayments() {
+        try {
+            List<Payment> payments = repo.findAll();
+            return payments.stream()
+                    .map(payment -> mapper.map(payment, PaymentResDTO.class))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            log.error("Error occurred while retrieving all payments: {}", e.getMessage());
+            return null;
+        }
+    }
+
+
 
     @Override
     public PaymentResDTO getPaymentById(int paymentId) {
