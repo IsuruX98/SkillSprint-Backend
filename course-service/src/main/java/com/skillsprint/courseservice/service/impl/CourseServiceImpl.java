@@ -74,12 +74,7 @@ public class CourseServiceImpl implements CourseService {
             Course course = mapper.map(courseWrapper, Course.class);
             course.setStatus(CommonConstant.PENDING);
 
-//            Map<String, String> uploadOptions = new HashMap<>();
-//            uploadOptions.put("resource_type","image");
-//
-//            Map uploadResult = cloudinary.uploader().upload(courseWrapper.getFile().getBytes(), uploadOptions);
-//            String url = uploadResult.get("url").toString();
-
+            //cloudinary coverImage Url
             String url = cloudinaryUrl(courseWrapper);
 
             course.setCoverImgUrl(url);
@@ -93,8 +88,6 @@ public class CourseServiceImpl implements CourseService {
             return "Failed to add course";
         }
     }
-
-    //TODO - should be returned according to the given Response by Isuru ?
 
 
 
@@ -207,7 +200,6 @@ public class CourseServiceImpl implements CourseService {
 
             if(course.isPresent()){
 
-
                 Course crs = course.get();
                  userDTO=iUser.getUserDTOById(crs.getInstructorId());
 
@@ -247,7 +239,6 @@ public class CourseServiceImpl implements CourseService {
             Optional<Course> course = courseRepository.findById(courseId);
 
             if(course.isPresent()){
-
 
                 Course crs = course.get();
                 userDTO=iUser.getUserDTOById(crs.getInstructorId());
@@ -360,7 +351,6 @@ public class CourseServiceImpl implements CourseService {
 
                         AtomicReference<List<ModuleResponseDTO>> moduleResponseDTOList1 = new AtomicReference<>(new ArrayList<>());
 
-
                         moduleList.forEach(module -> {
 
                             ModuleResponseDTO moduleResponseDTO = new ModuleResponseDTO();
@@ -369,6 +359,7 @@ public class CourseServiceImpl implements CourseService {
                             moduleResponseDTO.setModuleName(module.getModuleName());
                             moduleResponseDTO.setCourseId(module.getCourseId());
 
+                            //fetches contents from content-service
                             List<VideoDTO> videoDTOList = iContent.getAllVideos(module.getId()).getBody();
                             if(videoDTOList != null)
                                 moduleResponseDTO.setVideoDTOList(videoDTOList);
@@ -389,8 +380,8 @@ public class CourseServiceImpl implements CourseService {
                             moduleResponseDTOList1.get().add(moduleResponseDTO);
 
                         });
-
                         List<ModuleResponseDTO> moduleResponseDTOList = moduleResponseDTOList1.get();
+                        //Modules and it's contents are assign to the relevant course.
                         detailedCourseDTO.setModuleResponseDTOList(moduleResponseDTOList);
 
                     }

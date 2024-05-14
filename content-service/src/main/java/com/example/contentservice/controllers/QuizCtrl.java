@@ -83,16 +83,5 @@ public class QuizCtrl {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-//
-//    @DeleteMapping("/module/{moduleId}")
-//    public ResponseEntity<Void> deleteAllQuizzesByModuleId(@PathVariable String moduleId) {
-//        quizService.deleteAllQuizzesByModuleId(moduleId);
-//        return ResponseEntity.noContent().build();
-//    }
-//
-//    @PostMapping("/check-answer")
-//    public ResponseEntity<QuizResultDTO> checkAnswer(@RequestBody UserAnswerDTO userAnswerDTO) {
-//        QuizResultDTO resultDTO = quizService.checkAnswer(userAnswerDTO);
-//        return ResponseEntity.ok(resultDTO);
-//    }
+
 }
