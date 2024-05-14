@@ -2,8 +2,6 @@ package com.skillsprint.learnerservice.controllers;
 import com.skillsprint.learnerservice.Service.EnrollmentService;
 import com.skillsprint.learnerservice.dto.EnrollmentAllDTO;
 import com.skillsprint.learnerservice.dto.EnrollmentDTO;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +52,4 @@ public class EnrollmentController {
         }
     }
 
-
-    //todo - My Enrollments
 }

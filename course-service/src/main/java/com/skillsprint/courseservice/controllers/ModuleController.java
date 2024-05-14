@@ -15,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class ModuleController {
 
-    //TODO - haven't tested yet.
+
 
     private final ModuleService moduleService;
 
@@ -33,7 +33,6 @@ public class ModuleController {
     }
 
 
-    //TODO - not tested below methods
 
     @PutMapping("")
     public ResponseEntity<String> updateModule(@RequestBody ModuleDTO moduleDTO){
