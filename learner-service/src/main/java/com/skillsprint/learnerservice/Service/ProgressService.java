@@ -1,7 +1,7 @@
 package com.skillsprint.learnerservice.Service;
 
 
-import com.skillsprint.learnerservice.DTO.ProgressDTO;
+import com.skillsprint.learnerservice.dto.ProgressDTO;
 
 import java.util.List;
 

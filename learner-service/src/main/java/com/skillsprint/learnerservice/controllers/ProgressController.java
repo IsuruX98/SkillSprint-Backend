@@ -1,6 +1,6 @@
 package com.skillsprint.learnerservice.controllers;
 
-import com.skillsprint.learnerservice.DTO.ProgressDTO;
+import com.skillsprint.learnerservice.dto.ProgressDTO;
 import com.skillsprint.learnerservice.Service.ProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

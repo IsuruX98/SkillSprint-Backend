@@ -1,12 +1,14 @@
 spring:
   application:
     name: LEARNER-SERVICE
+
   data:
     mongodb:
       uri: mongodb+srv://root:1234@cluster0.ksoh91d.mongodb.net/SkillSprintDB?retryWrites=true&w=majority&appName=Cluster0
 
 server:
-  port: 9192
+  port: 8079
+
 
 eureka:
   instance:

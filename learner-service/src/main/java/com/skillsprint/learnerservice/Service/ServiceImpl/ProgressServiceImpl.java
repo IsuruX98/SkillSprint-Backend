@@ -1,7 +1,7 @@
 package com.skillsprint.learnerservice.Service.ServiceImpl;
 
-import com.skillsprint.learnerservice.DTO.ProgressDTO;
-import com.skillsprint.learnerservice.DTO.ProgressMapper;
+import com.skillsprint.learnerservice.dto.ProgressDTO;
+import com.skillsprint.learnerservice.dto.ProgressMapper;
 import com.skillsprint.learnerservice.Service.ProgressService;
 import com.skillsprint.learnerservice.model.Progress;
 import com.skillsprint.learnerservice.repository.ProgressRepository;
