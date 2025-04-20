@@ -11,7 +11,9 @@ public class RouteValidator {
 
     //allow paths to request without authentication
     public static final List<String> openApiEndpoints=List.of(
-            "/auth/**",
+            "/auth/signup",
+            "/auth/login",
+            "/auth/validate",
             "/eureka",
             "/course-controller/all-approved/",
             "/course-controller/all-courses/**"

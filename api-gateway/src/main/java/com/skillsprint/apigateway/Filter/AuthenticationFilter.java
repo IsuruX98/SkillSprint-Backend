@@ -30,6 +30,9 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
             ServerHttpRequest request = exchange.getRequest();
 
 
+            // 🔍 Debug: Always print
+            System.out.println("Request Path: " + request.getURI().getPath());
+            System.out.println("Is Secured: " + validator.isSecured.test(request));
             if (validator.isSecured.test(request)) {
                 HttpHeaders headers = request.getHeaders(); //get headers from request
                 if (!headers.containsKey(HttpHeaders.AUTHORIZATION)) { //check weather token is available in request header
